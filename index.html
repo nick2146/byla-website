@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BYLA helps high-school students explore business through practical learning, case competitions, and entrepreneurship.">
+  <meta name="theme-color" content="#101d35">
+  <title>BYLA — Business Youth Leaders Association</title>
+  <style>
+    :root{--navy:#101d35;--blue:#2457d6;--blue2:#4778f5;--ink:#18243a;--muted:#627087;--paper:#f6f8fc;--line:#e5eaf3;--white:#fff;--radius:22px;--shadow:0 18px 50px rgba(16,29,53,.09)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#fff;line-height:1.6}a{color:inherit;text-decoration:none}button,a{ -webkit-tap-highlight-color:transparent}.container{width:min(1140px,calc(100% - 40px));margin:auto}
+    .nav-wrap{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(229,234,243,.85)}nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.04em}.brand-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:var(--blue);color:#fff;font-size:16px;letter-spacing:-.05em}.brand span:last-child{font-size:16px}.nav-links{display:flex;align-items:center;gap:28px;color:#526078;font-size:14px;font-weight:650}.nav-links a:hover{color:var(--blue)}.nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:12px;padding:13px 18px;background:var(--blue);color:#fff;font-weight:750;font-size:14px;transition:transform .2s,background .2s;cursor:pointer}.nav-cta:hover,.btn:hover{background:#1746bf;transform:translateY(-2px)}.menu-btn{display:none;background:none;border:0;font-size:25px;color:var(--ink)}
+    .hero{position:relative;overflow:hidden;background:var(--navy);color:#fff;padding:96px 0 88px}.hero:before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(71,120,245,.28),transparent 68%);right:-100px;top:-190px}.hero:after{content:"";position:absolute;width:350px;height:350px;border:1px solid rgba(255,255,255,.09);border-radius:50%;right:7%;bottom:-240px;box-shadow:0 0 0 45px rgba(255,255,255,.025),0 0 0 90px rgba(255,255,255,.02)}.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.12fr .88fr;gap:64px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:9px;color:#a9c1ff;text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:850}.eyebrow:before{content:"";width:24px;height:2px;background:currentColor}.hero h1{font-size:clamp(43px,6vw,72px);line-height:1.03;letter-spacing:-.06em;margin:22px 0}.hero h1 em{font-style:normal;color:#86a7ff}.hero p{font-size:17px;color:#c2ccdc;max-width:560px;margin:0 0 30px}.hero-actions{display:flex;flex-wrap:wrap;gap:13px}.btn-light{background:#fff;color:var(--navy)}.btn-light:hover{background:#eaf0ff}.btn-outline{background:transparent;border:1px solid rgba(255,255,255,.26);color:#fff}.btn-outline:hover{background:rgba(255,255,255,.08)}.hero-note{font-size:12px;color:#9eabc1;margin-top:22px}.hero-visual{position:relative;min-height:350px;display:grid;place-items:center}.orbit{width:min(100%,370px);aspect-ratio:1;border-radius:50%;border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;position:relative;background:radial-gradient(circle,rgba(50,83,151,.32),rgba(16,29,53,.04) 67%)}.orbit:before,.orbit:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.1);border-radius:50%;inset:30px}.orbit:after{inset:65px}.orbit-core{position:relative;z-index:2;width:126px;height:126px;border-radius:30px;display:grid;place-items:center;background:linear-gradient(145deg,#4778f5,#1c48b5);box-shadow:0 18px 65px rgba(36,87,214,.45);font-size:30px;font-weight:900;letter-spacing:-.06em}.float-card{position:absolute;z-index:3;background:#fff;color:var(--ink);border-radius:15px;padding:14px 16px;box-shadow:0 18px 40px rgba(0,0,0,.18);font-size:12px}.float-card strong{display:block;font-size:14px;margin-bottom:2px}.float-card small{color:var(--muted)}.fc-one{top:25px;left:-5px}.fc-two{right:-10px;top:110px}.fc-three{left:20px;bottom:30px}
+    .trust-strip{border-bottom:1px solid var(--line);padding:24px 0}.trust-inner{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}.trust-label{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;color:#8792a5}.trust-item{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:750;color:#526078}.trust-item span{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#edf2ff;color:var(--blue)}
+    section{padding:88px 0}.section-head{max-width:650px;margin-bottom:38px}.kicker{color:var(--blue);font-size:12px;font-weight:850;text-transform:uppercase;letter-spacing:.14em}.section-head h2{font-size:clamp(30px,4vw,45px);line-height:1.12;letter-spacing:-.045em;margin:13px 0}.section-head p{color:var(--muted);font-size:16px;margin:0}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:#fff;transition:transform .22s,box-shadow .22s,border-color .22s}.card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:#c9d6fa}.card-icon{width:48px;height:48px;border-radius:15px;background:#edf2ff;color:var(--blue);display:grid;place-items:center;font-size:22px;margin-bottom:23px}.card h3{font-size:19px;letter-spacing:-.025em;margin:0 0 9px}.card p{font-size:14px;color:var(--muted);margin:0 0 18px}.text-link{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-size:13px;font-weight:800}.text-link:hover{gap:12px}
+    .feature{background:var(--paper)}.feature-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}.feature-panel{border-radius:26px;background:var(--navy);padding:34px;color:#fff;min-height:350px;position:relative;overflow:hidden}.feature-panel:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;border:1px solid rgba(255,255,255,.13);right:-70px;bottom:-95px;box-shadow:0 0 0 30px rgba(255,255,255,.025),0 0 0 60px rgba(255,255,255,.02)}.feature-panel .mini-label{color:#a9c1ff;font-size:11px;font-weight:850;letter-spacing:.15em;text-transform:uppercase}.feature-panel h3{font-size:32px;line-height:1.12;letter-spacing:-.04em;max-width:300px;margin:18px 0}.feature-panel p{font-size:14px;color:#c2ccdc;max-width:300px}.feature-tag{display:inline-block;margin-top:15px;padding:8px 12px;border-radius:9px;background:rgba(255,255,255,.1);font-size:12px;font-weight:750}.feature-copy h2{font-size:clamp(30px,4vw,43px);line-height:1.12;letter-spacing:-.045em;margin:13px 0 17px}.feature-copy>p{color:var(--muted);font-size:15px}.check-list{list-style:none;padding:0;margin:25px 0;display:grid;gap:15px}.check-list li{display:flex;gap:12px;font-size:14px;font-weight:650}.check{flex:0 0 23px;height:23px;border-radius:50%;background:#e7efff;color:var(--blue);display:grid;place-items:center;font-size:13px}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:step}.step{padding-top:22px;border-top:2px solid var(--line);counter-increment:step}.step:before{content:"0" counter(step);display:block;font-size:12px;color:var(--blue);font-weight:900;letter-spacing:.1em;margin-bottom:17px}.step h3{margin:0 0 8px;font-size:18px}.step p{margin:0;color:var(--muted);font-size:14px}
+    .cta-band{padding:0 0 88px}.cta-box{background:linear-gradient(120deg,#2457d6,#183d9e);border-radius:26px;padding:45px 48px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:28px;position:relative;overflow:hidden}.cta-box:after{content:"";position:absolute;width:270px;height:270px;border:1px solid rgba(255,255,255,.14);border-radius:50%;right:20%;top:-200px;box-shadow:0 0 0 35px rgba(255,255,255,.035)}.cta-copy{position:relative;z-index:1}.cta-copy h2{font-size:clamp(27px,3vw,38px);letter-spacing:-.04em;line-height:1.12;margin:0 0 10px}.cta-copy p{margin:0;color:#d5e0ff;font-size:14px}.cta-box .btn{position:relative;z-index:1;white-space:nowrap;flex-shrink:0}
+    footer{background:#0b1426;color:#fff;padding:48px 0 24px}.footer-top{display:flex;justify-content:space-between;gap:35px;flex-wrap:wrap;padding-bottom:35px}.footer-brand p{color:#a6b2c8;font-size:13px;max-width:300px}.footer-links{display:flex;gap:50px;flex-wrap:wrap}.footer-links div{display:grid;align-content:start;gap:10px}.footer-links strong{font-size:12px;color:#fff;margin-bottom:5px}.footer-links a{font-size:13px;color:#a6b2c8}.footer-links a:hover{color:#fff}.footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:20px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:#8290a9;font-size:11px}
+    @media(max-width:850px){.hero-grid,.feature-grid{grid-template-columns:1fr;gap:35px}.hero{padding:72px 0}.hero-visual{min-height:300px}.orbit{width:300px}.cards{grid-template-columns:1fr 1fr}.feature-grid{gap:28px}.feature-panel{min-height:280px}.nav-links{gap:16px}.trust-inner{justify-content:center}.trust-label{width:100%;text-align:center}}
+    @media(max-width:620px){.container{width:min(100% - 32px,1140px)}nav{height:68px}.nav-cta{display:none}.menu-btn{display:block}.nav-links{display:none;position:absolute;top:68px;left:0;right:0;padding:18px 24px 24px;background:#fff;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0}.nav-links.open{display:flex}.nav-links a{padding:12px 0}.hero{padding:58px 0 50px}.hero h1{font-size:46px}.hero p{font-size:15px}.hero-visual{min-height:270px}.orbit{width:260px}.orbit-core{width:100px;height:100px;border-radius:25px}.float-card{padding:10px 12px}.fc-one{left:-5px;top:12px}.fc-two{right:-5px;top:90px}.fc-three{left:0;bottom:15px}section{padding:65px 0}.cards,.steps{grid-template-columns:1fr}.card{padding:24px}.feature-panel{padding:27px}.cta-band{padding-bottom:65px}.cta-box{padding:30px 25px;align-items:flex-start;flex-direction:column}.footer-links{gap:28px}.footer-bottom{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="container" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="BYLA home"><span class="brand-mark">BY</span><span>BYLA</span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#about">About</a><a href="#programs">Programs</a><a href="#competition">Case Competition</a><a href="#get-involved">Get Involved</a>
+      </div>
+      <a class="nav-cta" href="#get-involved">Get involved <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Business starts with opportunity</div>
+          <h1>Think bigger.<br><em>Build what's next.</em></h1>
+          <p>BYLA helps high-school students explore business, develop practical skills, and turn ambitious ideas into real-world action.</p>
+          <div class="hero-actions"><a class="btn btn-light" href="#programs">Explore our programs <span aria-hidden="true">→</span></a><a class="btn btn-outline" href="#about">Discover BYLA</a></div>
+          <div class="hero-note">Learn by doing. Lead with purpose. Grow together.</div>
+        </div>
+        <div class="hero-visual" aria-label="Illustration representing business ideas and collaboration">
+          <div class="orbit"><div class="orbit-core">BYLA</div>
+            <div class="float-card fc-one"><strong>Ideas → Impact</strong><small>Turn concepts into action</small></div>
+            <div class="float-card fc-two"><strong>Think like a founder</strong><small>Build practical skills</small></div>
+            <div class="float-card fc-three"><strong>Learn together</strong><small>Lead with confidence</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="trust-strip"><div class="container trust-inner"><div class="trust-label">A place to start building</div><div class="trust-item"><span>↗</span> Practical business skills</div><div class="trust-item"><span>◎</span> Student-led ideas</div><div class="trust-item"><span>✦</span> Real-world challenges</div></div></div>
+    <section id="about">
+      <div class="container">
+        <div class="section-head"><div class="kicker">What we're about</div><h2>Business education should be accessible to everyone.</h2><p>Students have great ideas. BYLA exists to help them develop the knowledge, confidence, and connections to explore those ideas beyond the classroom.</p></div>
+        <div class="cards">
+          <article class="card"><div class="card-icon">⌁</div><h3>Learn by doing</h3><p>Explore business concepts through approachable resources, practical activities, and real-world examples.</p><a class="text-link" href="#programs">Explore learning <span>→</span></a></article>
+          <article class="card"><div class="card-icon">◇</div><h3>Challenge yourself</h3><p>Build critical thinking and teamwork by working through business problems and case challenges.</p><a class="text-link" href="#competition">Discover competition <span>→</span></a></article>
+          <article class="card"><div class="card-icon">↗</div><h3>Make ideas happen</h3><p>Develop an entrepreneurial mindset, test your ideas, and learn how to turn plans into action.</p><a class="text-link" href="#get-involved">Get involved <span>→</span></a></article>
+        </div>
+      </div>
+    </section>
+    <section class="feature" id="programs">
+      <div class="container feature-grid">
+        <div class="feature-panel"><div class="mini-label">Your next step starts here</div><h3>From first idea to confident action.</h3><p>Discover opportunities to learn, collaborate, and put business knowledge into practice.</p><span class="feature-tag">Curiosity is your starting point</span></div>
+        <div class="feature-copy"><div class="kicker">Explore BYLA</div><h2>More than learning business terms.</h2><p>We want students to understand how business works in the real world—and feel ready to participate in it.</p>
+          <ul class="check-list"><li><span class="check">✓</span><span><strong>Business learning:</strong> build a foundation in marketing, finance, strategy, and entrepreneurship.</span></li><li><span class="check">✓</span><span><strong>Case challenges:</strong> practise analyzing problems and presenting thoughtful solutions.</span></li><li><span class="check">✓</span><span><strong>Entrepreneurship:</strong> explore ideas, test assumptions, and think creatively.</span></li><li><span class="check">✓</span><span><strong>Community:</strong> learn with other students who are curious about business.</span></li></ul>
+          <a class="btn" href="#competition">Explore the case competition <span>→</span></a>
+        </div>
+      </div>
+    </section>
+    <section id="competition">
+      <div class="container">
+        <div class="section-head"><div class="kicker">Think. Analyze. Present.</div><h2>Meet the challenge of a business case.</h2><p>The BYLA Case Competition is designed to give student teams an opportunity to apply business thinking to a realistic challenge and communicate their recommendations.</p></div>
+        <div class="steps">
+          <article class="step"><h3>Understand the problem</h3><p>Review the case, identify the central challenge, and determine what matters most.</p></article>
+          <article class="step"><h3>Build your strategy</h3><p>Collaborate with your teammates to develop a clear, evidence-informed recommendation.</p></article>
+          <article class="step"><h3>Present your solution</h3><p>Organize your thinking and communicate your proposed strategy with confidence.</p></article>
+        </div>
+        <p style="margin-top:30px;color:var(--muted);font-size:13px">Competition dates, eligibility, rules, and registration details will be published here when confirmed.</p>
+      </div>
+    </section>
+    <section class="cta-band" id="get-involved">
+      <div class="container"><div class="cta-box"><div class="cta-copy"><h2>Ready to build your business skills?</h2><p>Follow BYLA's development and be part of a student community exploring what's possible.</p></div><a class="btn btn-light" href="https://github.com/nick2146/byla-website" target="_blank" rel="noopener noreferrer">Connect with BYLA <span>↗</span></a></div></div>
+    </section>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand"><a class="brand" href="#home"><span class="brand-mark">BY</span><span>BYLA</span></a><p>Business Youth Leaders Association<br>Making real-world business more accessible to students.</p></div>
+        <div class="footer-links"><div><strong>Explore</strong><a href="#about">About BYLA</a><a href="#programs">Programs</a><a href="#competition">Case Competition</a></div><div><strong>Connect</strong><a href="#get-involved">Get involved</a><a href="https://github.com/nick2146/byla-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div>
+      </div>
+      <div class="footer-bottom"><span>© <span id="year"></span> BYLA. All rights reserved.</span><span>Built to help student ideas move forward.</span></div>
+    </div>
+  </footer>
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+      menuBtn.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+      menuBtn.textContent = isOpen ? '×' : '☰';
+    });
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.setAttribute('aria-label', 'Open navigation');
+      menuBtn.textContent = '☰';
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
