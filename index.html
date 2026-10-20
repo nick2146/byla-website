@@ -147,6 +147,70 @@ a:focus-visible,button:focus-visible{outline:3px solid #58aaff;outline-offset:4p
 @media(max-width:650px){.hero{background-attachment:scroll}.hero:after{height:70px}.hero .eyebrow{font-size:9px;letter-spacing:.1em}.quickfacts{box-shadow:none}.fact:hover{background:transparent}.team-card{padding:15px 11px}.cta-box:before{right:-100px}.reveal{transform:translateY(12px)}}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.orbit-core{animation:none}.hero-actions .btn:after,.cta-box .btn:after{display:none}}
 
+
+/* Premium visual upgrade — layered light, richer cards, and motion */
+:root{--electric:#1687ff;--ice:#b9dcff;--glass:rgba(255,255,255,.075)}
+html{scroll-behavior:smooth}
+body{background:#fff}
+.nav-wrap{box-shadow:0 8px 30px #020a1714}
+.nav-wrap nav{position:relative}
+.nav-wrap nav:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,#55aaff70,transparent);pointer-events:none}
+.brand-mark{transition:transform .35s ease,box-shadow .35s ease}
+.brand:hover .brand-mark{transform:rotate(-7deg) scale(1.06);box-shadow:0 0 0 5px #1687ff22,0 0 26px #1687ff44}
+.hero{isolation:isolate}
+.hero:before{z-index:-1}
+.hero:after{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;opacity:.24;background-image:radial-gradient(#b7d7ff 0.7px,transparent .7px);background-size:25px 25px;mask-image:linear-gradient(90deg,#000,transparent 85%)}
+.hero h1{max-width:680px;text-wrap:balance}
+.hero h1 em{background:linear-gradient(100deg,#1687ff 0%,#7ac7ff 48%,#d4edff 100%);background-clip:text;-webkit-background-clip:text;color:transparent}
+.hero .eyebrow{padding:9px 13px;border:1px solid #ffffff38;border-radius:999px;background:#ffffff0d;backdrop-filter:blur(10px)}
+.hero-art{filter:drop-shadow(0 20px 50px #001b4055)}
+.orbit{box-shadow:inset 0 0 70px #1687ff12}
+.orbit-core{animation:byla-core-glow 4s ease-in-out infinite}
+@keyframes byla-core-glow{0%,100%{box-shadow:0 0 0 9px #ffffff0a,0 20px 70px #007bff45}50%{box-shadow:0 0 0 13px #ffffff0c,0 20px 85px #007bff80}}
+.float-card{transition:transform .3s ease,border-color .3s ease}
+.float-card:hover{transform:translateY(-6px) scale(1.03);border-color:#72baff}
+.quickfacts{box-shadow:0 18px 45px #063b7718}
+.fact{transition:background .25s ease,transform .25s ease}
+.fact:hover{background:#ffffff0c;transform:translateY(-2px)}
+section:not(.hero){position:relative}
+.section-head h2,.feature-copy h2{max-width:760px;text-wrap:balance}
+.kicker{display:inline-flex;align-items:center;gap:10px}
+.kicker:before{content:"";display:inline-block;width:22px;height:2px;background:var(--electric);border-radius:2px}
+.card,.track,.prize,.sponsor{position:relative;overflow:hidden}
+.card:before,.track:before,.prize:before,.sponsor:before{content:"";position:absolute;inset:0 auto auto 0;width:100%;height:3px;background:linear-gradient(90deg,#087cf0,#6bc5ff);transform:scaleX(0);transform-origin:left;transition:transform .35s ease}
+.card:hover:before,.track:hover:before,.prize:hover:before,.sponsor:hover:before{transform:scaleX(1)}
+.card{box-shadow:0 5px 20px #06152b05}
+.card-icon{transition:transform .3s ease,background .3s ease,color .3s ease}
+.card:hover .card-icon{transform:translateY(-3px) rotate(-5deg);background:#dceaff;color:#005ec7}
+.track:hover{background:linear-gradient(145deg,#fff,#f4f8ff)}
+.timeline-item{transition:padding .25s ease}
+.timeline-item:hover{padding-left:8px}
+.time{white-space:nowrap}
+.rubric-row{background:linear-gradient(120deg,#fff,#fbfdff)}
+.rubric-row strong{padding:5px 9px;border-radius:8px;background:#edf4ff}
+.rulebook{box-shadow:0 25px 70px #06152b1c}
+.module{transition:background .25s ease,border-color .25s ease,transform .25s ease}
+.module:hover{background:#ffffff13;border-color:#6eb8ff;transform:translateY(-2px)}
+.prize:first-child{box-shadow:0 12px 35px #2457d610}
+.prize:first-child strong{color:#075fd1}
+.team-card{position:relative}
+.team-card:after{content:"";position:absolute;top:-2px;left:0;width:32px;height:3px;background:#1687ff;transition:width .3s ease}
+.team-card:hover:after{width:100%}
+.sponsor{background:linear-gradient(150deg,#fff,#fbfdff)}
+.contact-panel{border:1px solid #e4ebf6;box-shadow:0 15px 50px #06152b08}
+.contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{outline:3px solid #1687ff20;border-color:#1687ff}
+.btn{box-shadow:0 6px 18px #087cf01c}
+.btn:hover{box-shadow:0 10px 26px #087cf03d}
+.btn-light:hover{box-shadow:0 10px 28px #ffffff20}
+.cta-box{position:relative;overflow:hidden;isolation:isolate;box-shadow:0 24px 65px #164ba52b}
+.cta-box:before{content:"";position:absolute;z-index:-1;width:360px;height:360px;border:1px solid #ffffff2c;border-radius:50%;right:12%;top:-240px;box-shadow:0 0 0 35px #ffffff08,0 0 0 70px #ffffff06;pointer-events:none}
+.cta-box h2{max-width:620px}
+footer{position:relative;overflow:hidden}
+footer:before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#1687ff9c,transparent)}
+.footer-brand .brand-mark{border-color:#ffffff80}
+@media(max-width:650px){.hero:after{opacity:.14}.hero-art{filter:none}.float-card{animation-duration:6s}.section-head h2{letter-spacing:-.045em}.card:hover,.track:hover,.prize:hover,.sponsor:hover{transform:translateY(-2px)}}
+@media(prefers-reduced-motion:reduce){.orbit-core{animation:none!important}.brand-mark,.float-card,.fact,.card-icon,.timeline-item,.module,.team-card:after{transition:none!important}}
+
 </style>
 </head>
 <body>
