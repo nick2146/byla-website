@@ -16,6 +16,46 @@ section{padding:78px 0}.section-head{max-width:720px;margin-bottom:32px}.kicker{
 @media(max-width:900px){.nav-links{gap:11px;font-size:11px}.hero-grid,.feature-grid,.rulebook,.contact-panel{grid-template-columns:1fr}.hero-art{min-height:300px}.team-grid{grid-template-columns:repeat(3,1fr)}.metrics{max-width:650px}.rulebook{gap:20px}}
 @media(max-width:650px){.container{width:calc(100% - 30px)}nav{height:66px}.menu-btn{display:block}.nav-links{display:none;position:absolute;top:66px;left:0;right:0;background:white;padding:12px 22px 20px;flex-direction:column;align-items:stretch;border-bottom:1px solid var(--line)}.nav-links.open{display:flex}.nav-links a{padding:10px 0;font-size:13px}.nav-cta{display:none}.hero{padding:53px 0 43px}.hero h1{font-size:45px}.hero p{font-size:14px}.hero-art{min-height:265px}.orbit{width:250px}.orbit-core{width:95px;height:95px}.float-card{padding:9px 10px}.fc1{left:-7px}.fc2{right:-5px}.fc3{left:-5px}.metrics{grid-template-columns:repeat(2,1fr);gap:18px}.quickfacts .container{grid-template-columns:repeat(2,1fr)}.fact{padding:14px;border-bottom:1px solid var(--line)}.fact:nth-child(2){border-right:0}.fact:nth-child(3){padding-left:0}.fact:nth-child(3),.fact:nth-child(4){border-bottom:0}.fact strong{font-size:16px}section{padding:58px 0}.cards,.track-grid,.timeline,.rubric-grid,.prizes,.partner-grid{grid-template-columns:1fr}.timeline-item{grid-template-columns:90px 1fr}.date-banner{align-items:flex-start;flex-direction:column}.judge-grid{grid-template-columns:1fr}.rulebook{padding:23px}.module-list{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(2,1fr)}.contact-panel{padding:22px}.cta-box{padding:28px 23px;align-items:flex-start;flex-direction:column}.footer-top{flex-direction:column}.footer-links{gap:30px}.footer-bottom{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* Modern cinematic BYLA redesign */
+:root{--navy:#06152b;--blue:#087cf0;--blue2:#268bff}
+.nav-wrap{background:#06152be8;border-bottom:1px solid #ffffff17;color:#fff}
+nav{height:88px}
+.brand{gap:12px;color:#fff}
+.brand-mark{width:60px;height:60px;border-radius:50%;background:transparent;border:1px solid #ffffffb0;color:#fff;font-size:19px;letter-spacing:.08em;position:relative;box-shadow:inset 0 0 0 4px #ffffff08}
+.brand-mark:before{content:"";position:absolute;top:13px;left:15px;width:26px;height:20px;background:linear-gradient(140deg,transparent 35%,#f4f8ff 36% 47%,transparent 48%),linear-gradient(40deg,transparent 37%,#8bbcff 38% 51%,transparent 52%);clip-path:polygon(0 100%,32% 38%,47% 60%,70% 0,100% 100%);opacity:.95}
+.brand-name{display:none}
+.nav-links{gap:23px;color:#e1e9f8;text-transform:uppercase;letter-spacing:.08em;font-size:11px}
+.nav-links a:hover{color:#55a5ff}
+.nav-cta{border-radius:999px;background:#087cf0;padding:13px 22px}
+.hero{padding:75px 0 66px;min-height:590px;background:#06152b url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2200&q=85') center 42%/cover no-repeat}
+.hero:before{content:"";position:absolute;inset:0;width:auto;height:auto;border-radius:0;background:linear-gradient(90deg,rgba(3,13,29,.97) 0%,rgba(3,13,29,.91) 29%,rgba(3,13,29,.58) 52%,rgba(3,13,29,.16) 100%),linear-gradient(0deg,rgba(3,13,29,.65),transparent 55%)}
+.hero-grid{grid-template-columns:1.05fr .95fr;gap:35px;min-height:440px}
+.hero h1{font-size:clamp(46px,5.1vw,70px);letter-spacing:-.055em;max-width:650px}
+.hero h1 em{color:#1687ff}
+.hero p{color:#f0f4fb;max-width:560px}
+.eyebrow{color:#e1eaf9;font-size:12px;letter-spacing:.16em}
+.hero-actions .btn{border-radius:999px;padding:15px 24px;text-transform:uppercase;letter-spacing:.05em;font-size:11px}
+.hero-actions .btn-light{background:#087cf0;color:white;border-color:#087cf0}
+.hero-actions .btn-outline{border-color:#ffffffb8;background:#06152b42}
+.hero-note{color:#d0d9e9}
+.metrics{display:none}
+.hero-art{min-height:380px}
+.orbit{width:min(100%,365px);border-color:#ffffff25;background:radial-gradient(circle,#1d68bd55,transparent 70%)}
+.orbit-core{background:linear-gradient(145deg,#147ff4,#073b8b);border-radius:50%;width:132px;height:132px;border:1px solid #ffffff8c;box-shadow:0 0 0 9px #ffffff0a,0 20px 70px #007bff6b}
+.float-card{background:#06152bd9;color:#fff;border:1px solid #ffffff3b;backdrop-filter:blur(12px);box-shadow:0 15px 35px #0004}
+.float-card small{color:#bdcbe0}
+.quickfacts{background:#063b77;color:#fff;border:0;position:relative;overflow:hidden}
+.quickfacts:before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,#05376f,#0756a6 50%,#04366d);opacity:.9}
+.quickfacts .container{position:relative;grid-template-columns:repeat(4,1fr)}
+.fact{padding:24px 22px;border-right:1px solid #ffffff3b}
+.fact:first-child{padding-left:0}
+.fact strong{font-size:16px;color:#fff}
+.fact span{color:#d4e5fb}
+section{scroll-margin-top:90px}
+@media(max-width:900px){.nav-links{gap:12px}.hero{background-position:58% center}.hero-grid{grid-template-columns:1fr .75fr}.hero-art{min-height:300px}}
+@media(max-width:650px){nav{height:70px}.brand-mark{width:50px;height:50px}.nav-links{background:#07172e;border-bottom-color:#ffffff20}.nav-links a{color:#fff}.hero{padding:48px 0 40px;background-position:58% center}.hero:before{background:linear-gradient(90deg,rgba(3,13,29,.95),rgba(3,13,29,.78)),linear-gradient(0deg,rgba(3,13,29,.65),transparent)}.hero-grid{grid-template-columns:1fr;gap:5px}.hero h1{font-size:clamp(42px,12vw,56px)}.hero-art{min-height:220px;margin-top:12px}.orbit{width:220px}.orbit-core{width:90px;height:90px}.quickfacts .container{grid-template-columns:repeat(2,1fr)}.fact{padding:15px;border-color:#ffffff35}.fact:nth-child(3){padding-left:15px}.fact strong{font-size:14px}}
+
 </style>
 </head>
 <body>
@@ -28,12 +68,11 @@ section{padding:78px 0}.section-head{max-width:720px;margin-bottom:32px}.kicker{
 <main>
 <section class="hero" id="home"><div class="container hero-grid">
 <div><div class="eyebrow"><span class="live-dot"></span> Season 1 Case Competition · Now Open</div>
-<h1>The Future of Business Isn't <em>Hypothetical.</em></h1>
-<p>The Business Youth Leadership Association connects Grades 9–12 students with real-world business challenges. Join a 3-hour live innovation sprint with real cases, partner businesses, mentor support and seed-grant prizes.</p>
-<div class="hero-actions"><a class="btn btn-light" href="https://forms.gle/ZvUXBTaGG1E1SWM89" target="_blank" rel="noopener noreferrer">Join Next Competition ↗</a><a class="btn btn-outline" href="#partners">Partner As A Business</a></div>
-<div class="hero-note">Student-led · Open enrollment · $5 to compete</div>
-<div class="metrics"><div class="metric"><strong>Grades 9–12</strong><span>Open to students aged 13–19</span></div><div class="metric"><strong>2–4</strong><span>Students per team</span></div><div class="metric"><strong>3-Hour</strong><span>Live innovation sprint</span></div><div class="metric"><strong>$5</strong><span>Flat registration per person</span></div></div></div>
-<div class="hero-art" aria-label="BYLA logo and competition highlights"><div class="orbit"><div class="orbit-core">BYLA</div><div class="float-card fc1"><strong>Ideas → Impact</strong><small>Real cases. Real solutions.</small></div><div class="float-card fc2"><strong>3-hour sprint</strong><small>Think. Build. Present.</small></div><div class="float-card fc3"><strong>Student-owned</strong><small>Solutions with purpose</small></div></div></div>
+<h1>The Future of Business Isn’t <em>Hypothetical.</em></h1>
+<p>The Business Youth Leadership Association connects Grades 9–12 students with real-world business challenges. Join a 3-hour live innovation sprint with real cases, partner businesses, mentor support and prizes.</p>
+<div class="hero-actions"><a class="btn btn-light" href="https://forms.gle/ZvUXBTaGG1E1SWM89" target="_blank" rel="noopener noreferrer">Join Next Competition →</a><a class="btn btn-outline" href="#partners">Partner As A Business ↗</a></div>
+<div class="hero-note">Student-led · Open enrollment · $5 to compete</div></div>
+<div class="hero-art" aria-label="Business youth leadership and competition"><div class="orbit"><div class="orbit-core">BYLA</div><div class="float-card fc1"><strong>Ideas → Impact</strong><small>Real cases. Real solutions.</small></div><div class="float-card fc2"><strong>3-hour sprint</strong><small>Think. Build. Present.</small></div><div class="float-card fc3"><strong>Student-owned</strong><small>Solutions with purpose</small></div></div></div>
 </div></section>
 <div class="quickfacts"><div class="container"><div class="fact"><strong>Nov 20, 2026</strong><span>Competition day · 12–3 PM</span></div><div class="fact"><strong>Nov 13, 2026</strong><span>Registration closes</span></div><div class="fact"><strong>5-slide deck</strong><span>One clear team recommendation</span></div><div class="fact"><strong>$900 total</strong><span>Placement grant pool, split by team</span></div></div></div>
 <section id="about"><div class="container"><div class="section-head"><div class="kicker">About BYLA</div><h2>Not just another competition. A launchpad.</h2><p>BYLA connects Grades 9–12 students to real-world challenges in strategy, market research, financial modeling, digital strategy, risk, entrepreneurship, consulting and executive presentation. It empowers youth, supports local business and expands access to business education.</p></div>
