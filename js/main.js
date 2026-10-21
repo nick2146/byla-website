@@ -12,7 +12,7 @@
  // Live countdown to the published Season 1 competition start.
  const countdown=document.getElementById('competition-countdown');
  if(countdown){
-   const end=new Date('2026-11-20T12:00:00-05:00').getTime();
+   const end=new Date('2026-11-21T12:00:00-05:00').getTime();
    const updateCountdown=()=>{let left=Math.max(0,end-Date.now());const days=Math.floor(left/86400000);left%=86400000;const hours=Math.floor(left/3600000);left%=3600000;const minutes=Math.floor(left/60000);
      const values={'countdown-days':String(days).padStart(2,'0'),'countdown-hours':String(hours).padStart(2,'0'),'countdown-minutes':String(minutes).padStart(2,'0')};
      Object.entries(values).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.textContent=value});
