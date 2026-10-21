@@ -15,3 +15,34 @@ section{padding:105px 0}.section-top{display:flex;align-items:flex-end;justify-c
 @media(max-width:980px){.nav{height:78px}.nav-links{gap:14px}.nav-links a{font-size:9px}.nav .nav-cta{display:none}.hero{min-height:600px}.editorial-grid{gap:38px}.feature-card{padding:23px}.timeline{grid-template-columns:repeat(2,1fr)}.form-panel{gap:28px}}
 @media(max-width:720px){.container{width:calc(100% - 36px)}.nav{height:72px}.brand-mark{height:46px;width:46px}.brand-copy strong{font-size:11px}.brand-copy small{font-size:8px}.menu-toggle{display:grid;place-items:center}.nav-links{display:none;position:fixed;top:76px;left:0;right:0;bottom:0;overflow:auto;background:#06152b;padding:25px 28px 40px;align-items:stretch;gap:0;flex-direction:column}.nav-links.is-open{display:flex}.nav-links a{font-size:14px;padding:17px 0;border-bottom:1px solid #ffffff20}.hero{min-height:620px}.hero:before{background:linear-gradient(90deg,#030d1df2,#030d1dbb),linear-gradient(0deg,#030d1d99,transparent)}.hero-content{padding:78px 0}.hero h1{font-size:clamp(50px,13vw,76px)}.hero-copy{font-size:14px}.hero-side-note{display:none}.stats{grid-template-columns:repeat(2,1fr)}.stat{padding:20px 15px;border-bottom:1px solid #ffffff35}.stat:nth-child(2){border-right:0}.stat:nth-child(3){padding-left:0;border-bottom:0}.stat:nth-child(4){border-bottom:0}.section-top{display:block;margin-bottom:30px}.section-intro{margin-top:18px}.section-title{font-size:clamp(36px,10vw,53px)}section{padding:70px 0}.editorial-grid,.two-col,.form-panel{grid-template-columns:1fr;gap:30px}.editorial-image,.editorial-image img{min-height:340px}.feature-grid{grid-template-columns:1fr}.feature-card{min-height:auto;padding:25px}.feature-card h3{margin-top:19px}.timeline,.case-tracks,.prizes,.partner-tiers,.rubric{grid-template-columns:1fr}.timeline{gap:0}.timeline-item{padding:19px 0}.page-hero{padding:75px 0 65px;min-height:360px}.page-hero h1{font-size:clamp(48px,12vw,68px)}.page-hero p{font-size:13px}.cta-panel{display:block}.cta-panel .btn{margin-top:23px}.footer-top{display:grid;grid-template-columns:1fr;gap:32px}.footer-columns{gap:45px}.footer-bottom{display:grid}.form-panel{padding:26px 20px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+/* Learning Hub and newsletter */
+.learning-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.learning-card{border:1px solid var(--line);padding:clamp(22px,3vw,34px);background:#fff}
+.learning-icon{display:grid;place-items:center;width:44px;height:44px;background:var(--pale);color:var(--blue);font:800 14px Manrope,sans-serif;border-radius:12px;margin-bottom:24px}
+.learning-meta{font-size:10px;letter-spacing:.12em;font-weight:800;color:var(--blue);text-transform:uppercase}
+.learning-card h3{font:800 25px/1.15 Manrope,sans-serif;letter-spacing:-.04em;margin:12px 0}
+.learning-card p,.learning-card li{font-size:13px;color:var(--muted);line-height:1.8}
+.learning-card ul{padding-left:18px;margin:15px 0 22px}
+.learning-article{max-width:900px;margin:0 auto}
+.learning-article .section-title{margin-bottom:20px}
+.concept-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:28px 0}
+.concept{border:1px solid var(--line);padding:20px;background:#fff}
+.concept strong{font:800 15px Manrope,sans-serif}
+.concept p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:0}
+.example-box{background:#edf5ff;border-left:3px solid var(--blue);padding:24px;margin:26px 0}
+.example-box p{font-size:13px;line-height:1.85}
+.case-steps{padding-left:25px}
+.case-steps li{padding:10px 0 10px 8px}
+.case-steps li strong,.case-steps li span{display:block}
+.case-steps li span{font-size:13px;color:var(--muted);line-height:1.8}
+.newsletter-panel{display:grid;grid-template-columns:1fr .85fr;gap:clamp(28px,5vw,65px);align-items:center;background:var(--paper);padding:clamp(25px,5vw,55px)}
+.newsletter-panel h2,.newsletter-signup h3{font:800 clamp(28px,4vw,42px)/1.12 Manrope,sans-serif;letter-spacing:-.05em;margin:10px 0 15px}
+.newsletter-panel p,.newsletter-list{font-size:13px;color:var(--muted);line-height:1.9}
+.newsletter-list{padding-left:20px}
+.newsletter-list li{margin:7px 0}
+.newsletter-signup{background:#fff;border:1px solid var(--line);padding:clamp(23px,3vw,34px)}
+.newsletter-signup h3{font-size:27px}
+.newsletter-signup p{font-size:12px;line-height:1.85}
+.newsletter-mark{font-size:10px;letter-spacing:.18em;color:var(--blue);font-weight:800}
+@media(max-width:720px){.learning-grid,.concept-grid,.newsletter-panel{grid-template-columns:1fr}}
