@@ -23,7 +23,7 @@ export default function Home() {
     setBusy(true);
     setNotice("");
     const supabase = createClient();
-    const result = mode === "signup" ? await supabase.auth.signUp({ email, password, options: { data: { username } } }) : await supabase.auth.signInWithPassword({ email, password });
+    const result = mode === "signup" ? await supabase.auth.signUp({ email, password, options: { data: { username }, emailRedirectTo: `${window.location.origin}/auth/callback` } }) : await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
     if (result.error) { setNotice(result.error.message); return; }
     if (mode === "signup" && !result.data.session) { setNotice("Check your email to confirm your account, then sign in."); return; }
