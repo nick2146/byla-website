@@ -13,6 +13,7 @@ const watchlist = [
 export default function Home() {
   const [mode, setMode] = useState<"signin" | "signup">("signup");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [notice, setNotice] = useState("Create an account to start your virtual portfolio.");
   const [busy, setBusy] = useState(false);
@@ -23,11 +24,11 @@ export default function Home() {
     setBusy(true);
     setNotice("");
     const supabase = createClient();
-    const result = mode === "signup" ? await supabase.auth.signUp({ email, password }) : await supabase.auth.signInWithPassword({ email, password });
+    const result = mode === "signup" ? await supabase.auth.signUp({ email, password, options: { data: { username } } }) : await supabase.auth.signInWithPassword({ email, password });
     setBusy(false);
     if (result.error) { setNotice(result.error.message); return; }
     if (mode === "signup" && !result.data.session) { setNotice("Check your email to confirm your account, then sign in."); return; }
-    if (result.data.user) { setUserEmail(result.data.user.email ?? email); setNotice("Signed in. Your virtual portfolio will be loaded from your account."); }
+    if (result.data.user) { window.location.href = "/dashboard"; }
   }
 
   return (
@@ -54,7 +55,7 @@ export default function Home() {
           <p className="card-subtitle">Your virtual portfolio starts at $100,000.</p>
           <div className="mode-switch"><button className={mode === "signup" ? "selected" : ""} onClick={() => setMode("signup")}>Create account</button><button className={mode === "signin" ? "selected" : ""} onClick={() => setMode("signin")}>Sign in</button></div>
           <form onSubmit={submitAuth}>
-            <label>Email address<input type="email" autoComplete="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" /></label>
+            {mode === "signup" && <label>Public username<input type="text" autoComplete="nickname" minLength={3} maxLength={24} pattern="[A-Za-z0-9_]+" required value={username} onChange={e => setUsername(e.target.value)} placeholder="MarketLearner24" /></label>}\n            <label>Email address<input type="email" autoComplete="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" /></label>
             <label>Password<input type="password" autoComplete={mode === "signup" ? "new-password" : "current-password"} minLength={8} required value={password} onChange={e => setPassword(e.target.value)} placeholder="At least 8 characters" /></label>
             <button className="button primary full" type="submit" disabled={busy}>{busy ? "Please wait…" : mode === "signup" ? "Create free account" : "Sign in"} <span>→</span></button>
           </form>
