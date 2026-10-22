@@ -11,7 +11,7 @@ export async function GET() {
     const {data:allowed,error:limitError}=await admin.rpc("consume_api_rate_limit",{p_user_id:user.id,p_action:"leaderboard",p_limit:5});
     if(limitError) throw new Error("RATE_LIMIT_SERVICE_UNAVAILABLE");
     if(!allowed) return NextResponse.json({error:"Leaderboard refresh limit reached. Please wait a minute."},{status:429});
-    const {data:portfolios,error}=await admin.from("portfolios").select("user_id,cash").limit(100);
+    const {data:portfolios,error}=await admin.from("portfolios").select("user_id,cash").limit(1000);
     if(error || !portfolios) throw new Error("QUERY_FAILED");
     if(!portfolios.length) return NextResponse.json({entries:[]},{headers:{"Cache-Control":"private, no-store"}});
     const ids=portfolios.map(p=>p.user_id);
@@ -21,7 +21,7 @@ export async function GET() {
     ]);
     if(pr.error || po.error) throw new Error("QUERY_FAILED");
     const positions=po.data??[];
-    const symbols=Array.from(new Set(positions.map(p=>p.symbol))).slice(0,20);
+    const symbolCounts=new Map<string,number>();\n    for (const pos of positions) symbolCounts.set(pos.symbol,(symbolCounts.get(pos.symbol)??0)+1);\n    const symbols=Array.from(symbolCounts.entries()).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([symbol])=>symbol);
     const quotePairs=await Promise.all(symbols.map(async s=>{try{return [s,await getMarketQuote(s)] as const;}catch{return [s,null] as const;}}));
     const quotes=new Map(quotePairs), names=new Map((pr.data??[]).map(p=>[p.id,p.username]));
     const entries=portfolios.map(p=>{
