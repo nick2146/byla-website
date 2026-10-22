@@ -8,6 +8,9 @@ export async function GET() {
   if (authError || !user) return NextResponse.json({error:"Please sign in to view the leaderboard."},{status:401});
   try {
     const admin=createAdminClient();
+    const {data:allowed,error:limitError}=await admin.rpc("consume_api_rate_limit",{p_user_id:user.id,p_action:"leaderboard",p_limit:5});
+    if(limitError) throw new Error("RATE_LIMIT_SERVICE_UNAVAILABLE");
+    if(!allowed) return NextResponse.json({error:"Leaderboard refresh limit reached. Please wait a minute."},{status:429});
     const {data:portfolios,error}=await admin.from("portfolios").select("user_id,cash").limit(100);
     if(error || !portfolios) throw new Error("QUERY_FAILED");
     if(!portfolios.length) return NextResponse.json({entries:[]},{headers:{"Cache-Control":"private, no-store"}});
@@ -18,7 +21,7 @@ export async function GET() {
     ]);
     if(pr.error || po.error) throw new Error("QUERY_FAILED");
     const positions=po.data??[];
-    const symbols=Array.from(new Set(positions.map(p=>p.symbol))).slice(0,80);
+    const symbols=Array.from(new Set(positions.map(p=>p.symbol))).slice(0,20);
     const quotePairs=await Promise.all(symbols.map(async s=>{try{return [s,await getMarketQuote(s)] as const;}catch{return [s,null] as const;}}));
     const quotes=new Map(quotePairs), names=new Map((pr.data??[]).map(p=>[p.id,p.username]));
     const entries=portfolios.map(p=>{
