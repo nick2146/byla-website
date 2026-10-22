@@ -32,6 +32,8 @@ test("database locks down direct trade writes and service-role function executio
   assert.match(sql, /for update/);
   assert.match(sql, /INSUFFICIENT_CASH/);
   assert.match(sql, /INSUFFICIENT_SHARES/);
+  assert.match(sql, /consume_api_rate_limit/);
+  assert.match(sql, /grant execute on function public\\.consume_api_rate_limit[\\s\\S]*to service_role/);
 });
 test("leaderboard requires a signed-in session and does not return auth IDs", async () => {
   const route = await read("../app/api/leaderboard/route.ts");
