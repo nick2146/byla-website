@@ -124,3 +124,16 @@ section{scroll-margin-top:88px}
 @media(max-width:720px){.hero{min-height:650px}.hero-content{padding:66px 0 60px}.hero h1{font-size:clamp(48px,12.8vw,74px)}.hero-countdown{padding:15px 14px;margin-top:24px}.countdown-units{gap:9px}.countdown-units strong{font-size:23px}.countdown-units .countdown-date{padding-left:10px}.countdown-units .countdown-date strong{font-size:17px}.countdown-units span{font-size:7px}.feature-card{border-radius:8px}.section-label{font-size:9px}}
 @media(max-width:380px){.countdown-units{grid-template-columns:repeat(3,minmax(40px,1fr)) 1.4fr;gap:6px}.countdown-units strong{font-size:20px}.countdown-units .countdown-date{padding-left:7px}.countdown-units .countdown-date strong{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.countdown-pulse{animation:none}.hero-image{animation:none}}
+
+
+/* Executive recruitment page */
+.roles-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.role-card{display:flex;flex-direction:column;align-items:flex-start;padding:clamp(23px,3vw,34px);background:#fff;border:1px solid var(--line);min-height:270px;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s}
+.role-card:hover{transform:translateY(-4px);border-color:#8bbcf4;box-shadow:0 18px 42px #0d4b8e0b}
+.role-card-top{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.role-number{font-family:Manrope,sans-serif;color:#8aa5c6;font-size:13px;font-weight:800;letter-spacing:.1em}
+.role-tag{font-size:9px;text-transform:uppercase;letter-spacing:.1em;font-weight:800;color:#0754a1;background:#edf5ff;padding:7px 10px;border-radius:99px}
+.role-card h2{font-family:Manrope,sans-serif;font-size:clamp(22px,2.6vw,30px);line-height:1.15;letter-spacing:-.05em;margin:24px 0 10px}
+.role-card p{font-size:13px;line-height:1.85;color:var(--muted);margin:0 0 22px}
+.role-apply{margin-top:auto}
+@media(max-width:760px){.roles-grid{grid-template-columns:1fr}.role-card{min-height:0}.role-card-top{align-items:flex-start}.role-tag{max-width:65%;text-align:right}}
