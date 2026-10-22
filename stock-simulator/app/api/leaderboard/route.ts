@@ -21,7 +21,9 @@ export async function GET() {
     ]);
     if(pr.error || po.error) throw new Error("QUERY_FAILED");
     const positions=po.data??[];
-    const symbolCounts=new Map<string,number>();\n    for (const pos of positions) symbolCounts.set(pos.symbol,(symbolCounts.get(pos.symbol)??0)+1);\n    const symbols=Array.from(symbolCounts.entries()).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([symbol])=>symbol);
+    const symbolCounts=new Map<string,number>();
+    for (const pos of positions) symbolCounts.set(pos.symbol,(symbolCounts.get(pos.symbol)??0)+1);
+    const symbols=Array.from(symbolCounts.entries()).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([symbol])=>symbol);
     const quotePairs=await Promise.all(symbols.map(async s=>{try{return [s,await getMarketQuote(s)] as const;}catch{return [s,null] as const;}}));
     const quotes=new Map(quotePairs), names=new Map((pr.data??[]).map(p=>[p.id,p.username]));
     const entries=portfolios.map(p=>{
