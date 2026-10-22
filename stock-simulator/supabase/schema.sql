@@ -96,10 +96,13 @@ create trigger on_auth_user_created_paper_portfolio
   after insert on auth.users
   for each row execute procedure public.bootstrap_paper_portfolio();
 
--- Production trade execution should be implemented as a single atomic server-only
--- database function, with EXECUTE revoked from anon/authenticated and granted only to
--- service_role. The server must verify the user's Supabase session and retrieve the quote
--- from the provider itself before invoking it. Never accept a client-supplied price.
+-- Trigger invocation does not require API callers to have EXECUTE on this function.
+revoke all on function public.bootstrap_paper_portfolio() from public;
+revoke all on function public.bootstrap_paper_portfolio() from anon;
+revoke all on function public.bootstrap_paper_portfolio() from authenticated;
+
+-- Trades are executed atomically by the server-only function below. The server verifies
+-- the session and retrieves the quote from the provider; never accept a client-supplied price.
 
 
 -- Atomic paper-trade execution. Only the trusted server can execute this function.
