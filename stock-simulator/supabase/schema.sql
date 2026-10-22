@@ -67,9 +67,26 @@ language plpgsql
 security definer
 set search_path = ''
 as $$
+declare
+  v_username text;
+  v_base text;
+  v_suffix text;
 begin
   insert into public.portfolios(user_id, cash) values (new.id, 100000.00)
   on conflict (user_id) do nothing;
+
+  -- Username comes from signup metadata, is sanitized, and is made unique before insertion.
+  v_base := lower(regexp_replace(coalesce(new.raw_user_meta_data ->> 'username', ''), '[^a-zA-Z0-9_]', '', 'g'));
+  v_base := substring(v_base from 1 for 18);
+  if char_length(v_base) < 3 then v_base := 'student'; end if;
+  v_username := v_base;
+  v_suffix := substring(replace(new.id::text, '-', '') from 1 for 5);
+  while exists (select 1 from public.profiles where username = v_username) loop
+    v_username := substring(v_base from 1 for 18) || '_' || v_suffix;
+    v_suffix := substring(md5(v_suffix || new.id::text) from 1 for 5);
+  end loop;
+  insert into public.profiles(id, username) values (new.id, v_username)
+  on conflict (id) do nothing;
   return new;
 end;
 $$;
