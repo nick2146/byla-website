@@ -200,3 +200,50 @@ revoke all on function public.execute_paper_trade(uuid, text, text, numeric, num
 revoke all on function public.execute_paper_trade(uuid, text, text, numeric, numeric, timestamptz) from anon;
 revoke all on function public.execute_paper_trade(uuid, text, text, numeric, numeric, timestamptz) from authenticated;
 grant execute on function public.execute_paper_trade(uuid, text, text, numeric, numeric, timestamptz) to service_role;
+
+
+-- Per-user server API rate limits. The application service role is the only caller.
+create table if not exists public.api_rate_limits (
+  user_id uuid not null references auth.users(id) on delete cascade,
+  action text not null check (action in ('quote','trade','leaderboard')),
+  window_start timestamptz not null,
+  request_count integer not null check (request_count > 0),
+  primary key (user_id, action)
+);
+alter table public.api_rate_limits enable row level security;
+-- No client-facing policies: users cannot inspect or modify rate-limit counters.
+
+create or replace function public.consume_api_rate_limit(
+  p_user_id uuid,
+  p_action text,
+  p_limit integer
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  v_count integer;
+  v_window timestamptz := date_trunc('minute', now());
+begin
+  if p_user_id is null or p_action not in ('quote','trade','leaderboard')
+     or p_limit is null or p_limit < 1 or p_limit > 120 then
+    raise exception 'INVALID_RATE_LIMIT';
+  end if;
+  insert into public.api_rate_limits(user_id, action, window_start, request_count)
+    values (p_user_id, p_action, v_window, 1)
+  on conflict (user_id, action) do update
+    set request_count = case
+      when public.api_rate_limits.window_start = v_window then public.api_rate_limits.request_count + 1
+      else 1
+    end,
+    window_start = v_window
+  returning request_count into v_count;
+  return v_count <= p_limit;
+end;
+$$;
+revoke all on function public.consume_api_rate_limit(uuid, text, integer) from public;
+revoke all on function public.consume_api_rate_limit(uuid, text, integer) from anon;
+revoke all on function public.consume_api_rate_limit(uuid, text, integer) from authenticated;
+grant execute on function public.consume_api_rate_limit(uuid, text, integer) to service_role;
