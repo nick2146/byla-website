@@ -30,7 +30,7 @@ BYLA Markets is an educational paper-trading platform. It uses virtual USD only;
 4. Apply the schema and verify that the signup trigger creates exactly one portfolio with $100,000 virtual USD and a unique username.
 5. Confirm RLS is enabled and direct browser clients cannot insert/update/delete portfolios, positions, trades, or rate-limit counters.
 6. Verify that unauthenticated quote, portfolio, trade, and leaderboard requests return 401; invalid/stale quote and insufficient-cash/share trades are rejected.
-6. Run `npm test`, `npm run typecheck`, and `npm run build`. Inspect the GitHub Actions results and fix failures before deployment.
+7. Run `npm test`, `npm run typecheck`, and `npm run build`. Inspect the GitHub Actions results and fix failures before deployment.
 8. Test concurrent orders and rate-limit responses in a non-production Supabase project. Confirm your market-data plan permits the intended student-facing display and request volume.
 
 ## Security notes
