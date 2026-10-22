@@ -17,7 +17,6 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [notice, setNotice] = useState("Create an account to start your virtual portfolio.");
   const [busy, setBusy] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
 
   async function submitAuth(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -59,7 +58,7 @@ export default function Home() {
             <label>Password<input type="password" autoComplete={mode === "signup" ? "new-password" : "current-password"} minLength={8} required value={password} onChange={e => setPassword(e.target.value)} placeholder="At least 8 characters" /></label>
             <button className="button primary full" type="submit" disabled={busy}>{busy ? "Please wait…" : mode === "signup" ? "Create free account" : "Sign in"} <span>→</span></button>
           </form>
-          <p className="notice" role="status">{notice}</p>{userEmail && <p className="signed-in">Signed in as {userEmail}</p>}
+          <p className="notice" role="status">{notice}</p>
           <p className="legal">By continuing, you agree this is an educational simulation. No real trades are placed.</p>
         </aside>
       </section>
