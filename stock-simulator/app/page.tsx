@@ -4,10 +4,10 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 const watchlist = [
-  { symbol: "AAPL", name: "Apple", price: "Market quote required", change: "—" },
-  { symbol: "MSFT", name: "Microsoft", price: "Market quote required", change: "—" },
-  { symbol: "NVDA", name: "NVIDIA", price: "Market quote required", change: "—" },
-  { symbol: "TSLA", name: "Tesla", price: "Market quote required", change: "—" },
+  { symbol: "AAPL", name: "Apple", price: "View in simulator", change: "—" },
+  { symbol: "MSFT", name: "Microsoft", price: "View in simulator", change: "—" },
+  { symbol: "NVDA", name: "NVIDIA", price: "View in simulator", change: "—" },
+  { symbol: "TSLA", name: "Tesla", price: "View in simulator", change: "—" },
 ];
 
 export default function Home() {
@@ -66,13 +66,13 @@ export default function Home() {
 
       <section className="metrics" aria-label="Platform highlights">
         <div><strong>$100,000</strong><span>Starting virtual balance</span></div>
-        <div><strong>Real-world data</strong><span>Provider connection pending</span></div>
+        <div><strong>Real-world data</strong><span>Market data connection</span></div>
         <div><strong>Zero risk</strong><span>Virtual money only</span></div>
         <div><strong>All skill levels</strong><span>Learn at your own pace</span></div>
       </section>
 
       <section className="market-section" id="markets">
-        <div className="section-head"><div><span className="eyebrow">MARKET WATCH</span><h2>Explore the companies<br />shaping the world.</h2></div><span className="market-status"><i /> Live data activates after provider setup</span></div>
+        <div className="section-head"><div><span className="eyebrow">MARKET WATCH</span><h2>Explore the companies<br />shaping the world.</h2></div><span className="market-status"><i /> Quote availability depends on provider connection</span></div>
         <div className="stocks">{watchlist.map(stock => <article className="stock" key={stock.symbol}><div className="stock-symbol">{stock.symbol.slice(0, 1)}</div><div className="stock-main"><b>{stock.symbol}</b><span>{stock.name}</span></div><div className="stock-price"><b>{stock.price}</b><span>{stock.change}</span></div></article>)}</div>
         <p className="disclaimer">Prices are not displayed until a licensed market-data provider is configured. This preview does not show live quotes.</p>
       </section>
