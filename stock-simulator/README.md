@@ -15,7 +15,7 @@ BYLA Markets is an educational paper-trading platform. It uses virtual USD only;
 3. Copy `.env.example` to `.env.local` and fill in your values locally.
 4. Run the entire `supabase/schema.sql` in the Supabase SQL Editor before signing up test users.
 5. In Supabase Auth settings, set the site URL and allowed redirect URLs to your local development URL and the eventual Vercel production domain.
-6. Run `npm test`, `npm run typecheck`, `npm run build`, then `npm run dev`.
+7. Run `npm test`, `npm run typecheck`, `npm run build`, then `npm run dev`.
 
 ## Environment variables
 - `NEXT_PUBLIC_SUPABASE_URL`
@@ -24,13 +24,14 @@ BYLA Markets is an educational paper-trading platform. It uses virtual USD only;
 - `MARKET_DATA_API_KEY` — server-only; never commit or paste it into chat
 
 ## Vercel checklist (do not deploy until verified)
-1. Configure the four environment variables in Vercel Project Settings → Environment Variables. Use Preview values first; keep service-role and market-data keys private.
-2. Set Supabase Auth Site URL / redirect allowlist to the correct Preview or production URL.
-3. Apply the schema and verify that the signup trigger creates exactly one portfolio with $100,000 virtual USD and a unique username.
-4. Confirm RLS is enabled and direct browser clients cannot insert/update/delete portfolios, positions, trades, or rate-limit counters.
-5. Verify that unauthenticated quote, portfolio, trade, and leaderboard requests return 401; invalid/stale quote and insufficient-cash/share trades are rejected.
+1. Create a separate Vercel project from this repository and set its Root Directory to `stock-simulator`.
+2. Configure the four environment variables in Vercel Project Settings → Environment Variables. Use Preview values first; keep service-role and market-data keys private.
+3. Set Supabase Auth Site URL / redirect allowlist to the correct Preview or production URL.
+4. Apply the schema and verify that the signup trigger creates exactly one portfolio with $100,000 virtual USD and a unique username.
+5. Confirm RLS is enabled and direct browser clients cannot insert/update/delete portfolios, positions, trades, or rate-limit counters.
+6. Verify that unauthenticated quote, portfolio, trade, and leaderboard requests return 401; invalid/stale quote and insufficient-cash/share trades are rejected.
 6. Run `npm test`, `npm run typecheck`, and `npm run build`. Inspect the GitHub Actions results and fix failures before deployment.
-7. Test concurrent orders and rate-limit responses in a non-production Supabase project. Confirm your market-data plan permits the intended student-facing display and request volume.
+8. Test concurrent orders and rate-limit responses in a non-production Supabase project. Confirm your market-data plan permits the intended student-facing display and request volume.
 
 ## Security notes
 - Quote and trade routes require a verified Supabase session.
