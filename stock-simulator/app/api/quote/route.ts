@@ -10,6 +10,10 @@ export async function GET(request: Request) {
   const parsed = schema.safeParse(new URL(request.url).searchParams.get("symbol") ?? "AAPL");
   if (!parsed.success) return NextResponse.json({ error: "Invalid ticker symbol." }, { status: 400 });
   try {
+    const admin = (await import("@/lib/supabase/admin")).createAdminClient();
+    const { data: allowed, error: limitError } = await admin.rpc("consume_api_rate_limit", { p_user_id: user.id, p_action: "quote", p_limit: 60 });
+    if (limitError) throw new Error("RATE_LIMIT_SERVICE_UNAVAILABLE");
+    if (!allowed) return NextResponse.json({ error: "Quote request limit reached. Please wait a minute." }, { status: 429 });
     const quote = await getMarketQuote(parsed.data);
     const age = Date.now() - new Date(quote.asOf).getTime();
     if (age > 900000 || age < -60000) return NextResponse.json({ error: "The provider returned a stale quote." }, { status: 409 });
