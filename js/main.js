@@ -9,16 +9,13 @@
  const progress=document.getElementById('scroll-progress-fill');
  const updateProgress=()=>{if(!progress)return;const max=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=(max>0?Math.min(100,window.scrollY/max*100):0)+'%'};
  window.addEventListener('scroll',updateProgress,{passive:true});updateProgress();
- // Live countdown to the published Season 1 competition start.
+ // Keep the countdown at zero until the competition date is confirmed.
  const countdown=document.getElementById('competition-countdown');
  if(countdown){
-   const end=new Date('2026-11-21T12:00:00-05:00').getTime();
-   const updateCountdown=()=>{let left=Math.max(0,end-Date.now());const days=Math.floor(left/86400000);left%=86400000;const hours=Math.floor(left/3600000);left%=3600000;const minutes=Math.floor(left/60000);
-     const values={'countdown-days':String(days).padStart(2,'0'),'countdown-hours':String(hours).padStart(2,'0'),'countdown-minutes':String(minutes).padStart(2,'0')};
-     Object.entries(values).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.textContent=value});
-     if(Date.now()>=end){const label=countdown.querySelector('.countdown-label span:last-child');if(label)label.textContent='SEASON 1 COMPETITION DAY';}
-   };
-   updateCountdown();window.setInterval(updateCountdown,60000);
+   const values={'countdown-days':'00','countdown-hours':'00','countdown-minutes':'00'};
+   Object.entries(values).forEach(([id,value])=>{const el=document.getElementById(id);if(el)el.textContent=value});
+   const label=countdown.querySelector('.countdown-label span:last-child');
+   if(label)label.textContent='COMPETITION DATE TO BE ANNOUNCED';
  }
  const page=document.body.dataset.page;
  document.querySelectorAll('[data-nav]').forEach(a=>{if(a.dataset.nav===page)a.setAttribute('aria-current','page')});
