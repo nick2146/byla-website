@@ -11,11 +11,14 @@ export async function POST(request: Request) {
   const parsed = schema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Enter a valid ticker, side, and share quantity." }, { status: 400 });
   try {
+    const admin = createAdminClient();
+    const { data: allowed, error: limitError } = await admin.rpc("consume_api_rate_limit", { p_user_id: user.id, p_action: "trade", p_limit: 20 });
+    if (limitError) throw new Error("RATE_LIMIT_SERVICE_UNAVAILABLE");
+    if (!allowed) return NextResponse.json({ error: "Paper-trading order limit reached. Please wait a minute." }, { status: 429 });
     // Never trust client prices or the request Host header. Fetch directly from the configured provider.
     const quote = await getMarketQuote(parsed.data.symbol);
     const quoteTime = new Date(quote.asOf).getTime();
     if (!Number.isFinite(quoteTime) || Date.now()-quoteTime > 900000 || quoteTime > Date.now()+60000) return NextResponse.json({ error: "The market quote is stale. Please try again." }, { status: 409 });
-    const admin = createAdminClient();
     const { data, error } = await admin.rpc("execute_paper_trade", { p_user_id:user.id, p_symbol:parsed.data.symbol, p_side:parsed.data.side, p_quantity:parsed.data.quantity, p_price:quote.price, p_quote_as_of:quote.asOf });
     if (error) {
       const message = error.message.includes("INSUFFICIENT_CASH") ? "Not enough virtual cash." : error.message.includes("INSUFFICIENT_SHARES") ? "You do not own enough shares to sell." : "Trade could not be completed.";
