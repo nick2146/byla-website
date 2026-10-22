@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 const watchlist = [
   { symbol: "AAPL", name: "Apple", price: "Market quote required", change: "—" },
@@ -13,11 +14,20 @@ export default function Home() {
   const [mode, setMode] = useState<"signin" | "signup">("signup");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [notice, setNotice] = useState("Connect Supabase to enable secure account creation and sign-in.");
+  const [notice, setNotice] = useState("Create an account to start your virtual portfolio.");
+  const [busy, setBusy] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   async function submitAuth(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setNotice("Authentication is not connected yet. Configure Supabase and the server auth routes before enabling account creation.");
+    setBusy(true);
+    setNotice("");
+    const supabase = createClient();
+    const result = mode === "signup" ? await supabase.auth.signUp({ email, password }) : await supabase.auth.signInWithPassword({ email, password });
+    setBusy(false);
+    if (result.error) { setNotice(result.error.message); return; }
+    if (mode === "signup" && !result.data.session) { setNotice("Check your email to confirm your account, then sign in."); return; }
+    if (result.data.user) { setUserEmail(result.data.user.email ?? email); setNotice("Signed in. Your virtual portfolio will be loaded from your account."); }
   }
 
   return (
@@ -46,9 +56,9 @@ export default function Home() {
           <form onSubmit={submitAuth}>
             <label>Email address<input type="email" autoComplete="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" /></label>
             <label>Password<input type="password" autoComplete={mode === "signup" ? "new-password" : "current-password"} minLength={8} required value={password} onChange={e => setPassword(e.target.value)} placeholder="At least 8 characters" /></label>
-            <button className="button primary full" type="submit">{mode === "signup" ? "Create free account" : "Sign in"} <span>→</span></button>
+            <button className="button primary full" type="submit" disabled={busy}>{busy ? "Please wait…" : mode === "signup" ? "Create free account" : "Sign in"} <span>→</span></button>
           </form>
-          <p className="notice" role="status">{notice}</p>
+          <p className="notice" role="status">{notice}</p>{userEmail && <p className="signed-in">Signed in as {userEmail}</p>}
           <p className="legal">By continuing, you agree this is an educational simulation. No real trades are placed.</p>
         </aside>
       </section>
