@@ -22,12 +22,26 @@ export default function Home() {
     event.preventDefault();
     setBusy(true);
     setNotice("");
-    const supabase = createClient();
-    const result = mode === "signup" ? await supabase.auth.signUp({ email, password, options: { data: { username }, emailRedirectTo: `${window.location.origin}/auth/callback` } }) : await supabase.auth.signInWithPassword({ email, password });
-    setBusy(false);
-    if (result.error) { setNotice(result.error.message); return; }
-    if (mode === "signup" && !result.data.session) { setNotice("Check your email to confirm your account, then sign in."); return; }
-    if (result.data.user) { window.location.href = "/dashboard"; }
+    try {
+      const supabase = createClient();
+      const result = mode === "signup"
+        ? await supabase.auth.signUp({ email, password, options: { data: { username }, emailRedirectTo: `${window.location.origin}/auth/callback` } })
+        : await supabase.auth.signInWithPassword({ email, password });
+      if (result.error) { setNotice(result.error.message); return; }
+      if (result.data.session) {
+        window.location.href = "/dashboard";
+        return;
+      }
+      if (mode === "signup" && result.data.user) {
+        setNotice("Your account was created, but Supabase did not start a session. Confirm Email may still be enabled, or this email may already belong to an unverified account. Try signing in, or check Supabase Auth settings.");
+        return;
+      }
+      setNotice("Sign-in did not return an active session. Please try again.");
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "Authentication failed. Please try again.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
