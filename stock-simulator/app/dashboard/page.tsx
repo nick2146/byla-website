@@ -43,6 +43,10 @@ export default function Dashboard() {
   const [marketSort, setMarketSort] = useState("Hot");
   const [marketSearch, setMarketSearch] = useState("");
   const [marketQuotes, setMarketQuotes] = useState<Record<string, Quote>>({});
+  const [chartRange, setChartRange] = useState<"1D" | "1W" | "1M" | "3M" | "1Y">("1D");
+  const [chartCandles, setChartCandles] = useState<{ time: number; close: number }[]>([]);
+  const [chartLoading, setChartLoading] = useState(true);
+  const [chartError, setChartError] = useState("");
 
   const loadPortfolio = useCallback(async () => {
     const response = await fetch("/api/portfolio", { cache: "no-store" });
@@ -93,6 +97,23 @@ export default function Dashboard() {
     const interval = window.setInterval(() => void loadMarketQuotes(), 60000);
     return () => window.clearInterval(interval);
   }, [loadMarketQuotes]);
+
+  useEffect(() => {
+    let active = true;
+    const load = async () => {
+      setChartLoading(true); setChartError("");
+      try {
+        const response = await fetch("/api/candles?symbol=" + encodeURIComponent(symbol) + "&range=" + chartRange, { cache: "no-store" });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Historical prices unavailable.");
+        if (active) setChartCandles(Array.isArray(data.candles) ? data.candles : []);
+      } catch (error) { if (active) setChartError(error instanceof Error ? error.message : "Historical prices unavailable."); }
+      finally { if (active) setChartLoading(false); }
+    };
+    void load();
+    const timer = window.setInterval(() => void load(), 60000);
+    return () => { active = false; window.clearInterval(timer); };
+  }, [symbol, chartRange]);
 
   useEffect(() => {
     let active = true;
@@ -289,6 +310,12 @@ export default function Dashboard() {
         <article><span>Estimated holdings value</span><strong>{money(equity)}</strong></article>
         <article><span>Total account value</span><strong>{money(cash + equity)}</strong><small style={{ color: "#aab7cc" }}>Virtual cash + holdings</small></article>
       </div>
+
+      <section className="panel" id="live-stock-chart" style={{ marginBottom: 22, border: "1px solid #29456b", background: "linear-gradient(145deg, #14243b, #101827)" }}>
+        <div className="panel-heading" style={{ flexWrap: "wrap" }}><div><span className="eyebrow">MARKET HISTORY · AUTO-REFRESH 60 SEC</span><h2>{symbol} price chart</h2></div><div style={{ display: "flex", gap: 6 }}>{(["1D","1W","1M","3M","1Y"] as const).map(r => <button key={r} type="button" onClick={() => setChartRange(r)} className="button" style={{ background: chartRange===r ? "#2457e6" : "#18263a", color: "white" }}>{r}</button>)}</div></div>
+        {chartCandles.length > 1 ? (() => { const vals=chartCandles.map(c=>c.close); const lo=Math.min(...vals), hi=Math.max(...vals), span=hi-lo||1; const points=vals.map((v,i)=>`${20+i*860/Math.max(vals.length-1,1)},${235-(v-lo)/span*200}`).join(" "); const up=vals[vals.length-1]>=vals[0]; return <><div style={{ fontSize: 28, fontWeight: 700, margin: "12px 0" }}>{money(vals[vals.length-1])} <small style={{ fontSize: 14, color: up ? "#4ade80" : "#fb7185" }}>{up?"+":""}{(vals[vals.length-1]-vals[0]).toFixed(2)} ({((vals[vals.length-1]-vals[0])/vals[0]*100).toFixed(2)}%)</small></div><svg viewBox="0 0 900 260" role="img" aria-label={symbol+" historical closing prices"} style={{ width:"100%", height:"auto", minHeight:180 }}><line x1="20" x2="880" y1="35" y2="35" stroke="#293a53"/><line x1="20" x2="880" y1="235" y2="235" stroke="#293a53"/><polyline points={points} fill="none" stroke={up?"#4ade80":"#fb7185"} strokeWidth="3" strokeLinejoin="round" strokeLinecap="round"/><text x="24" y="24" fill="#aab7cc" fontSize="12">{money(hi)}</text><text x="24" y="253" fill="#aab7cc" fontSize="12">{money(lo)}</text></svg><div style={{display:"flex",justifyContent:"space-between",color:"#aab7cc",fontSize:12}}><span>{new Date(chartCandles[0].time*1000).toLocaleDateString()}</span><span>{chartRange} · {chartCandles.length} points</span><span>{new Date(chartCandles[chartCandles.length-1].time*1000).toLocaleDateString()}</span></div></>; })() : <p style={{ padding: 28, textAlign: "center", color: "#aab7cc" }}>{chartLoading ? "Loading historical prices…" : chartError || "No price history available for this range."}</p>}
+        <p style={{ color: "#8292aa", fontSize: 12 }}>Historical market data may be delayed. Educational simulation only.</p>
+      </section>
 
       <section className="panel" id="market-chart" style={{ marginBottom: 22 }}>
         <div className="panel-heading">
