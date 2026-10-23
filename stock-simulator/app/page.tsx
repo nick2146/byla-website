@@ -48,7 +48,7 @@ export default function Home() {
     <main className="shell">
       <header className="topbar">
         <a className="brand" href="/" aria-label="BYLA Markets home">
-          <span className="brand-mark">B</span>
+          <img className="brand-logo" src="/byla-markets-logo.svg" alt="BYLA mountain and flag logo" />
           <span>BYLA <b>MARKETS</b><small>STUDENT PAPER TRADING</small></span>
         </a>
         <nav><a href="#markets">Markets</a><a href="#learn">Learn</a><a href="#leaderboard">Leaderboard</a></nav>
