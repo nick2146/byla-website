@@ -51,3 +51,14 @@ test("username moderation blocks slurs and obfuscated hateful usernames", async 
   assert.match(page, /usernameModerationError\(username\)/);
   assert.match(page, /username-guidance/);
 });
+
+test("dashboard includes learning progress, market navigation, and investing education", async () => {
+  const page = await read("../app/dashboard/page.tsx");
+  const styles = await read("../app/globals.css");
+  assert.match(page, /welcome-banner/);
+  assert.match(page, /learningProgress/);
+  assert.match(page, /Diversify thoughtfully/);
+  assert.match(page, /id="market-watch"/);
+  assert.match(styles, /\.welcome-banner/);
+  assert.match(styles, /\.tip-grid/);
+});
