@@ -3,7 +3,6 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getMarketQuote } from "@/lib/market-data";
 
 export const dynamic = "force-dynamic";
-export const maxDuration = 60;
 
 // This simulator's auto-invest worker is deliberately restricted to the owner's account.
 const OWNER_USER_ID = "1db3a657-6ec0-45d5-b204-40a6fb29e699";
