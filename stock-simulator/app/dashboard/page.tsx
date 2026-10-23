@@ -8,7 +8,8 @@ type Trade = { id: string; symbol: string; side: string; quantity: number; price
 type Portfolio = { portfolio: { cash: number; updated_at: string } | null; positions: Position[]; trades: Trade[] };
 type Quote = { symbol: string; price: number; asOf: string; change?: number | null; changePercent?: number | null };
 type Leader = { rank: number; username: string; totalValue: number; returnPercent: number; isCurrentUser: boolean; quotesComplete: boolean };
-const money = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(n);
+type MarketAsset = { symbol: string; name: string; kind: "stock" | "crypto"; logo: string };
+const money = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: n < 1 ? 4 : 2 }).format(n);\nconst marketAssets: MarketAsset[] = [\n  { symbol: "AAPL", name: "Apple", kind: "stock", logo: "A" }, { symbol: "TSLA", name: "Tesla", kind: "stock", logo: "T" }, { symbol: "NVDA", name: "NVIDIA", kind: "stock", logo: "N" }, { symbol: "MSFT", name: "Microsoft", kind: "stock", logo: "M" }, { symbol: "AMZN", name: "Amazon", kind: "stock", logo: "a" }, { symbol: "GOOGL", name: "Alphabet", kind: "stock", logo: "G" }, { symbol: "META", name: "Meta Platforms", kind: "stock", logo: "M" }, { symbol: "NFLX", name: "Netflix", kind: "stock", logo: "N" }, { symbol: "JPM", name: "JPMorgan Chase", kind: "stock", logo: "J" }, { symbol: "KO", name: "Coca-Cola", kind: "stock", logo: "C" },\n  { symbol: "BTC-USD", name: "Bitcoin", kind: "crypto", logo: "₿" }, { symbol: "ETH-USD", name: "Ethereum", kind: "crypto", logo: "◆" }, { symbol: "ADA-USD", name: "Cardano", kind: "crypto", logo: "●" }, { symbol: "XRP-USD", name: "XRP", kind: "crypto", logo: "X" }, { symbol: "SOL-USD", name: "Solana", kind: "crypto", logo: "S" }, { symbol: "DOGE-USD", name: "Dogecoin", kind: "crypto", logo: "Ð" }, { symbol: "DOT-USD", name: "Polkadot", kind: "crypto", logo: "●" }, { symbol: "AVAX-USD", name: "Avalanche", kind: "crypto", logo: "A" },\n];
 const stocks = [
   ["AAPL", "Apple"], ["MSFT", "Microsoft"], ["NVDA", "NVIDIA"], ["TSLA", "Tesla"],
   ["AMZN", "Amazon"], ["GOOGL", "Alphabet"], ["META", "Meta Platforms"], ["NFLX", "Netflix"],
@@ -33,7 +34,7 @@ export default function Dashboard() {
   const [claimNext, setClaimNext] = useState<string | null>(null);
   const [claimBusy, setClaimBusy] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);\n  const [marketKind, setMarketKind] = useState<"stock" | "crypto">("stock");\n  const [marketSort, setMarketSort] = useState("Hot");\n  const [marketSearch, setMarketSearch] = useState("");\n  const [marketQuotes, setMarketQuotes] = useState<Record<string, Quote>>({});
 
   const loadPortfolio = useCallback(async () => {
     const response = await fetch("/api/portfolio", { cache: "no-store" });
@@ -206,6 +207,32 @@ export default function Dashboard() {
         <button className="button primary" onClick={claimDailyCash} disabled={!claimReady || claimBusy} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6", opacity: !claimReady || claimBusy ? 0.55 : 1 }}>
           {claimBusy ? "Claiming…" : claimReady ? "Claim $1,000" : "Claimed / Not ready"}
         </button>
+      </section>
+
+      <section className="panel market-browser" style={{ marginBottom: 18 }}>
+        <div className="panel-heading"><div><span className="eyebrow">DISCOVER THE MARKET</span><h2>Market watch</h2><p style={{ color: "#aab7cc", fontSize: 12, marginTop: 6 }}>Explore stocks and crypto with virtual trading. No real estate.</p></div><span className="virtual-pill">REAL-WORLD QUOTES</span></div>
+        <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
+          <button className="button" onClick={() => { setMarketKind("stock"); setMarketSort("Hot"); }} style={{ background: marketKind === "stock" ? "#2457e6" : "#111b2c", color: "#fff", border: "1px solid #31435f" }}>Stocks</button>
+          <button className="button" onClick={() => { setMarketKind("crypto"); setMarketSort("Hot"); }} style={{ background: marketKind === "crypto" ? "#2457e6" : "#111b2c", color: "#fff", border: "1px solid #31435f" }}>Crypto</button>
+          <input aria-label="Search markets" placeholder="Search assets…" value={marketSearch} onChange={(event) => setMarketSearch(event.target.value)} style={{ flex: 1, minWidth: 80, background: "#0a111d", color: "#fff", border: "1px solid #2d3a4d", borderRadius: 8, padding: "10px 12px" }} />
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 12 }}>
+          {["Hot", "Gainers", "Losers", "Highest price", "Lowest price"].map((sort) => <button key={sort} onClick={() => setMarketSort(sort)} style={{ border: "1px solid #31435f", borderRadius: 20, padding: "7px 11px", fontSize: 11, cursor: "pointer", background: marketSort === sort ? "#2457e6" : "#172235", color: "#fff" }}>{sort}</button>)}
+          <button onClick={() => void loadMarketQuotes()} style={{ marginLeft: "auto", border: "1px solid #31435f", borderRadius: 20, padding: "7px 11px", fontSize: 11, cursor: "pointer", background: "#172235", color: "#fff" }}>Refresh ↻</button>
+        </div>
+        <div>{marketAssets.filter((asset) => asset.kind === marketKind && (asset.name + asset.symbol).toLowerCase().includes(marketSearch.toLowerCase())).map((asset) => ({ asset, quote: marketQuotes[asset.symbol] })).sort((a, b) => {
+          const qa = a.quote, qb = b.quote;
+          if (marketSort === "Gainers") return (qb?.changePercent ?? -Infinity) - (qa?.changePercent ?? -Infinity);
+          if (marketSort === "Losers") return (qa?.changePercent ?? Infinity) - (qb?.changePercent ?? Infinity);
+          if (marketSort === "Highest price") return (qb?.price ?? -Infinity) - (qa?.price ?? -Infinity);
+          if (marketSort === "Lowest price") return (qa?.price ?? Infinity) - (qb?.price ?? Infinity);
+          return marketAssets.indexOf(a.asset) - marketAssets.indexOf(b.asset);
+        }).map(({ asset, quote: q }) => <div key={asset.symbol} style={{ display: "grid", gridTemplateColumns: "38px minmax(0,1fr) auto", alignItems: "center", gap: 10, padding: "12px 2px", borderBottom: "1px solid #263244" }}>
+          <div style={{ width: 36, height: 36, display: "grid", placeItems: "center", borderRadius: "50%", background: asset.kind === "crypto" ? "#283d76" : "#1e3045", color: "#fff", fontWeight: 800, fontSize: 16 }}>{asset.logo}</div>
+          <button onClick={() => { setSymbol(asset.symbol); setQuote(q ?? null); window.scrollTo({ top: 0, behavior: "smooth" }); }} style={{ textAlign: "left", border: 0, background: "transparent", color: "#f4f7fb", padding: 0, cursor: "pointer", minWidth: 0 }}><strong style={{ display: "block", fontSize: 13 }}>{asset.name}</strong><span style={{ display: "block", color: "#aab7cc", fontSize: 11, marginTop: 3 }}>{asset.symbol} · Available to select</span></button>
+          <div style={{ textAlign: "right" }}><strong style={{ display: "block", fontSize: 13 }}>{q ? money(q.price) : "—"}</strong><span style={{ display: "block", color: q?.changePercent == null ? "#aab7cc" : q.changePercent >= 0 ? "#22c55e" : "#ef7777", fontSize: 11, marginTop: 3 }}>{q?.changePercent == null ? "Quote loading / unavailable" : `${q.changePercent >= 0 ? "▲" : "▼"} ${Math.abs(q.changePercent).toFixed(2)}%`}</span></div>
+        </div>)}
+        <p className="legal" style={{ marginTop: 12 }}>Prices depend on the connected market-data provider and may be delayed. Crypto symbols may be unavailable for paper trading if the quote provider does not support them.</p>
       </section>
 
       <section className="panel" style={{ marginBottom: 18, border: "1px solid #263b5d", background: "linear-gradient(135deg, #14243b, #101827)" }}>
