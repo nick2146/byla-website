@@ -28,7 +28,7 @@ export default function Dashboard() {
   const [quote, setQuote] = useState<Quote | null>(null);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);\n  const [claimReady, setClaimReady] = useState(false);\n  const [claimNext, setClaimNext] = useState<string | null>(null);\n  const [claimBusy, setClaimBusy] = useState(false);
 
   const loadPortfolio = useCallback(async () => {
     const response = await fetch("/api/portfolio", { cache: "no-store" });
@@ -75,7 +75,7 @@ export default function Dashboard() {
         const { data, error } = await supabase.auth.getUser();
         if (error || !data.user) { window.location.href = "/"; return; }
         if (active) setEmail(data.user.email ?? "");
-        await Promise.all([loadPortfolio(), loadLeaders()]);
+        await Promise.all([loadPortfolio(), loadLeaders(), refreshClaimStatus()]);
       } catch (error) {
         if (active) setNotice(error instanceof Error ? error.message : "Could not load account.");
       } finally {
@@ -114,7 +114,7 @@ export default function Dashboard() {
     finally { setBusy(false); }
   }
 
-  async function signOut() { await createClient().auth.signOut(); window.location.href = "/"; }
+  async function refreshClaimStatus() {\n    try {\n      const response = await fetch("/api/daily-claim", { cache: "no-store" });\n      const data = await response.json();\n      if (response.ok) { setClaimReady(Boolean(data.canClaim)); setClaimNext(data.nextClaimAt ?? null); }\n    } catch { /* Reward status can be retried by refreshing the page. */ }\n  }\n\n  async function claimDailyCash() {\n    setClaimBusy(true); setNotice("");\n    try {\n      const response = await fetch("/api/daily-claim", { method: "POST" });\n      const data = await response.json();\n      if (!response.ok) throw new Error(data.error ?? "Could not claim daily virtual cash.");\n      setClaimReady(false); setClaimNext(data.nextClaimAt ?? null);\n      setNotice("Daily reward claimed! $1,000 has been added to your virtual cash.");\n      await loadPortfolio();\n    } catch (error) { setNotice(error instanceof Error ? error.message : "Could not claim daily virtual cash."); await refreshClaimStatus(); }\n    finally { setClaimBusy(false); }\n  }\n\n  async function signOut() { await createClient().auth.signOut(); window.location.href = "/"; }
 
   const cash = Number(portfolio?.portfolio?.cash ?? 100000);
   const equity = (portfolio?.positions ?? []).reduce((sum, position) => sum + Number(position.quantity) * (quotes[position.symbol]?.price ?? Number(position.average_cost)), 0);
@@ -131,6 +131,17 @@ export default function Dashboard() {
       <section className="dashboard-heading">
         <div><span className="eyebrow">YOUR LEARNING TERMINAL</span><h1>Portfolio overview</h1><p>Every order uses virtual cash. No brokerage or real-money transactions.</p></div>
         <div className="dashboard-value"><span>ESTIMATED ACCOUNT VALUE</span><strong>{money(cash + equity)}</strong><small>Starting balance: $100,000 USD virtual</small></div>
+      </section>
+
+      <section className="panel daily-reward-panel">
+        <div>
+          <span className="eyebrow">DAILY REWARD</span>
+          <h2>Claim $1,000 virtual cash</h2>
+          <p>{claimReady ? "Your daily reward is ready to claim." : claimNext ? `Next reward available: ${new Date(claimNext).toLocaleString()}` : "Checking your reward availability…"}</p>
+        </div>
+        <button className="button primary" onClick={claimDailyCash} disabled={!claimReady || claimBusy} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6", opacity: !claimReady || claimBusy ? 0.55 : 1 }}>
+          {claimBusy ? "Claiming…" : claimReady ? "Claim $1,000" : "Claimed / Not ready"}
+        </button>
       </section>
 
       <div className="dashboard-stats">
