@@ -210,18 +210,28 @@ export default function Dashboard() {
     const marketPrice = quotes[position.symbol]?.price;
     return sum + (marketPrice == null ? 0 : (marketPrice - Number(position.average_cost)) * Number(position.quantity));
   }, 0);
+  const accountValue = cash + equity;
+  const accountReturn = accountValue - 100000;
+  const accountReturnPercent = (accountReturn / 100000) * 100;
+  const completedTrades = portfolio?.trades.length ?? 0;
+  const learningProgress = Math.min(100, (Number((portfolio?.positions.length ?? 0) > 0) * 35) + (Number(completedTrades > 0) * 35) + (Number((portfolio?.positions.length ?? 0) >= 3) * 30));
   const formatChange = (value: number) => `${value > 0 ? "+" : ""}${money(value)}`;
   const changeColor = (value: number) => value > 0 ? "#22c55e" : value < 0 ? "#ef4444" : "#aab7cc";
   const changeIcon = (value: number) => value > 0 ? "▲" : value < 0 ? "▼" : "●";
 
-  if (loading) return <main className="dashboard-shell"><p>Loading your paper-trading account…</p></main>;
+  if (loading) return <main className="dashboard-shell" id="top"><p>Loading your paper-trading account…</p></main>;
 
   return (
     <main className="dashboard-shell">
       <header className="dashboard-top">
         <a className="brand" href="/"><img className="brand-logo" src="/byla-markets-logo.svg" alt="BYLA mountain and flag logo" /><span>BYLA <b>MARKETS</b><small>STUDENT PAPER TRADING</small></span></a>
-        <div className="dashboard-user"><span>{email}</span><button className="button primary" onClick={signOut} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6" }}>Sign out</button></div>
+        <nav className="dashboard-nav" aria-label="Dashboard sections"><a href="#market-watch">Markets</a><a href="#trade">Trade</a><a href="#positions">Portfolio</a><a href="#leaderboard">Leaderboard</a></nav><div className="dashboard-user"><span>{email}</span><button className="button primary" onClick={signOut} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6" }}>Sign out</button></div>
       </header>
+
+      <section className="welcome-banner">
+        <div className="welcome-copy"><span className="eyebrow">WELCOME TO YOUR MARKET DESK</span><h2>Build your strategy. <em>Learn by doing.</em></h2><p>A risk-free space to explore markets, test ideas, and learn how decisions shape a portfolio.</p><div className="welcome-actions"><a className="button primary" href="#trade">Make your first trade <span>↗</span></a><a className="welcome-link" href="#learn-tips">Explore learning tips ↓</a></div></div>
+        <div className="progress-card"><div className="progress-top"><span>YOUR LEARNING JOURNEY</span><strong>{learningProgress}%</strong></div><div className="progress-track"><span style={{ width: `${learningProgress}%` }} /></div><ul><li className={(portfolio?.positions.length ?? 0) > 0 ? "complete" : ""}><span>{(portfolio?.positions.length ?? 0) > 0 ? "✓" : "1"}</span>Build your first position</li><li className={completedTrades > 0 ? "complete" : ""}><span>{completedTrades > 0 ? "✓" : "2"}</span>Place a practice trade</li><li className={(portfolio?.positions.length ?? 0) >= 3 ? "complete" : ""}><span>{(portfolio?.positions.length ?? 0) >= 3 ? "✓" : "3"}</span>Explore diversification</li></ul></div>
+      </section>
 
       <section className="dashboard-heading">
         <div><span className="eyebrow">YOUR LEARNING TERMINAL</span><h1>Portfolio overview</h1><p>Every order uses virtual cash. No brokerage or real-money transactions.</p><p style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", fontSize: 11 }}><span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: refreshing ? "#eab308" : "#22c55e" }} />{refreshing ? "Updating portfolio…" : lastUpdated ? `Last portfolio update: ${new Date(lastUpdated).toLocaleTimeString()}` : "Waiting for first update"}<button className="button secondary" onClick={() => void refreshDashboard()} disabled={refreshing} style={{ padding: "7px 10px", background: "#2457e6", color: "#fff", border: "1px solid #2457e6" }}>{refreshing ? "Refreshing…" : "Refresh all data ↻"}</button></p></div>
@@ -239,7 +249,7 @@ export default function Dashboard() {
         </button>
       </section>
 
-      <section className="panel market-browser" style={{ marginBottom: 18, border: "1px solid #29456b", background: "radial-gradient(ellipse at top right, #1b3560 0%, #111b2c 48%, #101827 100%)", boxShadow: "0 18px 50px #0003" }}>
+      <section className="panel market-browser" id="market-watch" style={{ marginBottom: 18, border: "1px solid #29456b", background: "radial-gradient(ellipse at top right, #1b3560 0%, #111b2c 48%, #101827 100%)", boxShadow: "0 18px 50px #0003" }}>
         <div className="panel-heading"><div><span className="eyebrow">DISCOVER THE MARKET</span><h2 style={{ fontSize: 24, letterSpacing: "-0.6px", background: "linear-gradient(90deg, #fff, #85b7ff)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Market watch</h2><p style={{ color: "#aab7cc", fontSize: 12, marginTop: 6 }}>Explore stocks and crypto with virtual trading. No real estate.</p></div><span className="virtual-pill">REAL-WORLD QUOTES</span></div>
         <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
           <button className="button" onClick={() => { setMarketKind("stock"); setMarketSort("Hot"); }} style={{ background: marketKind === "stock" ? "#2457e6" : "#111b2c", color: "#fff", border: "1px solid #31435f" }}>Stocks</button>
@@ -280,7 +290,7 @@ export default function Dashboard() {
         <article><span>Total account value</span><strong>{money(cash + equity)}</strong><small style={{ color: "#aab7cc" }}>Virtual cash + holdings</small></article>
       </div>
 
-      <section className="panel" style={{ marginBottom: 22 }}>
+      <section className="panel" id="market-chart" style={{ marginBottom: 22 }}>
         <div className="panel-heading">
           <div><span className="eyebrow">LIVE PRICE & ORDER ESTIMATE</span><h2>{quote?.symbol ?? symbol} market value</h2></div>
           <span className="virtual-pill">VIRTUAL ONLY</span>
@@ -362,7 +372,8 @@ export default function Dashboard() {
             <tr key={leader.rank} className={leader.isCurrentUser ? "current-user-row" : ""}><td>#{leader.rank}</td><td>{leader.username}{leader.isCurrentUser ? " (you)" : ""}</td><td>{money(leader.totalValue)}{!leader.quotesComplete ? " *" : ""}</td><td>{leader.returnPercent >= 0 ? "+" : ""}{leader.returnPercent.toFixed(2)}%</td></tr>
           )}</tbody></table></div>}
       </section>
-      <footer className="dashboard-footer">BYLA Markets · Educational simulation only · No real money is involved.</footer>
+      <section className="learning-tips" id="learn-tips"><div><span className="eyebrow">THE SMART INVESTOR PLAYBOOK</span><h2>Practice the habits, not just the trades.</h2><p>Use the simulator to build good decision-making habits before you ever consider investing real money.</p></div><div className="tip-grid"><article><span>01</span><h3>Diversify thoughtfully</h3><p>Learn how spreading exposure across different companies can reduce dependence on a single holding.</p></article><article><span>02</span><h3>Know your thesis</h3><p>Write down why you chose a company and what information could change your view.</p></article><article><span>03</span><h3>Think long term</h3><p>Short-term price moves happen. Compare your choices with your original goals rather than reacting to every move.</p></article></div></section>
+      <footer className="dashboard-footer"><span>BYLA Markets · Educational simulation only · No real money is involved.</span><a href="#top" onClick={(event) => { event.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>Back to top ↑</a></footer>
     </main>
   );
 }
