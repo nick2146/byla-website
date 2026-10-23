@@ -6,7 +6,9 @@ import { useEffect, useRef, useState } from "react";
 type Candle = { time: number; open: number; high: number; low: number; close: number; volume: number };
 const ranges = ["1D", "1W", "1M", "3M", "1Y"] as const;
 
-export default function MarketChart({ symbol }: { symbol: string }) {
+const stocks = [["AAPL", "Apple"], ["MSFT", "Microsoft"], ["NVDA", "NVIDIA"], ["TSLA", "Tesla"], ["AMZN", "Amazon"], ["GOOGL", "Alphabet"], ["META", "Meta Platforms"], ["NFLX", "Netflix"], ["AMD", "Advanced Micro Devices"], ["INTC", "Intel"], ["ORCL", "Oracle"], ["CRM", "Salesforce"], ["JPM", "JPMorgan Chase"], ["KO", "Coca-Cola"], ["DIS", "Disney"], ["WMT", "Walmart"], ["COST", "Costco"], ["UBER", "Uber"], ["SHOP", "Shopify"], ["SPY", "S&P 500 ETF"]] as const;
+
+export default function MarketChart({ symbol, onSymbolChange }: { symbol: string; onSymbolChange: (symbol: string) => void }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const seriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
@@ -92,7 +94,7 @@ export default function MarketChart({ symbol }: { symbol: string }) {
   return (
     <section className="panel market-chart-panel">
       <div className="panel-heading chart-heading">
-        <div><span className="eyebrow">LIVE MARKET CHART</span><h2>{symbol} price action</h2></div>
+        <div><span className="eyebrow">LIVE MARKET CHART</span><h2>{symbol} price action</h2><label style={{ display: "block", marginTop: 10, color: "#aab7cc", fontSize: 13 }}>Choose a stock<select value={symbol} onChange={(event) => onSymbolChange(event.target.value)} style={{ display: "block", marginTop: 6, minWidth: 220, maxWidth: "100%", padding: "10px 12px", borderRadius: 8, background: "#111b2c", color: "#f4f7fb", border: "1px solid #2b3b53" }}>{stocks.map(([ticker, name]) => <option key={ticker} value={ticker}>{ticker} — {name}</option>)}</select></label></div>
         <div className="chart-price">{lastClose === null ? "—" : lastClose.toLocaleString("en-US", { style: "currency", currency: "USD" })}<small className={changePct !== null && changePct < 0 ? "negative" : "positive"}>{changePct === null ? "Selected period" : `${changePct >= 0 ? "+" : ""}${changePct.toFixed(2)}% selected period`}</small></div>
       </div>
       <div className="chart-controls" aria-label="Chart time range" style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "16px 0" }}>{ranges.map((item) => <button type="button" key={item} className={range === item ? "selected" : "button secondary"} onClick={() => setRange(item)} style={{ minWidth: 54, padding: "8px 12px", borderRadius: 8, border: "1px solid #2b3b53", background: range === item ? "#2457e6" : "#111b2c", color: "#f4f7fb", cursor: "pointer" }}>{item}</button>)}</div>
