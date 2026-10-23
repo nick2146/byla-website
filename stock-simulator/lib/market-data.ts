@@ -26,31 +26,80 @@ export async function getMarketQuote(symbol: string): Promise<MarketQuote> {
   return { symbol, price: parsed.data.c, change: parsed.data.d ?? null, changePercent: parsed.data.dp ?? null, asOf: new Date(parsed.data.t * 1000).toISOString() };
 }
 
-export async function getMarketCandles(symbol: string, range: string): Promise<MarketCandle[]> {
-  const key = process.env.MARKET_DATA_API_KEY;
-  if (!key) throw new Error("MARKET_DATA_NOT_CONFIGURED");
-  const now = Math.floor(Date.now() / 1000);
-  const ranges: Record<string, { seconds: number; resolution: string }> = {
-    "1D": { seconds: 24 * 60 * 60, resolution: "5" },
-    "1W": { seconds: 7 * 24 * 60 * 60, resolution: "15" },
-    "1M": { seconds: 30 * 24 * 60 * 60, resolution: "60" },
-    "3M": { seconds: 90 * 24 * 60 * 60, resolution: "D" },
-    "1Y": { seconds: 365 * 24 * 60 * 60, resolution: "W" },
-  };
-  const selected = ranges[range];
+const chartRanges: Record<string, { seconds: number; resolution: string; yahooRange: string; yahooInterval: string }> = {
+  "1D": { seconds: 24 * 60 * 60, resolution: "5", yahooRange: "1d", yahooInterval: "5m" },
+  "1W": { seconds: 7 * 24 * 60 * 60, resolution: "15", yahooRange: "5d", yahooInterval: "15m" },
+  "1M": { seconds: 30 * 24 * 60 * 60, resolution: "60", yahooRange: "1mo", yahooInterval: "60m" },
+  "3M": { seconds: 90 * 24 * 60 * 60, resolution: "D", yahooRange: "3mo", yahooInterval: "1d" },
+  "1Y": { seconds: 365 * 24 * 60 * 60, resolution: "W", yahooRange: "1y", yahooInterval: "1wk" },
+};
+
+async function getYahooCandles(symbol: string, range: string): Promise<MarketCandle[]> {
+  const selected = chartRanges[range];
   if (!selected) throw new Error("INVALID_CHART_RANGE");
-  const url = new URL("https://finnhub.io/api/v1/stock/candle");
-  url.searchParams.set("symbol", symbol);
-  url.searchParams.set("resolution", selected.resolution);
-  url.searchParams.set("from", String(now - selected.seconds));
-  url.searchParams.set("to", String(now));
-  url.searchParams.set("token", key);
-  const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(10000) });
-  if (!response.ok) throw new Error("MARKET_DATA_PROVIDER_UNAVAILABLE");
-  const parsed = candlesSchema.safeParse(await response.json());
-  if (!parsed.success) throw new Error("NO_CANDLE_DATA");
-  const { t, o, h, l, c, v } = parsed.data;
-  return t.map((time, i) => ({ time, open: o[i], high: h[i], low: l[i], close: c[i], volume: v?.[i] ?? 0 }))
-    .filter((candle) => Number.isFinite(candle.open) && Number.isFinite(candle.high) && Number.isFinite(candle.low) && Number.isFinite(candle.close))
-    .sort((a, b) => a.time - b.time);
+  const url = new URL(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}`);
+  url.searchParams.set("range", selected.yahooRange);
+  url.searchParams.set("interval", selected.yahooInterval);
+  const response = await fetch(url, {
+    cache: "no-store",
+    headers: { Accept: "application/json", "User-Agent": "Mozilla/5.0 BYLA-Markets/1.0" },
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!response.ok) throw new Error("FALLBACK_MARKET_DATA_UNAVAILABLE");
+  const payload = await response.json();
+  const result = payload?.chart?.result?.[0];
+  const timestamps: unknown[] = result?.timestamp ?? [];
+  const quote = result?.indicators?.quote?.[0];
+  if (!Array.isArray(timestamps) || !quote) throw new Error("NO_CANDLE_DATA");
+  return timestamps.map((time: unknown, i: number) => ({
+    time: Number(time),
+    open: Number(quote.open?.[i]),
+    high: Number(quote.high?.[i]),
+    low: Number(quote.low?.[i]),
+    close: Number(quote.close?.[i]),
+    volume: Number(quote.volume?.[i] ?? 0),
+  })).filter((candle: MarketCandle) =>
+    Number.isFinite(candle.time) && candle.time > 0 &&
+    Number.isFinite(candle.open) && candle.open > 0 &&
+    Number.isFinite(candle.high) && candle.high > 0 &&
+    Number.isFinite(candle.low) && candle.low > 0 &&
+    Number.isFinite(candle.close) && candle.close > 0
+  ).sort((a: MarketCandle, b: MarketCandle) => a.time - b.time);
+}
+
+export async function getMarketCandles(symbol: string, range: string): Promise<MarketCandle[]> {
+  const selected = chartRanges[range];
+  if (!selected) throw new Error("INVALID_CHART_RANGE");
+  const key = process.env.MARKET_DATA_API_KEY;
+
+  // Prefer Finnhub when configured, but fall back to Yahoo chart history if the key,
+  // subscription, or intraday candle endpoint is unavailable.
+  if (key) {
+    try {
+      const now = Math.floor(Date.now() / 1000);
+      const url = new URL("https://finnhub.io/api/v1/stock/candle");
+      url.searchParams.set("symbol", symbol);
+      url.searchParams.set("resolution", selected.resolution);
+      url.searchParams.set("from", String(now - selected.seconds));
+      url.searchParams.set("to", String(now));
+      url.searchParams.set("token", key);
+      const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(8000) });
+      if (response.ok) {
+        const parsed = candlesSchema.safeParse(await response.json());
+        if (parsed.success) {
+          const { t, o, h, l, c, v } = parsed.data;
+          const candles = t.map((time, i) => ({ time, open: o[i], high: h[i], low: l[i], close: c[i], volume: v?.[i] ?? 0 }))
+            .filter((candle) => Number.isFinite(candle.open) && Number.isFinite(candle.high) && Number.isFinite(candle.low) && Number.isFinite(candle.close))
+            .sort((a, b) => a.time - b.time);
+          if (candles.length) return candles;
+        }
+      }
+    } catch {
+      // Try the independent historical chart source below.
+    }
+  }
+
+  const fallbackCandles = await getYahooCandles(symbol, range);
+  if (!fallbackCandles.length) throw new Error("NO_CANDLE_DATA");
+  return fallbackCandles;
 }
