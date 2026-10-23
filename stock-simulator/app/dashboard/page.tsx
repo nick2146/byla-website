@@ -66,7 +66,7 @@ export default function Dashboard() {
       }
     };
     void refreshQuote();
-    const interval = window.setInterval(() => { void refreshQuote(); }, 30000);
+    const interval = window.setInterval(() => { void refreshQuote(); }, 60000);
     return () => { active = false; window.clearInterval(interval); };
   }, [symbol]);
 
@@ -86,6 +86,19 @@ export default function Dashboard() {
       }
     })();
     return () => { active = false; };
+  }, [loadPortfolio, loadLeaders]);
+
+  useEffect(() => {
+    // Refresh holdings, real-world quotes, and leaderboard once per minute.
+    const interval = window.setInterval(() => {
+      void loadPortfolio().catch(() => {
+        // Keep the last successful portfolio and quotes if a refresh fails.
+      });
+      void loadLeaders().catch(() => {
+        // Keep the last successful leaderboard if a refresh fails.
+      });
+    }, 60000);
+    return () => window.clearInterval(interval);
   }, [loadPortfolio, loadLeaders]);
 
   async function getQuote() {
