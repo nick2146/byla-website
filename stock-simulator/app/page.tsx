@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { usernameModerationError } from "@/lib/username-moderation";
 
 const watchlist = [
   { symbol: "AAPL", name: "Apple", price: "View in simulator", change: "—" },
@@ -22,6 +23,10 @@ export default function Home() {
     event.preventDefault();
     setBusy(true);
     setNotice("");
+    if (mode === "signup") {
+      const usernameError = usernameModerationError(username);
+      if (usernameError) { setNotice(usernameError); setBusy(false); return; }
+    }
     try {
       const supabase = createClient();
       const result = mode === "signup"
@@ -68,7 +73,7 @@ export default function Home() {
           <p className="card-subtitle">Your virtual portfolio starts at $100,000.</p>
           <div className="mode-switch"><button className={mode === "signup" ? "selected" : ""} onClick={() => setMode("signup")}>Create account</button><button className={mode === "signin" ? "selected" : ""} onClick={() => setMode("signin")}>Sign in</button></div>
           <form onSubmit={submitAuth}>
-            {mode === "signup" && <label>Public username<input type="text" autoComplete="nickname" minLength={3} maxLength={24} pattern="[A-Za-z0-9_]+" required value={username} onChange={e => setUsername(e.target.value)} placeholder="MarketLearner24" /></label>}
+            {mode === "signup" && <label>Public username<input type="text" autoComplete="nickname" minLength={3} maxLength={24} pattern="[A-Za-z0-9_]+" required value={username} onChange={e => setUsername(e.target.value)} placeholder="MarketLearner24" aria-describedby="username-guidance" /><small id="username-guidance">3–24 letters, numbers, or underscores. Slurs and hateful usernames are not allowed.</small></label>}
             <label>Email address<input type="email" autoComplete="email" required value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" /></label>
             <label>Password<input type="password" autoComplete={mode === "signup" ? "new-password" : "current-password"} minLength={8} required value={password} onChange={e => setPassword(e.target.value)} placeholder="At least 8 characters" /></label>
             <button className="button primary full" type="submit" disabled={busy}>{busy ? "Please wait…" : mode === "signup" ? "Create free account" : "Sign in"} <span>→</span></button>
