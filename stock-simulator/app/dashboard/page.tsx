@@ -43,6 +43,9 @@ export default function Dashboard() {
   const [marketSort, setMarketSort] = useState("Hot");
   const [marketSearch, setMarketSearch] = useState("");
   const [marketQuotes, setMarketQuotes] = useState<Record<string, Quote>>({});
+  const [autoInvestEnabled, setAutoInvestEnabled] = useState(false);
+  const [autoInvestLastRun, setAutoInvestLastRun] = useState<string | null>(null);
+  const [autoInvestBusy, setAutoInvestBusy] = useState(false);
 
   const loadPortfolio = useCallback(async () => {
     const response = await fetch("/api/portfolio", { cache: "no-store" });
@@ -118,7 +121,7 @@ export default function Dashboard() {
         const { data, error } = await supabase.auth.getUser();
         if (error || !data.user) { window.location.href = "/"; return; }
         if (active) setEmail(data.user.email ?? "");
-        await Promise.all([loadPortfolio(), loadLeaders(), refreshClaimStatus()]);
+        await Promise.all([loadPortfolio(), loadLeaders(), refreshClaimStatus(), loadAutoInvestSettings()]);
       } catch (error) {
         if (active) setNotice(error instanceof Error ? error.message : "Could not load account.");
       } finally {
@@ -181,6 +184,37 @@ export default function Dashboard() {
     finally { setBusy(false); }
   }
 
+  const loadAutoInvestSettings = useCallback(async () => {
+    try {
+      const response = await fetch("/api/auto-invest/settings", { cache: "no-store" });
+      const data = await response.json();
+      if (response.ok) {
+        setAutoInvestEnabled(Boolean(data.enabled));
+        setAutoInvestLastRun(data.lastRunAt ?? null);
+      }
+    } catch { /* Settings can be retried with the dashboard refresh. */ }
+  }, []);
+
+  async function toggleAutoInvest() {
+    setAutoInvestBusy(true);
+    setNotice("");
+    try {
+      const response = await fetch("/api/auto-invest/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ enabled: !autoInvestEnabled }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error ?? "Could not update auto-investing.");
+      setAutoInvestEnabled(Boolean(data.enabled));
+      setNotice(data.enabled ? "Auto-investing enabled for your account only. It uses virtual cash." : "Auto-investing paused for your account.");
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "Could not update auto-investing.");
+    } finally {
+      setAutoInvestBusy(false);
+    }
+  }
+
   async function refreshClaimStatus() {
     try {
       const response = await fetch("/api/daily-claim", { cache: "no-store" });
@@ -237,6 +271,23 @@ export default function Dashboard() {
         <button className="button primary" onClick={claimDailyCash} disabled={!claimReady || claimBusy} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6", opacity: !claimReady || claimBusy ? 0.55 : 1 }}>
           {claimBusy ? "Claiming…" : claimReady ? "Claim $1,000" : "Claimed / Not ready"}
         </button>
+      </section>
+
+      <section className="panel" style={{ marginBottom: 18, border: autoInvestEnabled ? "1px solid #2563eb" : "1px solid #31435f", background: "linear-gradient(135deg, #14243b, #101827)" }}>
+        <div className="panel-heading">
+          <div>
+            <span className="eyebrow">PERSONAL AUTOMATION · VIRTUAL ONLY</span>
+            <h2>Auto-invest for your account</h2>
+            <p style={{ color: "#aab7cc", fontSize: 12, marginTop: 6 }}>
+              {autoInvestEnabled ? "Enabled — the weekday strategy checks your portfolio and may place simulated trades." : "Paused — no automatic trades will be placed."}
+            </p>
+            <p className="legal">Rule-based experiment: screens a fixed large-company/ETF watchlist for positive daily momentum, deploys up to 5% of available cash per run, keeps at least 50% cash, caps positions at 20% of estimated account value, and exits at +10% or -5% from average cost. It cannot predict market peaks or guarantee returns.</p>
+            <small style={{ color: "#aab7cc" }}>{autoInvestLastRun ? `Last scheduled check: ${new Date(autoInvestLastRun).toLocaleString()}` : "No scheduled check recorded yet."}</small>
+          </div>
+          <button className="button primary" onClick={() => void toggleAutoInvest()} disabled={autoInvestBusy} style={{ background: autoInvestEnabled ? "#b91c1c" : "#2457e6", color: "#fff", border: 0, whiteSpace: "nowrap" }}>
+            {autoInvestBusy ? "Updating…" : autoInvestEnabled ? "Pause auto-invest" : "Enable auto-invest"}
+          </button>
+        </div>
       </section>
 
       <section className="panel market-browser" style={{ marginBottom: 18, border: "1px solid #29456b", background: "radial-gradient(ellipse at top right, #1b3560 0%, #111b2c 48%, #101827 100%)", boxShadow: "0 18px 50px #0003" }}>
