@@ -95,10 +95,10 @@ export default function MarketChart({ symbol }: { symbol: string }) {
         <div><span className="eyebrow">LIVE MARKET CHART</span><h2>{symbol} price action</h2></div>
         <div className="chart-price">{lastClose === null ? "—" : lastClose.toLocaleString("en-US", { style: "currency", currency: "USD" })}<small className={changePct !== null && changePct < 0 ? "negative" : "positive"}>{changePct === null ? "Selected period" : `${changePct >= 0 ? "+" : ""}${changePct.toFixed(2)}% selected period`}</small></div>
       </div>
-      <div className="chart-controls" aria-label="Chart time range">{ranges.map((item) => <button type="button" key={item} className={range === item ? "selected" : ""} onClick={() => setRange(item)}>{item}</button>)}</div>
+      <div className="chart-controls" aria-label="Chart time range" style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "16px 0" }}>{ranges.map((item) => <button type="button" key={item} className={range === item ? "selected" : "button secondary"} onClick={() => setRange(item)} style={{ minWidth: 54, padding: "8px 12px", borderRadius: 8, border: "1px solid #2b3b53", background: range === item ? "#2457e6" : "#111b2c", color: "#f4f7fb", cursor: "pointer" }}>{item}</button>)}</div>
       {loading && <p className="chart-message">Loading latest market candles…</p>}
       {error && <p className="chart-message notice" role="status">{error}</p>}
-      <div ref={containerRef} className="chart-canvas" aria-label={`${symbol} candlestick price chart`} />
+      <div ref={containerRef} className="chart-canvas" style={{ height: 320, minHeight: 320, width: "100%" }} aria-label={`${symbol} candlestick price chart`} />
       <p className="chart-footnote">Market data may be delayed or unavailable outside trading hours. Candles are historical provider data; this is a virtual trading simulator, not a brokerage.</p>
     </section>
   );
