@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import MarketChart from "./market-chart";
 
 type Position = { symbol: string; quantity: number; average_cost: number };
 type Trade = { id: string; symbol: string; side: string; quantity: number; price: number; total: number; created_at: string };
@@ -51,6 +50,22 @@ export default function Dashboard() {
     const data = await response.json();
     if (response.ok) setLeaders(data.entries ?? []);
   }, []);
+
+  useEffect(() => {
+    let active = true;
+    const refreshQuote = async () => {
+      try {
+        const response = await fetch("/api/quote?symbol=" + encodeURIComponent(symbol), { cache: "no-store" });
+        const data = await response.json();
+        if (active && response.ok) setQuote(data);
+      } catch {
+        // Keep the last good quote visible if a refresh briefly fails.
+      }
+    };
+    void refreshQuote();
+    const interval = window.setInterval(() => { void refreshQuote(); }, 30000);
+    return () => { active = false; window.clearInterval(interval); };
+  }, [symbol]);
 
   useEffect(() => {
     let active = true;
@@ -124,7 +139,29 @@ export default function Dashboard() {
         <article><span>Estimated holdings value</span><strong>{money(equity)}</strong></article>
       </div>
 
-      <MarketChart symbol={symbol} onSymbolChange={(nextSymbol) => { setSymbol(nextSymbol); setQuote(null); }} />
+      <section className="panel" style={{ marginBottom: 22 }}>
+        <div className="panel-heading">
+          <div><span className="eyebrow">LIVE PRICE & ORDER ESTIMATE</span><h2>{quote?.symbol ?? symbol} market value</h2></div>
+          <span className="virtual-pill">VIRTUAL ONLY</span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 14 }}>
+          <div style={{ padding: 16, borderRadius: 12, background: "#111b2c" }}>
+            <span style={{ color: "#aab7cc", fontSize: 13 }}>Latest available price</span>
+            <strong style={{ display: "block", fontSize: 26, marginTop: 7 }}>{quote ? money(quote.price) : "Loading…"}</strong>
+            <small style={{ color: "#aab7cc" }}>{quote ? `Quote time: ${new Date(quote.asOf).toLocaleString()}` : "Refreshing quote…"}</small>
+          </div>
+          <div style={{ padding: 16, borderRadius: 12, background: "#111b2c" }}>
+            <span style={{ color: "#aab7cc", fontSize: 13 }}>Estimated order total</span>
+            <strong style={{ display: "block", fontSize: 26, marginTop: 7 }}>{quote ? money(quote.price * Math.max(0, Number(quantity) || 0)) : "—"}</strong>
+            <small style={{ color: "#aab7cc" }}>{Number(quantity) || 0} shares × current displayed quote</small>
+          </div>
+          <div style={{ padding: 16, borderRadius: 12, background: "#111b2c" }}>
+            <span style={{ color: "#aab7cc", fontSize: 13 }}>Available virtual cash</span>
+            <strong style={{ display: "block", fontSize: 26, marginTop: 7 }}>{money(cash)}</strong>
+            <small style={{ color: "#aab7cc" }}>Prices may be delayed outside market hours</small>
+          </div>
+        </div>
+      </section>
 
       <div className="dashboard-grid">
         <section className="panel">
@@ -137,11 +174,25 @@ export default function Dashboard() {
               <label>Action<select value={side} onChange={(event) => setSide(event.target.value as "buy" | "sell")}><option value="buy">Buy</option><option value="sell">Sell</option></select></label>
               <label>Shares<input type="number" min="0.000001" max="1000000" step="0.000001" value={quantity} onChange={(event) => setQuantity(event.target.value)} required /></label>
             </div>
-            <button type="button" className="button primary" disabled={busy} onClick={getQuote} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6", fontWeight: 700, opacity: busy ? 0.7 : 1 }}>Check latest quote</button>
-            {quote && <div className="quote-preview"><span>{quote.symbol} indicative quote</span><strong>{money(quote.price)}</strong><small>Provider timestamp: {new Date(quote.asOf).toLocaleString()}</small></div>}
+            <button type="button" className="button secondary" disabled={busy} onClick={() => {
+              const owned = Number(portfolio?.positions.find((position) => position.symbol === symbol)?.quantity ?? 0);
+              if (side === "sell") {
+                if (owned > 0) setQuantity(String(owned));
+                else setNotice("You do not own any shares of this stock to sell.");
+              } else if (quote?.price && quote.price > 0) {
+                const maxShares = Math.floor((cash / quote.price) * 1000000) / 1000000;
+                setQuantity(String(Math.max(0, maxShares)));
+                if (maxShares <= 0) setNotice("Your virtual cash is not enough to buy one share at this price.");
+                else setNotice("");
+              } else {
+                void getQuote().then(() => setNotice("Quote refreshed. Press Max again to calculate the maximum shares."));
+              }
+            }} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6", fontWeight: 700 }}>Max {side === "buy" ? "buy" : "sell"}</button>
+            <button type="button" className="button primary" disabled={busy} onClick={getQuote} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6", fontWeight: 700, opacity: busy ? 0.7 : 1 }}>Refresh latest quote</button>
+            {quote && <div className="quote-preview"><span>{quote.symbol} latest available quote</span><strong>{money(quote.price)}</strong><small>Provider timestamp: {new Date(quote.asOf).toLocaleString()}</small><small>Estimated order value: {money(quote.price * Math.max(0, Number(quantity) || 0))}</small></div>}
             <button type="submit" className="button primary full" disabled={busy}>{busy ? "Processing…" : side === "buy" ? "Buy with virtual cash" : "Sell virtual shares"} →</button>
           </form>
-          <p className="legal">The server retrieves and validates the quote again when an order is submitted; preview prices are not locked in.</p>
+          <p className="legal">Quotes refresh automatically every 30 seconds. Orders execute using the latest price returned by the provider; outside market hours this may be the previous closing price. This is a virtual simulator only.</p>
           {notice && <p className="notice" role="status">{notice}</p>}
         </section>
 
