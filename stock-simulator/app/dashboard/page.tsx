@@ -9,7 +9,11 @@ type Portfolio = { portfolio: { cash: number; updated_at: string } | null; posit
 type Quote = { symbol: string; price: number; asOf: string; change?: number | null; changePercent?: number | null };
 type Leader = { rank: number; username: string; totalValue: number; returnPercent: number; isCurrentUser: boolean; quotesComplete: boolean };
 type MarketAsset = { symbol: string; name: string; kind: "stock" | "crypto"; logo: string };
-const money = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: n < 1 ? 4 : 2 }).format(n);\nconst marketAssets: MarketAsset[] = [\n  { symbol: "AAPL", name: "Apple", kind: "stock", logo: "A" }, { symbol: "TSLA", name: "Tesla", kind: "stock", logo: "T" }, { symbol: "NVDA", name: "NVIDIA", kind: "stock", logo: "N" }, { symbol: "MSFT", name: "Microsoft", kind: "stock", logo: "M" }, { symbol: "AMZN", name: "Amazon", kind: "stock", logo: "a" }, { symbol: "GOOGL", name: "Alphabet", kind: "stock", logo: "G" }, { symbol: "META", name: "Meta Platforms", kind: "stock", logo: "M" }, { symbol: "NFLX", name: "Netflix", kind: "stock", logo: "N" }, { symbol: "JPM", name: "JPMorgan Chase", kind: "stock", logo: "J" }, { symbol: "KO", name: "Coca-Cola", kind: "stock", logo: "C" },\n  { symbol: "BTC-USD", name: "Bitcoin", kind: "crypto", logo: "₿" }, { symbol: "ETH-USD", name: "Ethereum", kind: "crypto", logo: "◆" }, { symbol: "ADA-USD", name: "Cardano", kind: "crypto", logo: "●" }, { symbol: "XRP-USD", name: "XRP", kind: "crypto", logo: "X" }, { symbol: "SOL-USD", name: "Solana", kind: "crypto", logo: "S" }, { symbol: "DOGE-USD", name: "Dogecoin", kind: "crypto", logo: "Ð" }, { symbol: "DOT-USD", name: "Polkadot", kind: "crypto", logo: "●" }, { symbol: "AVAX-USD", name: "Avalanche", kind: "crypto", logo: "A" },\n];
+const money = (n: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: n < 1 ? 4 : 2 }).format(n);
+const marketAssets: MarketAsset[] = [
+  { symbol: "AAPL", name: "Apple", kind: "stock", logo: "A" }, { symbol: "TSLA", name: "Tesla", kind: "stock", logo: "T" }, { symbol: "NVDA", name: "NVIDIA", kind: "stock", logo: "N" }, { symbol: "MSFT", name: "Microsoft", kind: "stock", logo: "M" }, { symbol: "AMZN", name: "Amazon", kind: "stock", logo: "a" }, { symbol: "GOOGL", name: "Alphabet", kind: "stock", logo: "G" }, { symbol: "META", name: "Meta Platforms", kind: "stock", logo: "M" }, { symbol: "NFLX", name: "Netflix", kind: "stock", logo: "N" }, { symbol: "JPM", name: "JPMorgan Chase", kind: "stock", logo: "J" }, { symbol: "KO", name: "Coca-Cola", kind: "stock", logo: "C" },
+  { symbol: "BTC-USD", name: "Bitcoin", kind: "crypto", logo: "₿" }, { symbol: "ETH-USD", name: "Ethereum", kind: "crypto", logo: "◆" }, { symbol: "ADA-USD", name: "Cardano", kind: "crypto", logo: "●" }, { symbol: "XRP-USD", name: "XRP", kind: "crypto", logo: "X" }, { symbol: "SOL-USD", name: "Solana", kind: "crypto", logo: "S" }, { symbol: "DOGE-USD", name: "Dogecoin", kind: "crypto", logo: "Ð" }, { symbol: "DOT-USD", name: "Polkadot", kind: "crypto", logo: "●" }, { symbol: "AVAX-USD", name: "Avalanche", kind: "crypto", logo: "A" },
+];
 const stocks = [
   ["AAPL", "Apple"], ["MSFT", "Microsoft"], ["NVDA", "NVIDIA"], ["TSLA", "Tesla"],
   ["AMZN", "Amazon"], ["GOOGL", "Alphabet"], ["META", "Meta Platforms"], ["NFLX", "Netflix"],
@@ -34,7 +38,11 @@ export default function Dashboard() {
   const [claimNext, setClaimNext] = useState<string | null>(null);
   const [claimBusy, setClaimBusy] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [lastUpdated, setLastUpdated] = useState<string | null>(null);\n  const [marketKind, setMarketKind] = useState<"stock" | "crypto">("stock");\n  const [marketSort, setMarketSort] = useState("Hot");\n  const [marketSearch, setMarketSearch] = useState("");\n  const [marketQuotes, setMarketQuotes] = useState<Record<string, Quote>>({});
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [marketKind, setMarketKind] = useState<"stock" | "crypto">("stock");
+  const [marketSort, setMarketSort] = useState("Hot");
+  const [marketSearch, setMarketSearch] = useState("");
+  const [marketQuotes, setMarketQuotes] = useState<Record<string, Quote>>({});
 
   const loadPortfolio = useCallback(async () => {
     const response = await fetch("/api/portfolio", { cache: "no-store" });
