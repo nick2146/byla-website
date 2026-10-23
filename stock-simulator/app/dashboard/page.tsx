@@ -175,11 +175,19 @@ export default function Dashboard() {
         </button>
       </section>
 
+      <section className="panel" style={{ marginBottom: 18, border: "1px solid #263b5d", background: "linear-gradient(135deg, #14243b, #101827)" }}>
+        <span className="eyebrow">TOTAL PORTFOLIO PROFIT / LOSS</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginTop: 8 }}>
+          <strong style={{ fontSize: 32, color: changeColor(unrealizedProfitLoss) }}>{changeIcon(unrealizedProfitLoss)} {formatChange(unrealizedProfitLoss)}</strong>
+          <span style={{ color: "#aab7cc", fontSize: 13 }}>Unrealized profit/loss across all current holdings, based on latest available quotes</span>
+        </div>
+      </section>
+
       <div className="dashboard-stats">
         <article><span>Available virtual cash</span><strong>{money(cash)}</strong></article>
         <article><span>Positions</span><strong>{portfolio?.positions.length ?? 0}</strong></article>
         <article><span>Estimated holdings value</span><strong>{money(equity)}</strong></article>
-        <article><span>Unrealized profit / loss</span><strong style={{ color: changeColor(unrealizedProfitLoss) }}>{changeIcon(unrealizedProfitLoss)} {formatChange(unrealizedProfitLoss)}</strong><small style={{ color: "#aab7cc" }}>Based on latest available quotes</small></article>
+        <article><span>Total account value</span><strong>{money(cash + equity)}</strong><small style={{ color: "#aab7cc" }}>Virtual cash + holdings</small></article>
       </div>
 
       <section className="panel" style={{ marginBottom: 22 }}>
@@ -243,7 +251,7 @@ export default function Dashboard() {
           <div className="panel-heading"><div><span className="eyebrow">YOUR HOLDINGS</span><h2>Positions</h2></div></div>
           {!portfolio?.positions.length ? <p className="empty-state">No holdings yet. Select a stock, check its quote, and place a practice order.</p> :
             <div className="table-wrap"><table><thead><tr><th>Symbol</th><th>Shares</th><th>Average cost</th><th>Latest quote</th><th>Market value</th><th>Profit / loss</th></tr></thead><tbody>{portfolio.positions.map((position) =>
-              <tr key={position.symbol}><td><b>{position.symbol}</b></td><td>{Number(position.quantity).toLocaleString()}</td><td>{money(Number(position.average_cost))}</td><td>{quotes[position.symbol] ? money(quotes[position.symbol].price) : "Unavailable"}</td><td>{money(Number(position.quantity) * (quotes[position.symbol]?.price ?? Number(position.average_cost)))}</td><td style={{ color: quotes[position.symbol] ? changeColor((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity)) : "#aab7cc", fontWeight: 700 }}>{quotes[position.symbol] ? <>{changeIcon((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity))} {formatChange((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity))}</> : "—"}</td></tr>
+              <tr key={position.symbol}><td><b>{position.symbol}</b></td><td>{Number(position.quantity).toLocaleString()}</td><td>{money(Number(position.average_cost))}</td><td>{quotes[position.symbol] ? <span style={{ color: changeColor(quotes[position.symbol].price - Number(position.average_cost)), fontWeight: 700 }}>{changeIcon(quotes[position.symbol].price - Number(position.average_cost))} {money(quotes[position.symbol].price)}</span> : "Unavailable"}</td><td>{money(Number(position.quantity) * (quotes[position.symbol]?.price ?? Number(position.average_cost)))}</td><td style={{ color: quotes[position.symbol] ? changeColor((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity)) : "#aab7cc", fontWeight: 700 }}>{quotes[position.symbol] ? <>{changeIcon((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity))} {formatChange((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity))}</> : "—"}</td></tr>
             )}</tbody></table></div>}
         </section>
       </div>
