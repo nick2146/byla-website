@@ -97,6 +97,17 @@ export default function Dashboard() {
     return () => window.clearInterval(interval);
   }, [loadMarketQuotes]);
 
+  const loadAutoInvestSettings = useCallback(async () => {
+    try {
+      const response = await fetch("/api/auto-invest/settings", { cache: "no-store" });
+      const data = await response.json();
+      if (response.ok) {
+        setAutoInvestEnabled(Boolean(data.enabled));
+        setAutoInvestLastRun(data.lastRunAt ?? null);
+      }
+    } catch { /* Settings can be retried with the dashboard refresh. */ }
+  }, []);
+
   useEffect(() => {
     let active = true;
     const refreshQuote = async () => {
@@ -183,17 +194,6 @@ export default function Dashboard() {
     } catch (error) { setNotice(error instanceof Error ? error.message : "Trade failed."); }
     finally { setBusy(false); }
   }
-
-  const loadAutoInvestSettings = useCallback(async () => {
-    try {
-      const response = await fetch("/api/auto-invest/settings", { cache: "no-store" });
-      const data = await response.json();
-      if (response.ok) {
-        setAutoInvestEnabled(Boolean(data.enabled));
-        setAutoInvestLastRun(data.lastRunAt ?? null);
-      }
-    } catch { /* Settings can be retried with the dashboard refresh. */ }
-  }, []);
 
   async function toggleAutoInvest() {
     setAutoInvestBusy(true);
