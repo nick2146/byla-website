@@ -15,15 +15,43 @@ export type MarketCandle = { time: number; open: number; high: number; low: numb
 
 export async function getMarketQuote(symbol: string): Promise<MarketQuote> {
   const key = process.env.MARKET_DATA_API_KEY;
-  if (!key) throw new Error("MARKET_DATA_NOT_CONFIGURED");
-  const url = new URL("https://finnhub.io/api/v1/quote");
-  url.searchParams.set("symbol", symbol);
-  url.searchParams.set("token", key);
-  const response = await fetch(url, { next: { revalidate: 15 }, signal: AbortSignal.timeout(8000) });
-  if (!response.ok) throw new Error("MARKET_DATA_PROVIDER_UNAVAILABLE");
-  const parsed = quoteSchema.safeParse(await response.json());
-  if (!parsed.success || parsed.data.c <= 0 || parsed.data.t <= 0) throw new Error("NO_CURRENT_QUOTE");
-  return { symbol, price: parsed.data.c, change: parsed.data.d ?? null, changePercent: parsed.data.dp ?? null, asOf: new Date(parsed.data.t * 1000).toISOString() };
+  if (key) {
+    try {
+      const url = new URL("https://finnhub.io/api/v1/quote");
+      url.searchParams.set("symbol", symbol);
+      url.searchParams.set("token", key);
+      const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(6000) });
+      if (response.ok) {
+        const parsed = quoteSchema.safeParse(await response.json());
+        if (parsed.success && parsed.data.c > 0 && parsed.data.t > 0) {
+          return { symbol, price: parsed.data.c, change: parsed.data.d ?? null, changePercent: parsed.data.dp ?? null, asOf: new Date(parsed.data.t * 1000).toISOString() };
+        }
+      }
+    } catch {
+      // Try the independent quote source below.
+    }
+  }
+
+  // Use the most recent market price from Yahoo when Finnhub is unavailable or not configured.
+  const url = new URL(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}`);
+  url.searchParams.set("range", "5d");
+  url.searchParams.set("interval", "1d");
+  const response = await fetch(url, {
+    cache: "no-store",
+    headers: { Accept: "application/json", "User-Agent": "Mozilla/5.0 BYLA-Markets/1.0" },
+    signal: AbortSignal.timeout(8000),
+  });
+  if (!response.ok) throw new Error(key ? "MARKET_DATA_PROVIDER_UNAVAILABLE" : "MARKET_DATA_NOT_CONFIGURED");
+  const payload = await response.json();
+  const result = payload?.chart?.result?.[0];
+  const meta = result?.meta;
+  const price = Number(meta?.regularMarketPrice ?? result?.indicators?.quote?.[0]?.close?.filter((v: unknown) => typeof v === "number").at(-1));
+  const timestamp = Number(meta?.regularMarketTime ?? result?.timestamp?.at(-1));
+  const previous = Number(meta?.chartPreviousClose ?? meta?.previousClose);
+  if (!Number.isFinite(price) || price <= 0 || !Number.isFinite(timestamp) || timestamp <= 0) throw new Error("NO_CURRENT_QUOTE");
+  const change = Number.isFinite(previous) && previous > 0 ? price - previous : null;
+  const changePercent = change !== null && previous > 0 ? change / previous * 100 : null;
+  return { symbol, price, change, changePercent, asOf: new Date(timestamp * 1000).toISOString() };
 }
 
 const chartRanges: Record<string, { seconds: number; resolution: string; yahooRange: string; yahooInterval: string }> = {
