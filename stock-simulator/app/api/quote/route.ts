@@ -15,8 +15,10 @@ export async function GET(request: Request) {
     if (limitError) throw new Error("RATE_LIMIT_SERVICE_UNAVAILABLE");
     if (!allowed) return NextResponse.json({ error: "Quote request limit reached. Please wait a minute." }, { status: 429 });
     const quote = await getMarketQuote(parsed.data);
-    const age = Date.now() - new Date(quote.asOf).getTime();
-    if (age > 900000 || age < -60000) return NextResponse.json({ error: "The provider returned a stale quote." }, { status: 409 });
+    const quoteTime = new Date(quote.asOf).getTime();
+    if (!Number.isFinite(quoteTime) || quoteTime <= 0 || quoteTime > Date.now() + 60000) {
+      return NextResponse.json({ error: "The market provider returned an invalid quote." }, { status: 502 });
+    }
     return NextResponse.json(quote, { headers: { "Cache-Control": "private, no-store" } });
   } catch (e) {
     const missing = e instanceof Error && e.message === "MARKET_DATA_NOT_CONFIGURED";
