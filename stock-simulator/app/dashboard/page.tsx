@@ -28,7 +28,10 @@ export default function Dashboard() {
   const [quote, setQuote] = useState<Quote | null>(null);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
-  const [loading, setLoading] = useState(true);\n  const [claimReady, setClaimReady] = useState(false);\n  const [claimNext, setClaimNext] = useState<string | null>(null);\n  const [claimBusy, setClaimBusy] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [claimReady, setClaimReady] = useState(false);
+  const [claimNext, setClaimNext] = useState<string | null>(null);
+  const [claimBusy, setClaimBusy] = useState(false);
 
   const loadPortfolio = useCallback(async () => {
     const response = await fetch("/api/portfolio", { cache: "no-store" });
@@ -114,7 +117,25 @@ export default function Dashboard() {
     finally { setBusy(false); }
   }
 
-  async function refreshClaimStatus() {\n    try {\n      const response = await fetch("/api/daily-claim", { cache: "no-store" });\n      const data = await response.json();\n      if (response.ok) { setClaimReady(Boolean(data.canClaim)); setClaimNext(data.nextClaimAt ?? null); }\n    } catch { /* Reward status can be retried by refreshing the page. */ }\n  }\n\n  async function claimDailyCash() {\n    setClaimBusy(true); setNotice("");\n    try {\n      const response = await fetch("/api/daily-claim", { method: "POST" });\n      const data = await response.json();\n      if (!response.ok) throw new Error(data.error ?? "Could not claim daily virtual cash.");\n      setClaimReady(false); setClaimNext(data.nextClaimAt ?? null);\n      setNotice("Daily reward claimed! $1,000 has been added to your virtual cash.");\n      await loadPortfolio();\n    } catch (error) { setNotice(error instanceof Error ? error.message : "Could not claim daily virtual cash."); await refreshClaimStatus(); }\n    finally { setClaimBusy(false); }\n  }\n\n  async function signOut() { await createClient().auth.signOut(); window.location.href = "/"; }
+  async function refreshClaimStatus() {
+    try {
+      const response = await fetch("/api/daily-claim", { cache: "no-store" });
+      const data = await response.json();
+      if (response.ok) { setClaimReady(Boolean(data.canClaim)); setClaimNext(data.nextClaimAt ?? null); }
+    } catch { /* Reward status can be retried by refreshing the page. */ }
+  }
+
+  async function claimDailyCash() {
+    setClaimBusy(true); setNotice("");
+    try {
+      const response = await fetch("/api/daily-claim", { method: "POST" });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error ?? "Could not claim daily virtual cash.");
+      setClaimReady(false); setClaimNext(data.nextClaimAt ?? null);
+      setNotice("Daily reward claimed! $1,000 has been added to your virtual cash.");
+      await loadPortfolio();\n    } catch (error) { setNotice(error instanceof Error ? error.message : "Could not claim daily virtual cash."); await refreshClaimStatus(); }
+    finally { setClaimBusy(false); }
+  }\n\n  async function signOut() { await createClient().auth.signOut(); window.location.href = "/"; }
 
   const cash = Number(portfolio?.portfolio?.cash ?? 100000);
   const equity = (portfolio?.positions ?? []).reduce((sum, position) => sum + Number(position.quantity) * (quotes[position.symbol]?.price ?? Number(position.average_cost)), 0);
