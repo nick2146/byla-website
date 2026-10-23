@@ -133,9 +133,12 @@ export default function Dashboard() {
       if (!response.ok) throw new Error(data.error ?? "Could not claim daily virtual cash.");
       setClaimReady(false); setClaimNext(data.nextClaimAt ?? null);
       setNotice("Daily reward claimed! $1,000 has been added to your virtual cash.");
-      await loadPortfolio();\n    } catch (error) { setNotice(error instanceof Error ? error.message : "Could not claim daily virtual cash."); await refreshClaimStatus(); }
+      await loadPortfolio();
+    } catch (error) { setNotice(error instanceof Error ? error.message : "Could not claim daily virtual cash."); await refreshClaimStatus(); }
     finally { setClaimBusy(false); }
-  }\n\n  async function signOut() { await createClient().auth.signOut(); window.location.href = "/"; }
+  }
+
+  async function signOut() { await createClient().auth.signOut(); window.location.href = "/"; }
 
   const cash = Number(portfolio?.portfolio?.cash ?? 100000);
   const equity = (portfolio?.positions ?? []).reduce((sum, position) => sum + Number(position.quantity) * (quotes[position.symbol]?.price ?? Number(position.average_cost)), 0);
