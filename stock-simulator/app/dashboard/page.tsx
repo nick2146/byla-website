@@ -137,7 +137,7 @@ export default function Dashboard() {
               <label>Action<select value={side} onChange={(event) => setSide(event.target.value as "buy" | "sell")}><option value="buy">Buy</option><option value="sell">Sell</option></select></label>
               <label>Shares<input type="number" min="0.000001" max="1000000" step="0.000001" value={quantity} onChange={(event) => setQuantity(event.target.value)} required /></label>
             </div>
-            <button type="button" className="button secondary" disabled={busy} onClick={getQuote}>Check latest quote</button>
+            <button type="button" className="button primary" disabled={busy} onClick={getQuote} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6", fontWeight: 700, opacity: busy ? 0.7 : 1 }}>Check latest quote</button>
             {quote && <div className="quote-preview"><span>{quote.symbol} indicative quote</span><strong>{money(quote.price)}</strong><small>Provider timestamp: {new Date(quote.asOf).toLocaleString()}</small></div>}
             <button type="submit" className="button primary full" disabled={busy}>{busy ? "Processing…" : side === "buy" ? "Buy with virtual cash" : "Sell virtual shares"} →</button>
           </form>
