@@ -129,7 +129,7 @@ export default function Dashboard() {
       }
     })();
     return () => { active = false; };
-  }, [loadPortfolio, loadLeaders]);
+  }, [loadPortfolio, loadLeaders, loadAutoInvestSettings]);
 
   useEffect(() => {
     // Refresh holdings, real-world quotes, and leaderboard once per minute.
