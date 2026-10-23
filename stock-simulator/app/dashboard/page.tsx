@@ -249,7 +249,7 @@ export default function Dashboard() {
       </section>
 
       <section className="panel history-panel" id="leaderboard">
-        <div className="panel-heading"><div><span className="eyebrow">COMMUNITY CHALLENGE</span><h2>Individual leaderboard</h2></div><button className="button secondary" onClick={loadLeaders}>Refresh</button></div>
+        <div className="panel-heading"><div><span className="eyebrow">COMMUNITY CHALLENGE</span><h2>Individual leaderboard</h2></div><button className="button primary" onClick={loadLeaders} style={{ background: "#2457e6", color: "#ffffff", border: "1px solid #2457e6" }}>Refresh</button></div>
         <p className="legal">Ranked by estimated account value using latest quotes; unavailable quotes fall back to average cost and are marked with an asterisk.</p>
         {!leaders.length ? <p className="empty-state">No leaderboard data yet, or the service is temporarily unavailable.</p> :
           <div className="table-wrap"><table><thead><tr><th>Rank</th><th>Student</th><th>Estimated value</th><th>Return</th></tr></thead><tbody>{leaders.map((leader) =>
