@@ -124,7 +124,7 @@ export default function Dashboard() {
         <article><span>Estimated holdings value</span><strong>{money(equity)}</strong></article>
       </div>
 
-      <MarketChart symbol={symbol} />
+      <MarketChart symbol={symbol} onSymbolChange={(nextSymbol) => { setSymbol(nextSymbol); setQuote(null); }} />
 
       <div className="dashboard-grid">
         <section className="panel">
