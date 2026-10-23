@@ -32,6 +32,8 @@ export default function Dashboard() {
   const [claimReady, setClaimReady] = useState(false);
   const [claimNext, setClaimNext] = useState<string | null>(null);
   const [claimBusy, setClaimBusy] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   const loadPortfolio = useCallback(async () => {
     const response = await fetch("/api/portfolio", { cache: "no-store" });
@@ -45,7 +47,14 @@ export default function Dashboard() {
         if (result.ok) next[position.symbol] = await result.json();
       } catch { /* Keep average cost as the fallback when a quote is unavailable. */ }
     }));
-    setQuotes(next);
+    setQuotes((current) => {
+      const merged = { ...current, ...next };
+      for (const existing of Object.keys(merged)) {
+        if (!(data.positions as Position[]).some((position) => position.symbol === existing)) delete merged[existing];
+      }
+      return merged;
+    });
+    setLastUpdated(new Date().toISOString());
   }, []);
 
   const loadLeaders = useCallback(async () => {
@@ -100,6 +109,17 @@ export default function Dashboard() {
     }, 60000);
     return () => window.clearInterval(interval);
   }, [loadPortfolio, loadLeaders]);
+
+  async function refreshDashboard() {
+    setRefreshing(true);
+    try {
+      await Promise.all([loadPortfolio(), loadLeaders()]);
+    } catch {
+      setNotice("Refresh failed. Showing the last successfully loaded data.");
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   async function getQuote() {
     setBusy(true); setNotice(""); setQuote(null);
@@ -256,15 +276,15 @@ export default function Dashboard() {
             {quote && <div className="quote-preview"><span>{quote.symbol} latest available quote</span><strong>{money(quote.price)}</strong><small>Provider timestamp: {new Date(quote.asOf).toLocaleString()}</small><small>Estimated order value: {money(quote.price * Math.max(0, Number(quantity) || 0))}</small></div>}
             <button type="submit" className="button primary full" disabled={busy}>{busy ? "Processing…" : side === "buy" ? "Buy with virtual cash" : "Sell virtual shares"} →</button>
           </form>
-          <p className="legal">Quotes refresh automatically every 30 seconds. Orders execute using the latest price returned by the provider; outside market hours this may be the previous closing price. This is a virtual simulator only.</p>
+          <p className="legal">Portfolio holdings and leaderboard refresh automatically every 60 seconds. The selected stock quote also refreshes every 60 seconds. Orders execute using the latest price returned by the provider; outside market hours this may be the previous closing price. This is a virtual simulator only.</p>
           {notice && <p className="notice" role="status">{notice}</p>}
         </section>
 
         <section className="panel">
           <div className="panel-heading"><div><span className="eyebrow">YOUR HOLDINGS</span><h2>Positions</h2></div></div>
           {!portfolio?.positions.length ? <p className="empty-state">No holdings yet. Select a stock, check its quote, and place a practice order.</p> :
-            <div className="table-wrap"><table><thead><tr><th>Symbol</th><th>Shares</th><th>Average cost</th><th>Latest quote</th><th>Market value</th><th>Profit / loss</th></tr></thead><tbody>{portfolio.positions.map((position) =>
-              <tr key={position.symbol}><td><b>{position.symbol}</b></td><td>{Number(position.quantity).toLocaleString()}</td><td>{money(Number(position.average_cost))}</td><td>{quotes[position.symbol] ? <span style={{ color: changeColor(quotes[position.symbol].price - Number(position.average_cost)), fontWeight: 700 }}>{changeIcon(quotes[position.symbol].price - Number(position.average_cost))} {money(quotes[position.symbol].price)}</span> : "Unavailable"}</td><td>{money(Number(position.quantity) * (quotes[position.symbol]?.price ?? Number(position.average_cost)))}</td><td style={{ color: quotes[position.symbol] ? changeColor((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity)) : "#aab7cc", fontWeight: 700 }}>{quotes[position.symbol] ? <>{changeIcon((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity))} {formatChange((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity))}</> : "—"}</td></tr>
+            <div className="table-wrap"><table><thead><tr><th>Symbol</th><th>Shares</th><th>Average cost</th><th>Latest quote</th><th>Market value</th><th>Profit / loss</th><th>Return</th></tr></thead><tbody>{portfolio.positions.map((position) =>
+              <tr key={position.symbol}><td><b>{position.symbol}</b></td><td>{Number(position.quantity).toLocaleString()}</td><td>{money(Number(position.average_cost))}</td><td>{quotes[position.symbol] ? <span style={{ color: changeColor(quotes[position.symbol].price - Number(position.average_cost)), fontWeight: 700 }}>{changeIcon(quotes[position.symbol].price - Number(position.average_cost))} {money(quotes[position.symbol].price)}</span> : "Unavailable"}</td><td>{money(Number(position.quantity) * (quotes[position.symbol]?.price ?? Number(position.average_cost)))}</td><td style={{ color: quotes[position.symbol] ? changeColor((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity)) : "#aab7cc", fontWeight: 700 }}>{quotes[position.symbol] ? <>{changeIcon((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity))} {formatChange((quotes[position.symbol].price - Number(position.average_cost)) * Number(position.quantity))}</> : "—"}</td><td style={{ color: quotes[position.symbol] ? changeColor(quotes[position.symbol].price - Number(position.average_cost)) : "#aab7cc", fontWeight: 700 }}>{quotes[position.symbol] && Number(position.average_cost) > 0 ? `${( ((quotes[position.symbol].price - Number(position.average_cost)) / Number(position.average_cost)) * 100).toFixed(2)}%` : "—"}</td></tr>
             )}</tbody></table></div>}
         </section>
       </div>
