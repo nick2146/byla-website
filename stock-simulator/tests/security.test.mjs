@@ -16,7 +16,8 @@ test("trade endpoint authenticates user and fetches provider quote on server", a
   assert.match(route, /getMarketQuote\(parsed\.data\.symbol\)/);
   assert.match(route, /p_user_id:\s*user\.id/);
   assert.doesNotMatch(route, /body\.price|parsed\.data\.price/);
-  assert.match(route, /900000/);
+  assert.match(route, /quoteTime\s*<=\s*0/);
+  assert.doesNotMatch(route, /quoteTime\s*<\s*Date\.now\(\)\s*-\s*900000/);
 });
 test("quote endpoint requires authentication and never exposes provider token", async () => {
   const route = await read("../app/api/quote/route.ts");
