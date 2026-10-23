@@ -124,7 +124,7 @@ export default function Dashboard() {
   return (
     <main className="dashboard-shell">
       <header className="dashboard-top">
-        <a className="brand" href="/"><span className="brand-mark">B</span><span>BYLA <b>MARKETS</b><small>STUDENT PAPER TRADING</small></span></a>
+        <a className="brand" href="/"><img className="brand-logo" src="/byla-markets-logo.svg" alt="BYLA mountain and flag logo" /><span>BYLA <b>MARKETS</b><small>STUDENT PAPER TRADING</small></span></a>
         <div className="dashboard-user"><span>{email}</span><button className="button secondary" onClick={signOut}>Sign out</button></div>
       </header>
 
