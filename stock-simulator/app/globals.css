@@ -50,3 +50,87 @@
 .dashboard-shell button:focus-visible,.dashboard-shell a:focus-visible,.dashboard-shell input:focus-visible,.dashboard-shell select:focus-visible{outline:2px solid #85b7ff;outline-offset:3px}
 @media(max-width:1000px){.dashboard-nav{gap:12px;margin-right:0}.welcome-banner{grid-template-columns:1fr}.progress-card{max-width:none}.learning-tips{grid-template-columns:1fr;gap:18px}}
 @media(max-width:700px){.dashboard-nav{width:100%;order:3;margin:0;padding-top:6px;overflow-x:auto}.dashboard-nav a{white-space:nowrap}.welcome-banner{padding:22px 18px;margin-top:18px;gap:20px}.welcome-copy h2{font-size:30px}.tip-grid{grid-template-columns:1fr}.tip-grid article{padding:16px}.dashboard-footer{align-items:flex-start;flex-direction:column}}
+
+
+/* BYLA Markets — premium terminal polish */
+:root{--bg:#070b13;--panel:#0f1726;--panel2:#131f31;--line:#25344a;--text:#f4f7ff;--muted:#9aaac0;--mint:#8abaff;--mint2:#397cf6}
+html{scroll-padding-top:24px;scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at 50% -18%,#19345a 0%,#0a1220 36%,#070b13 72%);background-attachment:fixed}
+::selection{background:#397cf655;color:#fff}
+button,a,input,select{ -webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #8abaff;outline-offset:3px}
+.dashboard-shell{max-width:1520px;padding:0 clamp(16px,4.5vw,68px)}
+.dashboard-top{position:sticky;top:0;z-index:30;min-height:76px;background:#080e19eF;backdrop-filter:blur(18px);border-bottom:1px solid #26354b;box-shadow:0 8px 30px #0002}
+.dashboard-top .brand{font-size:13px;letter-spacing:.06em}
+.dashboard-top .brand-logo{width:48px;height:42px}
+.dashboard-nav{padding:7px;background:#0e1726;border:1px solid #26354a;border-radius:13px;gap:4px}
+.dashboard-nav a{padding:10px 13px;border-radius:8px;color:#b5c2d5;font-size:12px;font-weight:600;white-space:nowrap}
+.dashboard-nav a:hover{color:#fff;background:#1a2a41}
+.dashboard-user>span{max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dashboard-shell .button{min-height:40px;border-radius:10px;padding:11px 15px;font-weight:700;letter-spacing:.005em;box-shadow:0 3px 10px #0001}
+.dashboard-shell .button.primary{background:linear-gradient(135deg,#9bc9ff,#5d9bff);color:#081426;border-color:#9bc9ff}
+.dashboard-shell .button.primary:hover:not(:disabled){background:linear-gradient(135deg,#c4e0ff,#80b3ff);box-shadow:0 5px 22px #438cff33}
+.dashboard-shell .button.secondary{background:#142136;border-color:#344a68;color:#dce9fb}
+.dashboard-heading{padding:40px 0 25px;align-items:center}
+.dashboard-heading h1{font-size:clamp(32px,3.7vw,48px);letter-spacing:-.055em}
+.dashboard-heading>div:first-child>p{line-height:1.65}
+.dashboard-value{position:relative;overflow:hidden;min-width:270px;padding:23px 25px;border-color:#34517a;background:linear-gradient(145deg,#142844,#0d1727);box-shadow:0 12px 35px #0002}
+.dashboard-value:after{content:"";position:absolute;width:150px;height:150px;border:1px solid #8abaff18;border-radius:50%;right:-65px;top:-90px;box-shadow:0 0 0 22px #8abaff08,0 0 0 44px #8abaff05;pointer-events:none}
+.dashboard-value strong{font-size:clamp(25px,3vw,34px);letter-spacing:-.04em}
+.dashboard-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0 0 18px}
+.dashboard-stats article,.panel{border-radius:17px;border-color:#26364d;background:linear-gradient(145deg,#111c2c,#0d1522);box-shadow:0 9px 30px #00000013}
+.dashboard-stats article{padding:21px;gap:12px;position:relative;overflow:hidden}
+.dashboard-stats article:before{content:"";position:absolute;left:0;top:0;width:100%;height:2px;background:linear-gradient(90deg,#568eff,#8abaff22);opacity:.8}
+.dashboard-stats span{font-size:11px;letter-spacing:.025em}
+.dashboard-stats strong{font-size:clamp(19px,2vw,25px);letter-spacing:-.035em}
+.dashboard-shell .panel{padding:clamp(17px,2vw,25px);margin-bottom:18px}
+.dashboard-shell .panel:hover,.dashboard-stats article:hover{border-color:#3a5273;box-shadow:0 14px 38px #0002}
+.panel-heading{margin-bottom:22px}
+.panel-heading h2{font-size:21px;letter-spacing:-.035em}
+.eyebrow{font-size:10px;letter-spacing:.15em}
+.virtual-pill{background:#142b48;border-color:#315a8a;color:#a7d0ff;padding:7px 10px;font-weight:700;white-space:nowrap}
+.welcome-banner{margin-top:25px;padding:clamp(22px,3vw,38px);border-radius:22px;border-color:#304d75;background:radial-gradient(ellipse at 95% 0%,#438cff30,transparent 38%),radial-gradient(ellipse at 0% 100%,#24487b22,transparent 45%),linear-gradient(120deg,#14243a,#0c1421 76%);box-shadow:0 22px 60px #0003}
+.welcome-copy h2{font-size:clamp(30px,3.5vw,45px);max-width:700px}
+.welcome-copy p{font-size:14px;max-width:560px}
+.progress-card{border-color:#344b6b;background:#0a1422d9;padding:22px}
+.progress-top strong{font-size:27px}
+.market-browser{scroll-margin-top:100px}
+#market-watch .panel-heading{align-items:start}
+#market-watch .virtual-pill{margin-top:5px}
+#market-watch input{min-height:42px}
+#market-watch button{transition:transform .16s ease,background .16s ease,border-color .16s ease}
+#market-watch button:hover{transform:translateY(-1px)}
+#market-watch>div:nth-of-type(3)>button{font-weight:600}
+#market-watch>div:last-of-type>div{transition:border-color .18s ease,transform .18s ease,background .18s ease}
+#market-watch>div:last-of-type>div:hover{border-color:#5275a2;background:linear-gradient(90deg,#ffffff0d,#ffffff03);transform:translateY(-1px)}
+#market-chart,#trade,#positions,#leaderboard,#learn-tips{scroll-margin-top:100px}
+.dashboard-grid{grid-template-columns:minmax(300px,.78fr) minmax(0,1.22fr);gap:18px}
+.trade-form{gap:16px}
+.trade-form label{font-size:12px;font-weight:600;color:#cbd7e8}
+.trade-form input,.trade-form select{min-height:44px;border-radius:10px;background:#091321;border-color:#30425b;padding:12px 13px;font-size:13px}
+.trade-form input:hover,.trade-form select:hover{border-color:#526c90}
+.trade-form input:focus,.trade-form select:focus{border-color:#78adff;box-shadow:0 0 0 3px #397cf622}
+.quote-preview{border-radius:12px;border-color:#315b8b;background:linear-gradient(135deg,#112844,#0d1c30);padding:16px}
+.quote-preview strong{font-size:24px}
+.table-wrap{border:1px solid #26364b;border-radius:12px;background:#0b1320;scrollbar-color:#405775 #0b1320}
+table{font-size:12px;white-space:nowrap}
+thead{background:#121e2f}
+th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9db0ca}
+th,td{padding:14px 13px;border-bottom:1px solid #202e42}
+th:first-child,td:first-child{padding-left:16px}
+tbody tr{transition:background .15s ease}
+tbody tr:hover{background:#ffffff06}
+.current-user-row{background:#142a45}
+.empty-state{padding:18px;border:1px dashed #34455d;border-radius:12px;background:#0c1523}
+.learning-tips{margin-top:36px;padding:40px 0 34px;border-color:#26364b}
+.tip-grid article{border-radius:15px;padding:20px;background:linear-gradient(145deg,#121f31,#0c1420);transition:transform .18s ease,border-color .18s ease}
+.tip-grid article:hover{transform:translateY(-3px);border-color:#45638a}
+.tip-grid h3{font-size:14px}
+.tip-grid p{font-size:12px}
+.dashboard-footer{margin-top:24px;padding:25px 0 34px}
+.dashboard-footer a{padding:9px 12px;border:1px solid #2e4565;border-radius:9px;background:#111e30}
+.notice{border-radius:11px;padding:13px 15px;line-height:1.65}
+.legal{font-size:11px;line-height:1.75}
+@media(max-width:1100px){.dashboard-shell{padding:0 24px}.dashboard-top{flex-wrap:wrap;padding:12px 0}.dashboard-nav{order:3;width:100%;justify-content:flex-start;overflow-x:auto}.dashboard-user{margin-left:auto}.dashboard-grid{grid-template-columns:1fr}.dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.dashboard-shell{padding:0 14px}.dashboard-top{position:relative;gap:12px}.dashboard-top .brand-logo{width:42px}.dashboard-user{width:100%;margin:0}.dashboard-user>span{max-width:calc(100% - 100px)}.dashboard-nav{padding:5px}.dashboard-nav a{padding:10px 12px}.welcome-banner{padding:22px 17px;border-radius:17px}.welcome-copy h2{font-size:31px}.welcome-actions{gap:13px}.progress-card{padding:17px}.dashboard-heading{padding:30px 0 20px;gap:17px}.dashboard-heading h1{font-size:34px}.dashboard-value{min-width:0;padding:19px;width:100%}.dashboard-stats{gap:10px}.dashboard-stats article{padding:16px;gap:9px}.dashboard-stats strong{font-size:20px}.dashboard-shell .panel{padding:16px;border-radius:14px}.panel-heading{align-items:flex-start}.panel-heading h2{font-size:19px}.virtual-pill{font-size:8px;padding:6px 7px}.trade-inline{gap:9px}.table-wrap{margin-top:8px}th,td{padding:12px 11px}.learning-tips{padding-top:30px}.tip-grid{grid-template-columns:1fr}.dashboard-footer{font-size:11px;line-height:1.6}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
