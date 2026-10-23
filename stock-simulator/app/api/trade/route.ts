@@ -18,7 +18,9 @@ export async function POST(request: Request) {
     // Never trust client prices or the request Host header. Fetch directly from the configured provider.
     const quote = await getMarketQuote(parsed.data.symbol);
     const quoteTime = new Date(quote.asOf).getTime();
-    if (!Number.isFinite(quoteTime) || Date.now()-quoteTime > 900000 || quoteTime > Date.now()+60000) return NextResponse.json({ error: "The market quote is stale. Please try again." }, { status: 409 });
+    if (!Number.isFinite(quoteTime) || quoteTime <= 0 || quoteTime > Date.now()+60000) return NextResponse.json({ error: "The market provider returned an invalid quote. Please try again." }, { status: 409 });
+    // Outside regular market hours, the provider's latest closing price can be older than 15 minutes.
+    // That is still valid for a clearly labeled educational paper trade.
     const { data, error } = await admin.rpc("execute_paper_trade", { p_user_id:user.id, p_symbol:parsed.data.symbol, p_side:parsed.data.side, p_quantity:parsed.data.quantity, p_price:quote.price, p_quote_as_of:quote.asOf });
     if (error) {
       const message = error.message.includes("INSUFFICIENT_CASH") ? "Not enough virtual cash." : error.message.includes("INSUFFICIENT_SHARES") ? "You do not own enough shares to sell." : "Trade could not be completed.";
