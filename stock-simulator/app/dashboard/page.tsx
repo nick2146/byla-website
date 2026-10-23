@@ -72,6 +72,28 @@ export default function Dashboard() {
     if (response.ok) setLeaders(data.entries ?? []);
   }, []);
 
+  const loadMarketQuotes = useCallback(async () => {
+    const assets = marketAssets.filter((asset) => asset.kind === marketKind);
+    const results = await Promise.all(assets.map(async (asset) => {
+      try {
+        const response = await fetch("/api/quote?symbol=" + encodeURIComponent(asset.symbol), { cache: "no-store" });
+        if (response.ok) return [asset.symbol, await response.json() as Quote] as const;
+      } catch { /* Retain the last successful quote. */ }
+      return null;
+    }));
+    setMarketQuotes((current) => {
+      const next = { ...current };
+      for (const result of results) if (result) next[result[0]] = result[1];
+      return next;
+    });
+  }, [marketKind]);
+
+  useEffect(() => {
+    void loadMarketQuotes();
+    const interval = window.setInterval(() => void loadMarketQuotes(), 60000);
+    return () => window.clearInterval(interval);
+  }, [loadMarketQuotes]);
+
   useEffect(() => {
     let active = true;
     const refreshQuote = async () => {
