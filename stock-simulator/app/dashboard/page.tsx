@@ -315,7 +315,7 @@ export default function Dashboard() {
       </section>
 
       <div className="dashboard-grid">
-        <section className="panel">
+        <section className="panel" id="trade">
           <div className="panel-heading"><div><span className="eyebrow">PAPER TRADING</span><h2>Place an order</h2></div><span className="virtual-pill">VIRTUAL ONLY</span></div>
           <form className="trade-form" onSubmit={trade}>
             <label>Stock<select value={symbol} onChange={(event) => { setSymbol(event.target.value); setQuote(null); }}>{
@@ -347,7 +347,7 @@ export default function Dashboard() {
           {notice && <p className="notice" role="status">{notice}</p>}
         </section>
 
-        <section className="panel">
+        <section className="panel" id="positions">
           <div className="panel-heading"><div><span className="eyebrow">YOUR HOLDINGS</span><h2>Positions</h2></div></div>
           {!portfolio?.positions.length ? <p className="empty-state">No holdings yet. Select a stock, check its quote, and place a practice order.</p> :
             <div className="table-wrap"><table><thead><tr><th>Symbol</th><th>Shares</th><th>Average cost</th><th>Latest quote</th><th>Market value</th><th>Profit / loss</th><th>Return</th></tr></thead><tbody>{portfolio.positions.map((position) =>
