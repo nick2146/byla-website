@@ -193,7 +193,7 @@ export default function Dashboard() {
       </header>
 
       <section className="dashboard-heading">
-        <div><span className="eyebrow">YOUR LEARNING TERMINAL</span><h1>Portfolio overview</h1><p>Every order uses virtual cash. No brokerage or real-money transactions.</p></div>
+        <div><span className="eyebrow">YOUR LEARNING TERMINAL</span><h1>Portfolio overview</h1><p>Every order uses virtual cash. No brokerage or real-money transactions.</p><p style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", fontSize: 11 }}><span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: refreshing ? "#eab308" : "#22c55e" }} />{refreshing ? "Updating portfolio…" : lastUpdated ? `Last portfolio update: ${new Date(lastUpdated).toLocaleTimeString()}` : "Waiting for first update"}<button className="button secondary" onClick={() => void refreshDashboard()} disabled={refreshing} style={{ padding: "7px 10px", background: "#2457e6", color: "#fff", border: "1px solid #2457e6" }}>{refreshing ? "Refreshing…" : "Refresh all data ↻"}</button></p></div>
         <div className="dashboard-value"><span>ESTIMATED ACCOUNT VALUE</span><strong>{money(cash + equity)}</strong><small>Starting balance: $100,000 USD virtual</small></div>
       </section>
 
