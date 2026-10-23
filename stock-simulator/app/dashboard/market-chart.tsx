@@ -49,25 +49,31 @@ export default function MarketChart({ symbol }: { symbol: string }) {
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    setError("");
-    fetch(`/api/candles?symbol=${encodeURIComponent(symbol)}&range=${range}`, { cache: "no-store" })
-      .then(async (response) => {
+    let firstLoad = true;
+    async function loadCandles() {
+      if (firstLoad) setLoading(true);
+      setError("");
+      try {
+        const response = await fetch(`/api/candles?symbol=${encodeURIComponent(symbol)}&range=${range}`, { cache: "no-store" });
         const data = await response.json();
         if (!response.ok) throw new Error(data.error ?? "Unable to load chart.");
-        return data as { candles: Candle[] };
-      })
-      .then((data) => {
         if (cancelled) return;
-        setCandles(data.candles);
-        const first = data.candles[0]?.close;
-        const last = data.candles[data.candles.length - 1]?.close;
+        const next = data.candles as Candle[];
+        setCandles(next);
+        const first = next[0]?.close;
+        const last = next[next.length - 1]?.close;
         setLastClose(last ?? null);
         setChangePct(first && last ? ((last - first) / first) * 100 : null);
-      })
-      .catch((reason: unknown) => { if (!cancelled) setError(reason instanceof Error ? reason.message : "Unable to load chart."); })
-      .finally(() => { if (!cancelled) setLoading(false); });
-    return () => { cancelled = true; };
+      } catch (reason) {
+        if (!cancelled) setError(reason instanceof Error ? reason.message : "Unable to load chart.");
+      } finally {
+        if (!cancelled) setLoading(false);
+        firstLoad = false;
+      }
+    }
+    void loadCandles();
+    const interval = window.setInterval(() => { void loadCandles(); }, 60000);
+    return () => { cancelled = true; window.clearInterval(interval); };
   }, [symbol, range]);
 
   useEffect(() => {
