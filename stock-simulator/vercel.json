@@ -1,8 +1,3 @@
 {
-  "crons": [
-    {
-      "path": "/api/auto-invest",
-      "schedule": "30 14 * * 1-5"
-    }
-  ]
+  "crons": []
 }
