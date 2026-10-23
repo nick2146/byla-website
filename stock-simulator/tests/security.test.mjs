@@ -42,3 +42,12 @@ test("leaderboard requires a signed-in session and does not return auth IDs", as
   assert.match(route, /isCurrentUser/);
   assert.doesNotMatch(route, /return \{userId:/);
 });
+
+test("username moderation blocks slurs and obfuscated hateful usernames", async () => {
+  const helper = await read("../lib/username-moderation.ts");
+  const page = await read("../app/page.tsx");
+  assert.match(helper, /username\.toLowerCase\(\)\.replace\(\/\[\^a-z0-9\]\/g, ""\)/);
+  assert.match(helper, /blockedUsernameTerms/);
+  assert.match(page, /usernameModerationError\(username\)/);
+  assert.match(page, /username-guidance/);
+});
