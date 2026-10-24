@@ -183,3 +183,74 @@ td{color:#dce6f4}
 @media(max-width:950px){.dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-nav{gap:5px;margin-right:0}.dashboard-nav a{padding:8px}}
 @media(max-width:600px){.dashboard-nav{display:flex;flex-wrap:wrap;width:100%;margin:0}.dashboard-nav a{font-size:11px}.welcome-banner{padding:21px;gap:20px}.dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.dashboard-stats article{min-width:0}.dashboard-footer{align-items:flex-start;flex-direction:column}#live-stock-chart .panel-heading{align-items:flex-start}.dashboard-value{min-width:0}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* BYLA Markets — editorial-grade visual system */
+:root{--bg:#070b12;--panel:#0e1827;--panel2:#132239;--line:#273c58;--text:#f6f8fc;--muted:#9eafc6;--mint:#9ac5ff;--mint2:#4d8fff}
+body{background:radial-gradient(ellipse at 50% -24%,#244a7b 0%,#0b1422 35%,#070b12 72%) fixed}
+.dashboard-shell{max-width:1600px}
+.dashboard-top{min-height:82px;border-bottom-color:#8bb8ff20}
+.dashboard-top .brand{gap:13px}
+.dashboard-top .brand span{line-height:1.2}
+.dashboard-top .brand small{margin-top:5px;font-size:8px;letter-spacing:.2em}
+.dashboard-nav{border-radius:14px;padding:6px;background:#0b1422cc;border-color:#ffffff12;box-shadow:inset 0 1px #ffffff08}
+.dashboard-nav a{padding:11px 14px;font-size:12px;letter-spacing:.01em}
+.dashboard-nav a:hover{background:linear-gradient(135deg,#23436b,#172943);box-shadow:inset 0 1px #ffffff0d}
+.dashboard-user{gap:12px}
+.dashboard-user>span{font-size:11px}
+.dashboard-heading{padding-top:48px;padding-bottom:28px}
+.dashboard-heading h1{font-size:clamp(36px,4vw,54px);line-height:1.04}
+.dashboard-heading .eyebrow{padding:8px 11px;border:1px solid #6da7ff35;border-radius:30px;background:#4d8fff0b}
+.dashboard-heading>div:first-child>p{max-width:550px;font-size:14px;line-height:1.8}
+.dashboard-value{border-radius:20px;padding:25px 28px;min-width:300px;background:radial-gradient(ellipse at 100% 0%,#438cff24,transparent 52%),linear-gradient(145deg,#142945,#0c1626);box-shadow:0 22px 60px #0003,inset 0 1px #ffffff0c}
+.dashboard-value span{text-transform:uppercase;letter-spacing:.12em}
+.dashboard-value strong{font-size:clamp(30px,3vw,39px)}
+.dashboard-stats{gap:16px;margin-bottom:22px}
+.dashboard-stats article{min-height:126px;padding:23px;border-radius:18px;background:linear-gradient(145deg,#121f31,#0b1421);border-color:#2b3d56}
+.dashboard-stats article:before{height:2px;background:linear-gradient(90deg,#4d8fff,#9ac5ff65,transparent)}
+.dashboard-stats article span{font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#9eafc6}
+.dashboard-stats article strong{font-size:clamp(20px,2vw,27px);line-height:1.2}
+.dashboard-grid{gap:20px}
+.dashboard-shell .panel{border-radius:19px;border-color:#293b55;background:linear-gradient(145deg,#111e30,#0b1421);box-shadow:0 15px 42px #0002,inset 0 1px #ffffff08;padding:clamp(20px,2.3vw,30px)}
+.panel-heading{margin-bottom:25px}
+.panel-heading h2{font-size:22px}
+.panel-heading .muted{font-size:9px;letter-spacing:.17em}
+.welcome-banner{min-height:290px;margin:30px 0 20px;padding:clamp(26px,3.5vw,46px);border-radius:25px;border-color:#527eb65e;background:radial-gradient(ellipse at 82% 15%,#3979ff3a,transparent 36%),radial-gradient(ellipse at 5% 100%,#28c8a318,transparent 35%),linear-gradient(120deg,#162d4d,#0b1422 74%);box-shadow:0 25px 80px #0004,inset 0 1px #ffffff10}
+.welcome-copy .eyebrow{color:#a9ceff}
+.welcome-copy h2{font-size:clamp(33px,4vw,51px);line-height:1.07;max-width:690px;margin:17px 0}
+.welcome-copy p{font-size:14px;line-height:1.9;color:#b4c3d8}
+.welcome-actions .primary{padding:14px 18px;box-shadow:0 8px 28px #4d8fff25}
+.progress-card{border-radius:18px;padding:24px;background:#081321cc;border-color:#3b5679;box-shadow:inset 0 1px #ffffff0b,0 15px 40px #0002}
+.progress-top{font-size:9px;letter-spacing:.16em}
+.progress-top strong{font-size:30px}
+.progress-track{height:8px;background:#253953}
+.progress-track span{background:linear-gradient(90deg,#4c8dff,#8ec4ff 75%,#b7dcff)}
+.progress-card li{font-size:12px}
+.dashboard-shell .button{border-radius:11px;min-height:43px}
+.dashboard-shell .button.primary{background:linear-gradient(135deg,#b2d5ff,#6ba5ff);box-shadow:0 5px 18px #4d8fff20}
+.dashboard-shell .button.secondary{background:#14233a;border-color:#344c6d}
+.trade-form label{gap:9px;font-size:12px}
+.trade-form input,.trade-form select{min-height:47px;border-radius:11px;background:#080f1b;border-color:#30445f;padding:13px 14px}
+.quote-preview{border-radius:14px;padding:17px;background:radial-gradient(ellipse at 100% 0%,#3979ff20,transparent 65%),linear-gradient(135deg,#112743,#0b1728)}
+.table-wrap{border-radius:14px;border-color:#293b55;background:#091321}
+table{font-size:12px}
+thead{background:#132137}
+th{padding-top:15px;padding-bottom:15px;font-size:9px;letter-spacing:.11em}
+td{padding-top:15px;padding-bottom:15px}
+tbody tr:hover{background:#8bb8ff0c}
+.empty-state{padding:22px;background:#0b1625;border-color:#344b68;border-radius:14px}
+.learning-tips{padding-top:48px;margin-top:40px;border-color:#2b3d56}
+.learning-tips h2{font-size:clamp(28px,3.5vw,40px)}
+.learning-tips>div:first-child>p{font-size:13px;line-height:1.9}
+.tip-grid{gap:14px}
+.tip-grid article{min-height:170px;padding:22px;border-radius:17px;border-color:#2b3d56;background:linear-gradient(145deg,#132238,#0b1421);box-shadow:inset 0 1px #ffffff07}
+.tip-grid article>span{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:10px;background:#4d8fff17;border:1px solid #4d8fff30;font-size:11px}
+.tip-grid h3{font-size:15px;margin:16px 0 9px}
+.tip-grid p{font-size:12px;line-height:1.8}
+.dashboard-footer{margin-top:34px;padding:27px 0 40px;border-color:#293b55;color:#8fa2bc;font-size:11px}
+.dashboard-footer a{border-radius:11px;padding:10px 14px;background:#132239;border-color:#334d70}
+#live-stock-chart,#market-watch{border-radius:20px!important}
+#live-stock-chart button{padding:9px 12px}
+#market-watch input{border-radius:11px!important;background:#080f1b!important;border-color:#2b3f5a!important}
+#market-watch button{border-radius:10px}
+@media(max-width:1000px){.dashboard-heading{padding-top:34px}.dashboard-value{min-width:260px}.welcome-banner{min-height:0}.dashboard-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.dashboard-heading h1{font-size:36px}.dashboard-value{min-width:0}.dashboard-stats article{min-height:112px;padding:16px}.welcome-banner{padding:23px 18px;border-radius:19px}.welcome-copy h2{font-size:32px}.progress-card{padding:18px}.dashboard-shell .panel{padding:17px}.tip-grid article{min-height:0}.dashboard-top{backdrop-filter:none}}
