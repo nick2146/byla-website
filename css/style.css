@@ -485,3 +485,64 @@ body[data-page="home"] .scroll-progress span{background:linear-gradient(90deg,#0
   .site-header .nav-links a{padding:8px 11px;font-size:8px;letter-spacing:.045em}
   .site-header .nav-cta{padding:12px 14px;font-size:8px}
 }
+
+
+/* Final header layout fix: prevent the navigation pills from colliding at tablet and laptop widths */
+@media (min-width: 801px) {
+  .site-header .nav {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 20px;
+    row-gap: 12px;
+    height: auto !important;
+    min-height: 0;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+  .site-header .brand { grid-column: 1; grid-row: 1; min-width: 0; }
+  .site-header .brand-logo { width: clamp(135px, 15vw, 180px); height: 58px; }
+  .site-header .nav-cta { grid-column: 2; grid-row: 1; justify-self: end; white-space: nowrap; }
+  .site-header .nav-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    min-width: 0;
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 10px;
+    padding: 4px 0;
+  }
+  .site-header .nav-links a {
+    flex: 0 0 auto;
+    min-height: 36px;
+    padding: 9px 13px;
+    border: 1px solid rgba(159,202,255,.17);
+    border-radius: 999px;
+    background: rgba(255,255,255,.035);
+    font-size: 9px;
+    line-height: 1.25;
+    letter-spacing: .045em;
+    white-space: nowrap;
+  }
+  .site-header .nav-links a::after { display: none !important; }
+  .site-header .nav-links a:hover,
+  .site-header .nav-links a[aria-current="page"] {
+    color: #fff;
+    border-color: rgba(112,182,255,.65);
+    background: linear-gradient(135deg,rgba(20,124,224,.28),rgba(78,171,255,.13));
+    box-shadow: 0 4px 16px rgba(8,124,240,.12);
+  }
+}
+@media (min-width: 801px) and (max-width: 1050px) {
+  .site-header .nav { column-gap: 12px; }
+  .site-header .nav-links { gap: 7px; }
+  .site-header .nav-links a { padding: 8px 10px; font-size: 8px; letter-spacing: .025em; }
+  .site-header .nav .nav-cta { padding: 11px 13px; font-size: 8px; }
+}
+@media (max-width: 800px) {
+  .site-header .nav { display: flex !important; height: 72px !important; min-height: 0; padding-top: 0; padding-bottom: 0; }
+  .site-header .nav-links { grid-column: auto; grid-row: auto; }
+}
