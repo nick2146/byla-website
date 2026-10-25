@@ -1857,3 +1857,15 @@ input::placeholder, textarea::placeholder { color: #8292a6 !important; }
 .blue-band .timeline-item p {
   color: #07111f !important;
 }
+
+
+/* Homepage hero kicker: requested black text */
+.hero-redesign .hero-kicker,
+.hero-redesign .hero-kicker-tag {
+  color: #050b14 !important;
+  font-weight: 850 !important;
+}
+.hero-redesign .hero-kicker-tag {
+  background: #ffffff !important;
+  border-color: rgba(5, 11, 20, .28) !important;
+}
