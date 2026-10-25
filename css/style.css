@@ -1834,3 +1834,26 @@ input::placeholder, textarea::placeholder { color: #8292a6 !important; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
+
+
+/* Stronger, high-contrast competition timeline text */
+.timeline-item .timeline-time {
+  color: #07111f !important;
+  font-weight: 850 !important;
+  letter-spacing: .015em !important;
+}
+.timeline-item h3 {
+  color: #050b14 !important;
+  font-weight: 850 !important;
+  letter-spacing: -.025em !important;
+}
+.timeline-item p {
+  color: #111827 !important;
+  font-weight: 600 !important;
+  line-height: 1.75 !important;
+}
+.blue-band .timeline-item .timeline-time,
+.blue-band .timeline-item h3,
+.blue-band .timeline-item p {
+  color: #07111f !important;
+}
