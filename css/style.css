@@ -1869,3 +1869,58 @@ input::placeholder, textarea::placeholder { color: #8292a6 !important; }
   background: #ffffff !important;
   border-color: rgba(5, 11, 20, .28) !important;
 }
+
+
+/* GLOBAL CONTRAST SAFETY PASS — headings and text must remain readable on every surface */
+/* Dark photographic/gradient hero areas */
+.page-hero,
+.page-hero h1, .page-hero h2, .page-hero h3, .page-hero h4,
+.page-hero p, .page-hero li, .page-hero .section-title,
+.page-hero .eyebrow, .page-hero .breadcrumbs {
+  color: #f5f8ff !important;
+}
+.page-hero h1 em, .page-hero h2 em { color: #9ed0ff !important; }
+.page-hero .breadcrumbs a { color: #ffffff !important; }
+.hero:not(.hero-redesign),
+.hero:not(.hero-redesign) h1, .hero:not(.hero-redesign) h2,
+.hero:not(.hero-redesign) h3, .hero:not(.hero-redesign) p,
+.hero:not(.hero-redesign) .eyebrow { color: #f5f8ff !important; }
+.hero:not(.hero-redesign) h1 em { color: #9ed0ff !important; }
+
+/* Dark blue bands: keep headings, labels, paragraphs, and timeline copy light */
+.blue-band h1, .blue-band h2, .blue-band h3, .blue-band h4,
+.blue-band .section-title, .blue-band .section-label,
+.blue-band .section-intro, .blue-band p, .blue-band li,
+.blue-band .timeline-time, .blue-band .timeline-item h3,
+.blue-band .timeline-item p, .blue-band .eyebrow,
+.blue-band .text-link { color: #f0f6ff !important; }
+.blue-band .timeline-item { background: transparent !important; }
+.blue-band .timeline-item .timeline-time { color: #b9dcff !important; }
+.blue-band .timeline-item h3 { color: #ffffff !important; }
+.blue-band .timeline-item p { color: #d7e5f7 !important; }
+
+/* Light surfaces: use dark text and blue accents, never white-on-white */
+.surface h1, .surface h2, .surface h3, .surface h4,
+.surface .section-title, .surface .feature-card h3,
+.surface .feature-card p, .surface .section-intro,
+.surface .content-narrow, .surface .content-narrow p,
+.surface .role-card h2, .surface .role-card p,
+.surface .learning-card h3, .surface .learning-card p {
+  color: #14263d !important;
+}
+.surface .feature-card p, .surface .section-intro,
+.surface .content-narrow p, .surface .role-card p,
+.surface .learning-card p { color: #52647a !important; }
+
+/* Keep homepage kicker readable: black text only on its white pill */
+.hero-redesign .hero-kicker-tag {
+  color: #050b14 !important;
+  background: #ffffff !important;
+}
+.hero-redesign .hero-kicker:not(.hero-kicker-tag) { color: #f4f8ff !important; }
+
+/* Ensure ordinary content headings never inherit the blue accent as their foreground */
+main section:not(.blue-band):not(.page-hero) h1,
+main section:not(.blue-band):not(.page-hero) h2,
+main section:not(.blue-band):not(.page-hero) h3,
+main section:not(.blue-band):not(.page-hero) h4 { color: #10243d; }
