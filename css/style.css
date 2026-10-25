@@ -1170,3 +1170,147 @@ body[data-page="home"] .hero-bottom-line b {color:#2d69aa;margin-left:6px}
   body[data-page="home"] .hero-orbit {height:225px}
   body[data-page="home"] .hero-bottom-line span:first-child {max-width:58%}
 }
+
+
+/* BYLA navigation refresh — refined two-tier header with pill links */
+.site-header {
+  background: rgba(5, 18, 36, .96);
+  border-bottom: 1px solid rgba(184, 211, 245, .16);
+  box-shadow: 0 10px 30px rgba(3, 14, 29, .10);
+  backdrop-filter: blur(22px);
+}
+.site-header .nav {
+  height: auto;
+  min-height: 96px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  display: grid;
+  grid-template-columns: 142px minmax(0, 1fr) 158px;
+  align-items: center;
+  gap: 20px;
+}
+.site-header .brand { justify-self: start; }
+.site-header .brand-logo {
+  width: 142px;
+  height: 64px;
+  object-fit: contain;
+}
+.site-header .nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px 7px;
+  min-width: 0;
+}
+.site-header .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 31px;
+  padding: 7px 10px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #c9d7e9;
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: .075em;
+  white-space: nowrap;
+  transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.site-header .nav-links a:hover,
+.site-header .nav-links a:focus-visible {
+  color: #fff;
+  background: rgba(138, 184, 245, .11);
+  border-color: rgba(171, 205, 250, .17);
+  transform: translateY(-1px);
+}
+.site-header .nav-links a[aria-current="page"] {
+  color: #fff;
+  background: rgba(120, 174, 245, .15);
+  border-color: rgba(160, 198, 250, .23);
+}
+.site-header .nav-cta {
+  justify-self: end;
+  min-height: 46px;
+  width: 158px;
+  padding: 0 14px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #e5efff, #b9d5ff);
+  color: #0a2342;
+  box-shadow: 0 8px 22px rgba(74, 133, 211, .19);
+  font-size: 9px;
+  letter-spacing: .075em;
+  white-space: nowrap;
+}
+.site-header .nav-cta:hover {
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(74, 133, 211, .27);
+}
+.site-header .menu-toggle { display: none; }
+@media (max-width: 1100px) {
+  .site-header .nav {
+    grid-template-columns: 122px minmax(0, 1fr) 145px;
+    gap: 10px;
+  }
+  .site-header .brand-logo { width: 122px; }
+  .site-header .nav-links { gap: 3px; }
+  .site-header .nav-links a { padding: 7px 7px; font-size: 8px; letter-spacing: .04em; }
+  .site-header .nav-cta { width: 145px; font-size: 8px; }
+}
+@media (max-width: 820px) {
+  .site-header .nav {
+    min-height: 76px;
+    height: 76px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .site-header .brand-logo { width: 132px; height: 60px; }
+  .site-header .nav .nav-cta { display: none; }
+  .site-header .menu-toggle {
+    display: grid;
+    place-items: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(206, 226, 252, .3);
+    border-radius: 13px;
+    background: rgba(142, 185, 244, .1);
+    color: #f4f8ff;
+    font-size: 21px;
+    transition: background .2s ease, border-color .2s ease;
+  }
+  .site-header .menu-toggle:hover { background: rgba(142, 185, 244, .2); border-color: rgba(206,226,252,.55); }
+  .site-header .nav-links {
+    display: none;
+    position: fixed;
+    top: 76px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 5px;
+    padding: 18px 22px 32px;
+    background: rgba(5, 18, 36, .99);
+    border-top: 1px solid rgba(184, 211, 245, .16);
+    backdrop-filter: blur(22px);
+  }
+  .site-header .nav-links.is-open { display: flex; }
+  .site-header .nav-links a {
+    justify-content: flex-start;
+    min-height: 46px;
+    padding: 12px 14px;
+    border: 1px solid rgba(184,211,245,.1);
+    border-radius: 11px;
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+}
