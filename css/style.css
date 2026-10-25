@@ -1529,3 +1529,50 @@ body[data-page="home"] .hero-bottom-line b {color:#2d69aa;margin-left:6px}
   .site-header .brand-logo { width: 62px; height: 62px; }
   .site-header .nav-links { width: auto; }
 }
+
+
+/* Final header layout correction: keep the circular logo in its own centered row */
+.site-header .nav {
+  grid-template-columns: minmax(0, 1fr) 96px minmax(0, 1fr) !important;
+  grid-template-areas: ". brand cta" "links links links" !important;
+  row-gap: 10px !important;
+}
+.site-header .brand {
+  grid-area: brand !important;
+  justify-self: center !important;
+  align-self: center !important;
+  width: 86px !important;
+  height: 86px !important;
+}
+.site-header .brand-logo {
+  display: block !important;
+  width: 86px !important;
+  height: 86px !important;
+}
+.site-header .nav-cta {
+  grid-area: cta !important;
+  justify-self: end !important;
+  align-self: center !important;
+}
+.site-header .nav-links {
+  grid-area: links !important;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 820px) {
+  .site-header .nav {
+    grid-template-columns: 1fr auto !important;
+    grid-template-areas: none !important;
+    row-gap: 0 !important;
+  }
+  .site-header .brand {
+    grid-area: auto !important;
+    width: 62px !important;
+    height: 62px !important;
+  }
+  .site-header .brand-logo {
+    width: 62px !important;
+    height: 62px !important;
+  }
+  .site-header .nav-links { grid-area: auto !important; }
+}
