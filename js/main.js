@@ -154,7 +154,7 @@
         }
       });
     }, { threshold: 0.45 });
-    $('.stat strong').forEach(stat => statObserver.observe(stat));
+    Array.from(document.querySelectorAll('.stat strong')).forEach(stat => statObserver.observe(stat));
   }
 
   // Keep the competition countdown neutral until a date is confirmed.
