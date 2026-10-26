@@ -105,6 +105,58 @@
     animated.forEach(element => element.classList.add('is-visible'));
   }
 
+  // Subtle page-exit transitions for same-site navigation.
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!motionPreference) {
+    document.querySelectorAll('a[href]').forEach(anchor => {
+      anchor.addEventListener('click', event => {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        if (anchor.target === '_blank' || anchor.hasAttribute('download')) return;
+        const raw = anchor.getAttribute('href') || '';
+        if (!raw || raw.startsWith('#') || raw.startsWith('mailto:') || raw.startsWith('tel:')) return;
+        let destination;
+        try { destination = new URL(raw, window.location.href); } catch (_) { return; }
+        if (destination.origin !== window.location.origin || destination.pathname === window.location.pathname) return;
+        event.preventDefault();
+        document.body.classList.add('page-leave');
+        window.setTimeout(() => { window.location.href = destination.href; }, 120);
+      });
+    });
+  }
+
+  // Count up simple numeric stat labels once when they enter view.
+  const animateStat = element => {
+    if (element.dataset.counted === 'true') return;
+    const raw = element.textContent.trim();
+    const match = raw.match(/^(\D*?)([\d,]+(?:\.\d+)?)(\D*)$/);
+    if (!match) return;
+    const start = Number(match[2].replace(/,/g, ''));
+    if (!Number.isFinite(start) || start <= 0 || start > 1000000) return;
+    element.dataset.counted = 'true';
+    const prefix = match[1], suffix = match[3], duration = 850;
+    const began = performance.now();
+    const tick = now => {
+      const progress = Math.min(1, (now - began) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const value = start * eased;
+      const formatted = Number.isInteger(start) ? Math.round(value).toLocaleString() : value.toFixed(1);
+      element.textContent = prefix + formatted + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if (!motionPreference && 'IntersectionObserver' in window) {
+    const statObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateStat(entry.target);
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.45 });
+    $('.stat strong').forEach(stat => statObserver.observe(stat));
+  }
+
   // Keep the competition countdown neutral until a date is confirmed.
   const countdown = $('#competition-countdown');
   if (countdown) {
