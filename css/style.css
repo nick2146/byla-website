@@ -2255,3 +2255,51 @@ a:focus-visible, button:focus-visible { outline-offset: 4px; }
   .editorial-grid { gap: 30px; }
   .feature-card, .learning-card, .role-card, .partner-card, .news-card, .tool-card { padding: 23px; }
 }
+
+
+/* BYLA NAVIGATION REFRESH — polished dropdown, consistent responsive behavior, and motion */
+.site-header{box-shadow:0 10px 35px rgba(0,8,24,.16);transition:background .25s ease,box-shadow .25s ease}
+.site-header .nav{position:relative;gap:clamp(14px,2vw,28px)}
+.site-header .nav-links{gap:clamp(12px,1.45vw,22px);flex:1;justify-content:center}
+.site-header .nav-links>a,.site-header .nav-dropdown>summary{position:relative;display:inline-flex;align-items:center;gap:7px;padding:13px 0;color:#dce8f8;font-size:11px;font-weight:800;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap;transition:color .22s ease}
+.site-header .nav-links>a:after{content:"";position:absolute;left:0;right:100%;bottom:5px;height:2px;border-radius:4px;background:linear-gradient(90deg,#38bdf8,#8acbff);transition:right .25s ease}
+.site-header .nav-links>a:hover:after,.site-header .nav-links>a[aria-current=page]:after{right:0}
+.site-header .nav-links>a:hover,.site-header .nav-links>a[aria-current=page],.site-header .nav-dropdown>summary:hover,.site-header .nav-dropdown[open]>summary{color:#7fc7ff}
+.site-header .nav-dropdown{position:relative;align-self:center}
+.site-header .nav-dropdown>summary{list-style:none;cursor:pointer;gap:8px}
+.site-header .nav-dropdown>summary::-webkit-details-marker{display:none}
+.site-header .nav-dropdown>summary span{display:inline-grid;place-items:center;width:18px;height:18px;border:1px solid #ffffff35;border-radius:50%;font-size:13px;transition:transform .25s ease,background .25s ease}
+.site-header .nav-dropdown[open]>summary span{transform:rotate(180deg);background:#1685e8;border-color:#1685e8;color:white}
+.site-header .nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:-24px;min-width:285px;padding:10px;background:rgba(7,23,45,.97);border:1px solid rgba(134,194,255,.25);border-radius:17px;box-shadow:0 24px 65px rgba(0,8,24,.38),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(22px);display:grid;gap:3px;z-index:200;transform-origin:top left;animation:bylaMenuIn .2s cubic-bezier(.2,.75,.25,1) both}
+.site-header .nav-dropdown-menu:before{content:"EXPLORE BYLA";display:block;padding:9px 12px 10px;color:#7fc7ff;font-size:9px;font-weight:800;letter-spacing:.2em}
+.site-header .nav-dropdown-menu a{position:relative;display:flex;align-items:center;gap:11px;padding:12px 13px;border:1px solid transparent;border-radius:10px;color:#e2edfc;font-size:12px;font-weight:650;letter-spacing:0;text-transform:none;white-space:nowrap;transition:background .2s ease,border-color .2s ease,transform .2s ease,color .2s ease}
+.site-header .nav-dropdown-menu a:before{content:"↗";display:grid;place-items:center;width:27px;height:27px;flex:0 0 27px;border-radius:8px;background:linear-gradient(145deg,#123c69,#0a284a);color:#7fc7ff;font-size:13px;transition:background .2s ease,color .2s ease}
+.site-header .nav-dropdown-menu a:hover,.site-header .nav-dropdown-menu a:focus-visible{background:linear-gradient(100deg,rgba(30,126,219,.22),rgba(56,189,248,.08));border-color:rgba(113,185,255,.18);color:#fff;transform:translateX(3px)}
+.site-header .nav-dropdown-menu a:hover:before{background:#087cf0;color:#fff}
+.site-header .nav-cta{white-space:nowrap;flex-shrink:0;padding:12px 15px;font-size:9px}
+.menu-toggle{transition:transform .2s ease,background .2s ease,border-color .2s ease}
+.menu-toggle:hover{transform:rotate(4deg);background:#1685e8;border-color:#1685e8}
+@keyframes bylaMenuIn{from{opacity:0;transform:translateY(-7px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes bylaGlow{0%,100%{box-shadow:0 0 0 rgba(56,189,248,0)}50%{box-shadow:0 0 24px rgba(56,189,248,.12)}}
+@media(max-width:1100px){
+ .site-header .nav{gap:12px}
+ .site-header .nav-links{gap:10px}
+ .site-header .nav-links>a,.site-header .nav-dropdown>summary{font-size:10px;letter-spacing:.025em}
+ .site-header .brand-logo{width:145px}
+ .site-header .nav-cta{padding:10px 12px}
+}
+@media(max-width:900px){
+ .site-header .nav{min-height:74px}
+ .site-header .menu-toggle{display:grid;place-items:center;flex-shrink:0;z-index:220;width:46px;height:46px;font-size:21px}
+ .site-header .nav-links{display:none;position:fixed;top:74px;left:0;right:0;bottom:0;overflow:auto;overscroll-behavior:contain;background:radial-gradient(ellipse at 100% 0%,rgba(24,117,206,.2),transparent 35%),rgba(4,16,32,.985);backdrop-filter:blur(24px);padding:22px 26px 50px;align-items:stretch;justify-content:flex-start;gap:2px;flex-direction:column;border-top:1px solid #ffffff1c}
+ .site-header .nav-links.is-open{display:flex;animation:bylaMenuIn .22s ease both}
+ .site-header .nav-links>a,.site-header .nav-dropdown>summary{display:flex;width:100%;padding:15px 2px;border-bottom:1px solid #ffffff18;font-size:13px;letter-spacing:.06em}
+ .site-header .nav-links>a:after{display:none}
+ .site-header .nav-dropdown{width:100%;align-self:stretch}
+ .site-header .nav-dropdown>summary{justify-content:space-between}
+ .site-header .nav-dropdown-menu{position:static;min-width:0;width:100%;padding:7px 0 12px 8px;border:0;border-radius:0;box-shadow:none;background:transparent;backdrop-filter:none;animation:none}
+ .site-header .nav-dropdown-menu:before{padding-left:10px}
+ .site-header .nav-dropdown-menu a{white-space:normal;padding:11px 10px}
+ .site-header .nav-cta{display:none}
+}
+@media(prefers-reduced-motion:reduce){.site-header,.site-header *, .site-header *:before,.site-header *:after{animation:none!important;transition:none!important}}
