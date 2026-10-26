@@ -2357,3 +2357,6 @@ body:not(.motion-ready) .reveal{opacity:1;transform:none}
 
 .reveal{transition-delay:var(--reveal-delay,0ms)}
 @media(prefers-reduced-motion:reduce){.reveal{transition-delay:0ms!important}}
+
+/* Mobile menu visibility fix: keep the animated panel in the layout when closed. */
+@media(max-width:900px){.nav-links{display:flex!important}.nav-links.is-open{display:flex!important}.nav-links:not(.is-open){pointer-events:none}.nav-links.is-open{pointer-events:auto}.nav{position:relative}.site-header{z-index:110}}
