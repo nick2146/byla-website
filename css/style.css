@@ -2423,3 +2423,9 @@ body{letter-spacing:-.008em}.site-header{box-shadow:0 8px 30px #06152b12}.nav{ga
  #case-form>button{order:5}
  #case-form>#case-result{order:6;width:100%}
 }
+
+
+/* Case Lab: keep the brief in normal document flow; it must not follow scrolling. */
+@media(min-width:900px){
+  #case-form>#case-brief{position:static!important;top:auto!important;max-height:none!important;overflow:visible!important;align-self:start}
+}
