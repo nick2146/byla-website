@@ -4,6 +4,9 @@
  if(toggle&&links){
    toggle.addEventListener('click',()=>{const open=links.classList.toggle('is-open');toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation');toggle.textContent=open?'×':'☰';document.body.classList.toggle('menu-open',open)});
    links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('is-open');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation');toggle.textContent='☰'}));
+   links.querySelectorAll('.nav-dropdown > summary').forEach(summary=>summary.addEventListener('click',()=>{const parent=summary.parentElement;document.querySelectorAll('.nav-dropdown[open]').forEach(item=>{if(item!==parent)item.removeAttribute('open')})}));
+   document.addEventListener('click',event=>{if(!event.target.closest('.nav-dropdown'))document.querySelectorAll('.nav-dropdown[open]').forEach(item=>item.removeAttribute('open'))});
+   document.addEventListener('keydown',event=>{if(event.key==='Escape'){document.querySelectorAll('.nav-dropdown[open]').forEach(item=>item.removeAttribute('open'));links.classList.remove('is-open');document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open navigation');toggle.textContent='☰'}});
  }
  // Subtle reading progress indicator.
  const progress=document.getElementById('scroll-progress-fill');
