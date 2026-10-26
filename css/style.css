@@ -2303,3 +2303,29 @@ a:focus-visible, button:focus-visible { outline-offset: 4px; }
  .site-header .nav-cta{display:none}
 }
 @media(prefers-reduced-motion:reduce){.site-header,.site-header *, .site-header *:before,.site-header *:after{animation:none!important;transition:none!important}}
+
+/* BYLA navigation polish — shared across every page */
+.site-header{isolation:isolate;box-shadow:0 10px 35px #020a1718;transition:background .25s,border-color .25s}
+.nav{gap:clamp(12px,1.5vw,24px)}
+.nav-links{gap:clamp(8px,1vw,17px);align-items:center}
+.nav-links>a,.nav-dropdown>summary{position:relative;display:inline-flex;align-items:center;gap:7px;font-size:10px!important;letter-spacing:.09em!important;white-space:nowrap;padding:12px 0;transition:color .22s,transform .22s}
+.nav-links>a:after,.nav-dropdown>summary:after{content:"";position:absolute;left:0;right:100%;bottom:4px;height:2px;border-radius:2px;background:linear-gradient(90deg,#1686ff,#7bc4ff);transition:right .25s var(--ease)}
+.nav-links>a:hover:after,.nav-links>a[aria-current=page]:after,.nav-dropdown[open]>summary:after,.nav-dropdown>summary:hover:after{right:0}
+.nav-dropdown{position:relative;align-self:center}
+.nav-dropdown>summary{list-style:none;cursor:pointer;color:#dce6f6;font-weight:800;text-transform:uppercase}
+.nav-dropdown>summary::-webkit-details-marker{display:none}
+.nav-dropdown>summary span{display:inline-block;transition:transform .25s var(--ease);font-size:15px;color:#75baff}
+.nav-dropdown[open]>summary span{transform:rotate(180deg)}
+.nav-dropdown[open]>summary,.nav-dropdown>summary:hover{color:#75baff}
+.nav-dropdown-menu{position:absolute!important;top:calc(100% + 14px)!important;left:-20px!important;min-width:286px!important;padding:12px!important;display:grid!important;gap:4px!important;background:linear-gradient(145deg,#102b4d,#07172d)!important;border:1px solid #76baff45!important;border-radius:18px!important;box-shadow:0 24px 70px #02091670,0 0 0 1px #ffffff08 inset!important;z-index:100!important;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(10px) scale(.98);transform-origin:top left;transition:opacity .22s ease,transform .28s var(--ease),visibility .22s}
+.nav-dropdown[open]>.nav-dropdown-menu{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1)}
+.nav-dropdown-menu:before{content:"EXPLORE BYLA";display:block;padding:7px 11px 10px;color:#76baff;font-size:9px;font-weight:800;letter-spacing:.2em}
+.nav-dropdown-menu a{display:flex!important;align-items:center;justify-content:space-between;gap:14px;padding:11px 12px!important;border:1px solid transparent;border-radius:10px!important;color:#e4efff!important;font-size:12px!important;letter-spacing:.015em!important;text-transform:none!important;white-space:nowrap;transition:background .2s,border-color .2s,transform .2s,color .2s}
+.nav-dropdown-menu a:after{content:"↗";opacity:0;transform:translateX(-4px);transition:opacity .2s,transform .2s;color:#7bc4ff}
+.nav-dropdown-menu a:hover,.nav-dropdown-menu a:focus-visible{background:#1c4674!important;border-color:#77baff38!important;color:#fff!important;transform:translateX(3px)}
+.nav-dropdown-menu a:hover:after,.nav-dropdown-menu a:focus-visible:after{opacity:1;transform:translateX(0)}
+.nav-cta{white-space:nowrap;flex-shrink:0;box-shadow:0 8px 24px #087cf044}
+@media(max-width:1150px){.nav{gap:10px}.nav-links{gap:9px}.nav-links>a,.nav-dropdown>summary{font-size:9px!important;letter-spacing:.04em!important}.brand-logo{width:155px}}
+@media(max-width:900px){.nav{height:76px}.brand-logo{width:158px;height:62px}.nav-cta{display:none}.menu-toggle{display:grid;place-items:center;transition:background .2s,border-color .2s,transform .2s}.menu-toggle:hover{background:#ffffff16;border-color:#78baff;transform:rotate(4deg)}.nav-links{position:fixed;top:76px;left:0;right:0;bottom:0;height:calc(100dvh - 76px);overflow-y:auto;display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:22px 28px 40px;background:linear-gradient(160deg,#071a32f9,#041020fc);border-top:1px solid #ffffff18;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px);transition:opacity .22s,transform .25s var(--ease),visibility .22s;z-index:99}.nav-links.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}.nav-links>a,.nav-dropdown>summary{font-size:12px!important;letter-spacing:.1em!important;padding:14px 12px!important;border-bottom:1px solid #ffffff13;justify-content:space-between}.nav-links>a:after,.nav-dropdown>summary:after{display:none}.nav-dropdown{width:100%}.nav-dropdown>summary{display:flex;width:100%}.nav-dropdown-menu{position:static!important;min-width:0!important;width:100%;padding:8px!important;margin:2px 0 10px!important;border-radius:13px!important;box-shadow:none!important;background:#ffffff08!important;border:1px solid #ffffff12!important;transform:none!important;display:none!important;opacity:1;visibility:visible;pointer-events:auto}.nav-dropdown[open]>.nav-dropdown-menu{display:grid!important}.nav-dropdown-menu:before{padding:5px 10px 8px}.nav-dropdown-menu a{white-space:normal;font-size:12px!important;padding:12px!important}.nav-dropdown-menu a:after{opacity:1;transform:none}.nav-dropdown[open] summary{color:#79bdff}.nav-dropdown[open]>.nav-dropdown-menu{animation:menuReveal .24s var(--ease) both}}
+@keyframes menuReveal{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.nav-dropdown-menu,.nav-dropdown-menu a,.nav-dropdown>summary span,.nav-links,.menu-toggle{transition:none!important;animation:none!important}}
