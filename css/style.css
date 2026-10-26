@@ -1995,3 +1995,96 @@ select:focus-visible, textarea:focus-visible {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Distinct top-of-page motion for each BYLA section */
+@keyframes byla-hero-fade-up {
+  from { opacity: 0; transform: translate3d(0, 30px, 0); filter: blur(5px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+}
+@keyframes byla-hero-slide-left {
+  from { opacity: 0; transform: translate3d(-38px, 0, 0); clip-path: inset(0 0 0 12%); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); clip-path: inset(0); }
+}
+@keyframes byla-hero-slide-right {
+  from { opacity: 0; transform: translate3d(38px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes byla-hero-scale-in {
+  from { opacity: 0; transform: scale(.94) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes byla-hero-wipe {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(12px); }
+  to { opacity: 1; clip-path: inset(0); transform: translateY(0); }
+}
+@keyframes byla-hero-focus {
+  from { opacity: 0; filter: blur(10px); letter-spacing: .025em; transform: translateY(8px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+@keyframes byla-hero-accent {
+  0%, 100% { text-shadow: 0 0 0 rgba(56,189,248,0); }
+  50% { text-shadow: 0 0 22px rgba(56,189,248,.22); }
+}
+.page-hero .breadcrumbs { animation: byla-hero-fade-up .55s .02s both; }
+.page-hero .eyebrow { animation: none; }
+.page-hero h1 { animation: none; }
+.page-hero p { animation: none; }
+.page-hero .hero-actions { animation: byla-hero-fade-up .7s .32s both; }
+
+/* Home: confident rise-in with a restrained blue accent */
+body[data-page="home"] .page-hero .eyebrow { animation: byla-hero-slide-left .65s .08s both; }
+body[data-page="home"] .page-hero h1 { animation: byla-hero-fade-up .85s .14s both; }
+body[data-page="home"] .page-hero h1 em { animation: byla-hero-accent 4s 1.1s ease-in-out infinite; }
+body[data-page="home"] .page-hero p { animation: byla-hero-fade-up .8s .28s both; }
+
+/* About: a clean horizontal reveal */
+body[data-page="about"] .page-hero .eyebrow { animation: byla-hero-slide-left .65s .06s both; }
+body[data-page="about"] .page-hero h1 { animation: byla-hero-slide-left .8s .12s both; }
+body[data-page="about"] .page-hero p { animation: byla-hero-slide-right .8s .25s both; }
+
+/* Competition: decisive scale-in, like a live event opening */
+body[data-page="competition"] .page-hero .eyebrow { animation: byla-hero-scale-in .55s .04s both; }
+body[data-page="competition"] .page-hero h1 { animation: byla-hero-scale-in .8s .12s both; }
+body[data-page="competition"] .page-hero p { animation: byla-hero-fade-up .75s .26s both; }
+
+/* News: headline-style wipe */
+body[data-page="news"] .page-hero .eyebrow { animation: byla-hero-wipe .55s .04s both; }
+body[data-page="news"] .page-hero h1 { animation: byla-hero-wipe .8s .12s both; }
+body[data-page="news"] .page-hero p { animation: byla-hero-fade-up .75s .27s both; }
+
+/* Learning: softly focus into view */
+body[data-page="learning"] .page-hero .eyebrow { animation: byla-hero-focus .6s .05s both; }
+body[data-page="learning"] .page-hero h1 { animation: byla-hero-focus .85s .13s both; }
+body[data-page="learning"] .page-hero p { animation: byla-hero-fade-up .75s .27s both; }
+
+/* Markets: a crisp right-to-left financial-dashboard reveal */
+body[data-page="markets"] .page-hero .eyebrow { animation: byla-hero-slide-right .6s .04s both; }
+body[data-page="markets"] .page-hero h1 { animation: byla-hero-slide-left .8s .12s both; }
+body[data-page="markets"] .page-hero p { animation: byla-hero-slide-right .8s .26s both; }
+
+/* Newsletter: staggered upward entrance */
+body[data-page="newsletter"] .page-hero .eyebrow { animation: byla-hero-fade-up .55s .05s both; }
+body[data-page="newsletter"] .page-hero h1 { animation: byla-hero-fade-up .8s .12s both; }
+body[data-page="newsletter"] .page-hero p { animation: byla-hero-fade-up .75s .27s both; }
+
+/* Partners: an editorial left-to-right reveal */
+body[data-page="partners"] .page-hero .eyebrow { animation: byla-hero-slide-left .6s .04s both; }
+body[data-page="partners"] .page-hero h1 { animation: byla-hero-slide-right .8s .12s both; }
+body[data-page="partners"] .page-hero p { animation: byla-hero-fade-up .75s .27s both; }
+
+/* Contact: understated focus reveal */
+body[data-page="contact"] .page-hero .eyebrow { animation: byla-hero-focus .55s .04s both; }
+body[data-page="contact"] .page-hero h1 { animation: byla-hero-fade-up .8s .12s both; }
+body[data-page="contact"] .page-hero p { animation: byla-hero-fade-up .75s .27s both; }
+
+/* Executive roles: bold title wipe, then supporting copy */
+body[data-page="executive"] .page-hero .eyebrow { animation: byla-hero-slide-left .6s .04s both; }
+body[data-page="executive"] .page-hero h1 { animation: byla-hero-wipe .8s .12s both; }
+body[data-page="executive"] .page-hero p { animation: byla-hero-fade-up .75s .27s both; }
+
+/* Keep the printable worksheet and other reduced-motion experiences calm */
+@media (prefers-reduced-motion: reduce) {
+  body[data-page] .page-hero *,
+  .page-hero .breadcrumbs { animation: none !important; filter: none !important; }
+}
