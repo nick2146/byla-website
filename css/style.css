@@ -2384,3 +2384,27 @@ body{letter-spacing:-.008em}.site-header{box-shadow:0 8px 30px #06152b12}.nav{ga
 /* Keep the Resources trigger highlighted when a resource page is active. */
 .site-header .nav-dropdown>summary[aria-current="page"]{color:#7fc7ff}
 .site-header .nav-dropdown>summary[aria-current="page"]:after{right:0}
+/* Interactive Case Lab: keep the case brief visible and make answer choices easy to scan. */
+.case-brief{margin:24px 0 30px;padding:clamp(22px,3vw,34px);border:1px solid #a9c9ed;border-radius:20px;background:linear-gradient(135deg,#f4f9ff 0%,#fff 65%);box-shadow:0 16px 42px #06152b0c;position:relative;overflow:hidden}
+.case-brief:before{content:"";position:absolute;right:-65px;top:-95px;width:230px;height:230px;border-radius:50%;border:1px solid #1686ff22;box-shadow:0 0 0 25px #1686ff06,0 0 0 52px #1686ff04;pointer-events:none}
+.case-brief-kicker{font-size:10px;font-weight:800;letter-spacing:.19em;color:#087cf0;text-transform:uppercase}
+.case-brief h2{font-family:Manrope,sans-serif;font-size:clamp(26px,3vw,38px);letter-spacing:-.04em;line-height:1.15;margin:10px 0 14px}
+.case-brief>p{max-width:850px;color:#34465e;font-size:15px;line-height:1.8}
+.case-facts{display:flex;flex-wrap:wrap;gap:9px;margin:20px 0}
+.case-fact{display:inline-flex;align-items:center;padding:8px 12px;border:1px solid #d5e5f7;background:#fff;border-radius:999px;color:#294566;font-size:12px;font-weight:700}
+.case-brief .case-task{margin:22px 0 0;padding-top:16px;border-top:1px solid #dbe7f5;font-size:13px}
+.case-questions{display:grid;gap:4px}
+.case-questions>.section-intro{margin:0 0 14px}
+#case-form .field{margin:0 0 20px}
+#case-form .field>label{display:block;font-weight:800;color:#142b48;margin-bottom:9px;line-height:1.5}
+#case-form select,#case-form input[type=text]{width:100%;min-height:50px;padding:12px 14px;border:1px solid #d2deed;border-radius:11px;background:#fff;color:#152943;box-shadow:0 3px 10px #06152b05}
+#case-form select:focus,#case-form input:focus{outline:0;border-color:#1686ff;box-shadow:0 0 0 4px #1686ff18}
+#case-form #case-choice{font-weight:700;background:#f7fbff}
+#case-result{margin-top:24px;padding:20px;border:1px solid #d4e3f4;border-radius:16px;background:#f7fbff;color:#233b58}
+.review-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:18px;margin-bottom:10px}
+.review-score{display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;background:#e0efff;color:#075db4;font-weight:800;font-size:13px}
+.answer-review{margin-top:12px;padding:16px;border-radius:12px;background:#fff;border:1px solid #d8e5f3}
+.answer-review>strong{display:block;color:#126a46;margin-bottom:8px}
+.answer-review-note>strong{color:#9a5b0b}
+.answer-review p{margin:7px 0;color:#3c4f66;line-height:1.65}
+@media(max-width:720px){.case-brief{padding:22px 18px;border-radius:15px}.case-fact{font-size:11px}.review-heading{align-items:flex-start}}
