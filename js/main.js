@@ -47,7 +47,7 @@
       if (!event.target.closest('.nav-dropdown')) closeDropdowns();
       if (links.classList.contains('is-open') &&
           !event.target.closest('.nav') &&
-          window.matchMedia('(max-width: 900px)').matches) closeMenu();
+          window.matchMedia('(max-width: 1020px)').matches) closeMenu();
     });
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape') {
@@ -56,7 +56,7 @@
       }
     });
     window.addEventListener('resize', () => {
-      if (window.matchMedia('(min-width: 901px)').matches) closeMenu();
+      if (window.matchMedia('(min-width: 1021px)').matches) closeMenu();
     }, { passive: true });
   }
 
