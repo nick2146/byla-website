@@ -182,4 +182,25 @@
       '\n\nSent from joinbyla.ca.');
     window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
   }));
+
+  // Premium navigation feedback and accessible return-to-top control.
+  const header = $('.site-header');
+  const topButton = document.createElement('button');
+  topButton.className = 'back-to-top';
+  topButton.type = 'button';
+  topButton.setAttribute('aria-label', 'Back to top');
+  topButton.setAttribute('title', 'Back to top');
+  topButton.textContent = '↑';
+  document.body.appendChild(topButton);
+  const updateScrollUI = () => {
+    const y = window.scrollY || document.documentElement.scrollTop;
+    if (header) header.classList.toggle('is-scrolled', y > 12);
+    topButton.classList.toggle('is-visible', y > 520);
+  };
+  window.addEventListener('scroll', updateScrollUI, { passive: true });
+  updateScrollUI();
+  topButton.addEventListener('click', () => window.scrollTo({
+    top: 0,
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+  }));
 })();
