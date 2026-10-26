@@ -1924,3 +1924,74 @@ main section:not(.blue-band):not(.page-hero) h1,
 main section:not(.blue-band):not(.page-hero) h2,
 main section:not(.blue-band):not(.page-hero) h3,
 main section:not(.blue-band):not(.page-hero) h4 { color: #10243d; }
+
+
+/* BYLA motion refresh: subtle entrance, hover depth, and responsive motion */
+@keyframes byla-rise-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes byla-soft-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(56, 189, 248, 0); }
+  50% { box-shadow: 0 0 26px rgba(56, 189, 248, .14); }
+}
+@keyframes byla-orbit-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+/* Lightweight page-load movement that does not depend on JavaScript */
+.page-hero .container,
+.hero .hero-content,
+.hero .hero-copy {
+  animation: byla-rise-in .75s cubic-bezier(.2,.7,.2,1) both;
+}
+.page-hero .eyebrow { animation: byla-rise-in .65s .08s both; }
+.page-hero h1 { animation: byla-rise-in .75s .14s both; }
+.page-hero p { animation: byla-rise-in .75s .22s both; }
+
+/* Give cards a more tactile, polished response */
+.feature-card, .learning-card, .role-card, .stat,
+.timeline-item, .partner-card, .news-card, .tool-card {
+  transition: transform .28s cubic-bezier(.2,.7,.2,1),
+              box-shadow .28s ease, border-color .28s ease,
+              background-color .28s ease;
+}
+.feature-card:hover, .learning-card:hover, .role-card:hover,
+.timeline-item:hover, .partner-card:hover, .news-card:hover, .tool-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 42px rgba(3, 15, 35, .12);
+  border-color: rgba(56, 189, 248, .42);
+}
+.stat:hover { transform: translateY(-3px); }
+.btn, .nav-links a, .brand-logo, .text-link {
+  transition: transform .22s ease, color .22s ease, background-color .22s ease,
+              border-color .22s ease, box-shadow .22s ease, opacity .22s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(.98); }
+.brand-logo:hover { transform: scale(1.035); }
+.nav-links a:hover { opacity: .82; }
+.text-link:hover { transform: translateX(3px); }
+
+/* Gentle ambient motion for visual accents, without moving page content */
+.hero-side-note, .hero-caption { animation: byla-orbit-drift 5s ease-in-out infinite; }
+.hero-image { transition: transform .7s cubic-bezier(.2,.7,.2,1), filter .7s ease; }
+.hero-image:hover { transform: scale(1.015); filter: saturate(1.06); }
+
+/* Keyboard users get an obvious focus treatment */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #38bdf8;
+  outline-offset: 4px;
+}
+
+/* Respect accessibility settings and avoid motion for people who request it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
