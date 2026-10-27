@@ -56,7 +56,13 @@
 </style>
 </head>
 <body>
-<div id="site-header"></div>
+<header class="site-header"><nav class="nav container" aria-label="Main navigation">
+<a class="brand" href="index.html" aria-label="BYLA home"><img class="brand-logo" src="assets/byla-logo.svg" alt="BYLA — Business Youth Leadership Association"></a>
+<button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+<div class="nav-links"><a href="index.html" data-nav="home">Home</a><a href="about.html" data-nav="about">About</a><a href="competition.html" data-nav="competition">Competition</a><a href="markets.html" data-nav="markets" class="nav-markets">BYLA Markets <span aria-hidden="true">↗</span></a><details class="nav-dropdown"><summary data-nav="resources" aria-expanded="false">Resources <span aria-hidden="true">⌄</span></summary><div class="nav-dropdown-menu"><a href="resources.html">Resource Directory</a><a href="opportunities.html">Student Opportunities</a><a href="events.html">Events Calendar</a><a href="case-library.html">Business Case Library</a><a href="case-lab.html">Interactive Case Lab</a><a href="learning.html">Learning Hub</a><a href="weekly-challenge.html">Weekly Business Challenge</a></div></details><a href="news.html" data-nav="news">News &amp; Updates</a><a href="partners.html" data-nav="partners">Partners</a><a href="executive-positions.html" data-nav="executive">Executive Positions</a><a href="contact.html" data-nav="contact">Contact</a></div>
+<a class="btn btn-secondary nav-dashboard" href="dashboard.html" data-nav="dashboard">Dashboard ↗</a>
+<a class="btn btn-primary nav-cta" href="https://forms.gle/ZvUXBTaGG1E1SWM89" target="_blank" rel="noopener noreferrer">Register a Team ↗</a>
+</nav></header>
 <main class="dashboard-page">
 <div class="dashboard-wrap">
 <section class="dash-hero">
@@ -107,8 +113,8 @@
 </section>
 </div>
 </main>
-<div id="site-footer"></div>
-<script src="js/main.js?v=dashboard-foundation-1"></script>
+<footer class="site-footer"><div class="container"><div class="footer-top"><div class="footer-about"><a class="brand" href="index.html"><img class="brand-logo" src="assets/byla-logo.svg" alt="BYLA — Business Youth Leadership Association"></a><p>Student-led business learning through real-world cases and community connections.</p></div><div class="footer-columns"><div class="footer-col"><strong>Explore</strong><a href="about.html">About BYLA</a><a href="competition.html">Competition</a><a href="news.html">Finance & World News</a><a href="learning.html">Learning Hub</a><a href="markets.html">BYLA Markets</a><a href="newsletter.html">Newsletter</a><a href="partners.html">Partners</a><a href="contact.html">Contact</a></div><div class="footer-col"><strong>Get involved</strong><a href="https://forms.gle/ZvUXBTaGG1E1SWM89" target="_blank" rel="noopener noreferrer">Register a Team ↗</a><a href="BYLA-RULE-BOOK.pdf" target="_blank" rel="noopener noreferrer">Official Rulebook ↗</a></div></div></div><div class="footer-socials" aria-label="Follow BYLA on social media"><strong>Follow BYLA</strong><a href="https://www.instagram.com/byla_canada/" target="_blank" rel="noopener noreferrer" aria-label="BYLA on Instagram">Instagram <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/business-youth-leaders-association-canada-bba6a3445/?isSelfProfile=true" target="_blank" rel="noopener noreferrer" aria-label="BYLA on LinkedIn">LinkedIn <span aria-hidden="true">↗</span></a></div><div class="footer-bottom"><span>© Business Youth Leadership Association. All rights reserved.</span><span>Student-led · Open enrollment · $5 to compete</span></div></div></footer>
+<script src="js/main.js?v=dashboard-foundation-2"></script>
 <script>
 const dateNode=document.getElementById('dashboard-date');
 if(dateNode){dateNode.textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',month:'long',day:'numeric'}).format(new Date());}
