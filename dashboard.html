@@ -6,7 +6,7 @@
 <meta name="description" content="Your BYLA member dashboard for business learning, competitions, events and opportunities.">
 <title>Dashboard | BYLA</title>
 <link rel="icon" href="assets/byla-logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/style.css?v=dashboard-redesign-2">
+<link rel="stylesheet" href="css/style.css?v=dashboard-modern-3">
 <style>
 .dashboard-page{--dash-ink:#10223c;--dash-muted:#687b91;--dash-blue:#1674bd;background:#f4f7fb;min-height:75vh;padding:34px 0 76px;color:var(--dash-ink)}
 .dashboard-wrap{max-width:1200px;margin:auto;padding:0 28px}
@@ -49,6 +49,32 @@
 @media(max-width:900px){.dash-span-8,.dash-span-4{grid-column:span 12}.dash-hero{padding:29px;min-height:unset}.dash-hero p{max-width:560px}.dash-datebox{min-width:135px}.dash-quicklinks{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.dashboard-page{padding:25px 0 52px}.dashboard-wrap{padding:0 16px}.dash-topline{margin-bottom:15px}.dash-hero{display:block;padding:26px 22px;border-radius:17px}.dash-hero h1{font-size:34px}.dash-hero p{font-size:13px}.dash-datebox{display:inline-block;margin-top:22px;min-width:0;padding:10px 13px}.dash-datebox strong{font-size:12px}.dash-grid{gap:12px}.dash-card{padding:17px}.dash-stats{grid-template-columns:1fr}.dash-stat{display:flex;align-items:center;justify-content:space-between;gap:12px}.dash-stat strong{font-size:21px;margin:0}.dash-stat small{display:none}.dash-quicklinks{grid-template-columns:1fr}.dash-section-label{margin-top:23px}.dash-hero-actions .dash-action{font-size:11px;padding:10px 12px}}
 @media(prefers-reduced-motion:reduce){.dash-card,.dash-action,.dash-quicklink,.dash-arrow{transition:none!important}}
+
+/* Unified BYLA dashboard visual system: deep navy, electric blue, crisp glass surfaces. */
+.dashboard-page{--dash-ink:#eef5ff;--dash-muted:#9aacc4;--dash-blue:#59b2ff;background:#06152b;color:#edf5ff;position:relative;overflow:hidden}
+.dashboard-page:before{content:"";position:absolute;inset:0 0 auto;height:620px;pointer-events:none;background:radial-gradient(ellipse at 78% 0%,#1268b53a,transparent 52%),linear-gradient(180deg,#0b2341 0%,#06152b 100%)}
+.dashboard-wrap{position:relative;z-index:1}
+.dash-topline{margin-bottom:24px}.dash-breadcrumb{color:#8ea6c3}.dash-breadcrumb a{color:#7dc4ff}.dash-tag{background:#122e4d;color:#8bcaff;border:1px solid #6bb9ff20}
+.dash-hero{background:linear-gradient(115deg,#0a1d35 0%,#0b2c50 58%,#104b7d 100%);border:1px solid #83caff26;border-radius:22px;box-shadow:0 24px 70px #0003}
+.dash-hero:before{border-color:#8bd1ff35;box-shadow:0 0 0 35px #8bd1ff0b,0 0 0 75px #8bd1ff08,0 0 0 115px #8bd1ff05}
+.dash-hero h1{font-size:clamp(38px,5vw,58px);letter-spacing:-.065em}.dash-hero p{color:#c0d2e5}.dash-eyebrow{color:#80c7ff}
+.dash-datebox{background:#ffffff09;border-color:#ffffff25}.dash-action{border-radius:9px}.dash-action.primary{background:#5cb8ff;color:#06152b!important}.dash-action.secondary{background:#ffffff08;border-color:#ffffff36}
+.dash-section-label h2{color:#f1f6ff;font-size:20px;letter-spacing:-.04em}.dash-section-label p{color:#91a5bf}
+.dash-card{background:linear-gradient(145deg,#0c2039,#0a1a30);border:1px solid #9ecbfa20;box-shadow:0 10px 30px #00000012;border-radius:17px}
+.dash-card:hover{border-color:#63b5f45c;box-shadow:0 18px 40px #0003}
+.dash-card h2{color:#f0f6ff}.dash-card p{color:#a2b4cc}
+.dash-stat{background:#0b1b30;border-color:#ffffff12}.dash-stat-top{color:#a2b5cc}.dash-stat strong{color:#f4f8ff}.dash-stat small{color:#8fa4bf}
+.dash-icon{background:#123457;color:#8acaff;border:1px solid #68baff20;border-radius:10px}
+.dash-list-item{border-color:#ffffff12}.dash-item-main strong{color:#e9f3ff}.dash-item-main span{color:#96aac4}.dash-arrow{color:#71bdff}
+.dash-empty{background:#0a1c31;border-color:#ffffff25;color:#a1b3ca}
+.dash-quicklink{background:#0b1e35;border-color:#ffffff18}.dash-quicklink:hover{background:#102b49;border-color:#67b8fa70}.dash-quicklink strong{color:#eaf4ff}.dash-quicklink span{color:#9bafc8}
+.dash-note{background:#0c2a46;border-color:#7bc6ff25}.dash-note-icon{color:#7ec6ff}.dash-note strong{color:#d6ebff}.dash-note p{color:#a1b9d3}
+.dash-footer-note{color:#8097b5}
+.nav .nav-dashboard{padding:7px 11px!important;font-size:9px!important;letter-spacing:.045em!important;min-height:32px!important;border-radius:7px!important;line-height:1.1!important}
+@media(max-width:900px){.dash-hero h1{font-size:clamp(34px,5vw,48px)}}
+@media(max-width:650px){.dash-hero h1{font-size:36px}.dash-hero{border-radius:17px}.dash-card{background:#0b1e35}}
+@media(prefers-reduced-motion:reduce){.dashboard-page *{scroll-behavior:auto!important}}
+
 </style>
 </head>
 <body>
@@ -116,7 +142,7 @@
 </div>
 </main>
 <footer class="site-footer"><div class="container"><div class="footer-top"><div class="footer-about"><a class="brand" href="index.html"><img class="brand-logo" src="assets/byla-logo.svg" alt="BYLA — Business Youth Leadership Association"></a><p>Student-led business learning through real-world cases and community connections.</p></div><div class="footer-columns"><div class="footer-col"><strong>Explore</strong><a href="about.html">About BYLA</a><a href="competition.html">Competition</a><a href="news.html">Finance & World News</a><a href="learning.html">Learning Hub</a><a href="markets.html">BYLA Markets</a><a href="newsletter.html">Newsletter</a><a href="partners.html">Partners</a><a href="contact.html">Contact</a></div><div class="footer-col"><strong>Get involved</strong><a href="https://forms.gle/ZvUXBTaGG1E1SWM89" target="_blank" rel="noopener noreferrer">Register a Team ↗</a><a href="BYLA-RULE-BOOK.pdf" target="_blank" rel="noopener noreferrer">Official Rulebook ↗</a></div></div></div><div class="footer-socials" aria-label="Follow BYLA on social media"><strong>Follow BYLA</strong><a href="https://www.instagram.com/byla_canada/" target="_blank" rel="noopener noreferrer" aria-label="BYLA on Instagram">Instagram <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/business-youth-leaders-association-canada-bba6a3445/?isSelfProfile=true" target="_blank" rel="noopener noreferrer" aria-label="BYLA on LinkedIn">LinkedIn <span aria-hidden="true">↗</span></a></div><div class="footer-bottom"><span>© Business Youth Leadership Association. All rights reserved.</span><span>Student-led · Open enrollment · $5 to compete</span></div></div></footer>
-<script src="js/main.js?v=dashboard-redesign-2"></script>
+<script src="js/main.js?v=dashboard-modern-3"></script>
 <script>
 const dateNode=document.getElementById('dashboard-date');
 if(dateNode){dateNode.textContent=new Intl.DateTimeFormat(undefined,{month:'long',day:'numeric',year:'numeric'}).format(new Date());}
