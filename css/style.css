@@ -2721,3 +2721,10 @@ section{padding-top:clamp(68px,8vw,104px);padding-bottom:clamp(68px,8vw,104px)}
 .nav-search-panel{top:100%!important;transform:translateY(0) scale(1)!important;}
 .nav-search-wrap.is-open .nav-search-panel,.nav-search-wrap:focus-within .nav-search-panel{transform:translateY(0) scale(1)!important;}
 @media(max-width:1020px){.nav-search-panel{transform:none!important}}
+
+
+/* Search dropdown: anchored directly beneath the Search control and usable by click or hover. */
+.nav-search-wrap{position:relative!important;align-self:stretch;display:flex;align-items:center;}
+.nav-search-panel{top:100%!important;right:0!important;margin-top:0!important;transform:translateY(0) scale(1)!important;}
+.nav-search-panel:before{right:28px!important;}
+.nav-search-wrap.is-open .nav-search-panel,.nav-search-wrap:focus-within .nav-search-panel{opacity:1!important;visibility:visible!important;transform:translateY(0) scale(1)!important;}
