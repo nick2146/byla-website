@@ -2688,3 +2688,29 @@ section{padding-top:clamp(68px,8vw,104px);padding-bottom:clamp(68px,8vw,104px)}
 @media(prefers-reduced-motion:reduce){
  .feature-card,.home-spotlight-card,.case-track,.learning-card,.prize,.tier,.concept,.editorial-image img,.btn,.brand-logo{transition:none!important}
 }
+
+
+/* Compact hover/focus search menu */
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.nav-search-wrap{position:relative;display:flex;align-items:center}
+.nav-search-panel{position:absolute;z-index:100;top:calc(100% + 18px);right:-28px;width:min(350px,calc(100vw - 32px));padding:22px;background:#fff;color:#0a1830;border:1px solid #dce7f5;border-radius:14px;box-shadow:0 22px 65px #020b1b35;opacity:0;visibility:hidden;transform:translateY(8px) scale(.985);transform-origin:top right;transition:opacity .18s ease,transform .18s ease,visibility .18s}
+.nav-search-panel:before{content:"";position:absolute;top:-7px;right:42px;width:12px;height:12px;background:#fff;border-top:1px solid #dce7f5;border-left:1px solid #dce7f5;transform:rotate(45deg)}
+.nav-search-wrap.is-open .nav-search-panel,.nav-search-wrap:focus-within .nav-search-panel{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.nav-search-heading{display:block;font:800 16px/1.3 Manrope,sans-serif;letter-spacing:-.03em;margin-bottom:14px}
+.nav-search-form{display:flex;gap:8px;padding:5px;border:1px solid #d8e3f0;border-radius:9px;background:#f7faff}
+.nav-search-form:focus-within{border-color:#2386f5;box-shadow:0 0 0 3px #2386f51c}
+.nav-search-form input{min-width:0;width:100%;padding:9px 8px;border:0;outline:0;background:transparent;color:#0a1830;font-size:12px}
+.nav-search-form button{width:36px;min-width:36px;border:0;border-radius:6px;background:#087cf0;color:#fff;font-size:18px;cursor:pointer;transition:background .2s}
+.nav-search-form button:hover{background:#0759b6}
+.nav-search-caption{display:block;margin:18px 0 9px;font-size:9px;font-weight:800;letter-spacing:.14em;color:#72829a}
+.nav-search-topics{display:flex;flex-wrap:wrap;gap:7px}
+.nav-search-topics a{padding:7px 10px;border-radius:99px;background:#edf5ff;color:#164b84;font-size:11px;font-weight:700;transition:background .2s,color .2s}
+.nav-search-topics a:hover{background:#d8eaff;color:#063d7d}
+@media(max-width:720px){
+ .nav-search-wrap{display:block}
+ .nav-search-panel{position:static;width:100%;display:none;margin:0 0 12px;box-shadow:none;transform:none;border-radius:10px}
+ .nav-search-panel:before{display:none}
+ .nav-search-wrap.is-open .nav-search-panel,.nav-search-wrap:focus-within .nav-search-panel{display:block;opacity:1;visibility:visible}
+ .nav-search-wrap .nav-search-link{display:flex;padding:17px 0;border-bottom:1px solid #ffffff20}
+}
+@media(prefers-reduced-motion:reduce){.nav-search-panel,.nav-search-topics a,.nav-search-form button{transition:none!important}}
