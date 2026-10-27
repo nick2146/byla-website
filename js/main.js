@@ -60,6 +60,45 @@
     }, { passive: true });
   }
 
+  // Hover/focus search panel: fast access to the resource finder and popular topics.
+  const searchLink = $('.nav-search-link');
+  if (searchLink) {
+    const searchWrap = document.createElement('div');
+    searchWrap.className = 'nav-search-wrap';
+    searchLink.parentNode.insertBefore(searchWrap, searchLink);
+    searchWrap.appendChild(searchLink);
+    searchLink.setAttribute('aria-haspopup', 'true');
+    searchLink.setAttribute('aria-expanded', 'false');
+    const panel = document.createElement('div');
+    panel.className = 'nav-search-panel';
+    panel.innerHTML = '<span class="nav-search-heading">What are you looking for?</span><form class="nav-search-form" action="search.html" method="get"><label class="visually-hidden" for="nav-search-input">Search BYLA resources</label><input id="nav-search-input" type="search" name="q" placeholder="Search cases, finance, events…" autocomplete="off"><button type="submit" aria-label="Search">↗</button></form><span class="nav-search-caption">POPULAR SEARCHES</span><div class="nav-search-topics"><a href="search.html?q=finance">Finance</a><a href="search.html?q=case">Case practice</a><a href="search.html?q=competition">Competitions</a><a href="search.html?q=leadership">Leadership</a></div>';
+    searchWrap.appendChild(panel);
+    const setSearchOpen = open => {
+      searchWrap.classList.toggle('is-open', open);
+      searchLink.setAttribute('aria-expanded', String(open));
+    };
+    searchWrap.addEventListener('mouseenter', () => setSearchOpen(true));
+    searchWrap.addEventListener('mouseleave', () => { if (!searchWrap.contains(document.activeElement)) setSearchOpen(false); });
+    searchWrap.addEventListener('focusin', () => setSearchOpen(true));
+    searchWrap.addEventListener('focusout', event => {
+      if (!searchWrap.contains(event.relatedTarget)) setSearchOpen(false);
+    });
+    searchLink.addEventListener('click', event => {
+      if (!searchWrap.classList.contains('is-open')) {
+        event.preventDefault();
+        setSearchOpen(true);
+        const field = $('#nav-search-input', searchWrap);
+        if (field) field.focus();
+      }
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && searchWrap.classList.contains('is-open')) {
+        setSearchOpen(false);
+        searchLink.focus();
+      }
+    });
+  }
+
   // Reading progress is updated on scroll and resize without a heavy animation loop.
   const progress = $('#scroll-progress-fill');
   const updateProgress = () => {
