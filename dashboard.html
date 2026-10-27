@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Your BYLA member dashboard for business learning, competitions, events and opportunities.">
+<title>Dashboard | BYLA</title>
+<link rel="icon" href="assets/byla-logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css?v=dashboard-foundation-1">
+<style>
+.dashboard-page{background:#f5f8fc;min-height:70vh;padding:54px 0 80px;color:#10223c}
+.dashboard-wrap{max-width:1160px;margin:auto;padding:0 24px}
+.dash-eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:#2877bd}
+.dash-hero{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin:0 0 28px}
+.dash-hero h1{font-size:clamp(30px,4vw,44px);letter-spacing:-.04em;line-height:1.1;margin:9px 0 10px;color:#0a192f}
+.dash-hero p{margin:0;color:#60728a;max-width:640px;line-height:1.65}
+.dash-date{color:#5f728a;font-size:13px;font-weight:650;white-space:nowrap}
+.dash-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px}
+.dash-card{background:white;border:1px solid #e1e9f2;border-radius:18px;padding:22px;box-shadow:0 8px 28px #0a24400a;min-width:0;transition:transform .2s,border-color .2s,box-shadow .2s}
+.dash-card:hover{transform:translateY(-2px);border-color:#bfd8f0;box-shadow:0 14px 34px #0a244012}
+.dash-span-8{grid-column:span 8}.dash-span-4{grid-column:span 4}.dash-span-6{grid-column:span 6}.dash-span-12{grid-column:span 12}
+.dash-card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.dash-card h2{font-size:17px;letter-spacing:-.02em;margin:0;color:#112642}
+.dash-card p{color:#63748a;line-height:1.6;font-size:14px}
+.dash-tag{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;background:#eaf5ff;color:#1765a4}
+.dash-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.dash-metric{background:#f6f9fd;border:1px solid #e7eef6;border-radius:13px;padding:15px}
+.dash-metric strong{display:block;font-size:25px;letter-spacing:-.04em;color:#112642;margin:8px 0 3px}
+.dash-metric span{font-size:12px;color:#687b91}
+.dash-icon{width:35px;height:35px;display:grid;place-items:center;border-radius:11px;background:#e5f3ff;color:#1668a8;font-size:17px}
+.dash-list{display:grid;gap:0}
+.dash-list-item{display:flex;align-items:flex-start;gap:13px;padding:14px 0;border-top:1px solid #edf1f6}
+.dash-list-item:first-child{border-top:0;padding-top:0}
+.dash-list-item:last-child{padding-bottom:0}
+.dash-item-main{flex:1;min-width:0}
+.dash-item-main strong{display:block;color:#172d49;font-size:14px;margin:1px 0 4px}
+.dash-item-main span{display:block;color:#728197;font-size:12px;line-height:1.5}
+.dash-arrow{color:#4288c6;font-size:18px;font-weight:700}
+.dash-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.dash-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none!important;border-radius:10px;padding:11px 15px;font-size:13px;font-weight:750;transition:transform .18s,background .18s}
+.dash-action:hover{transform:translateY(-1px)}
+.dash-action.primary{background:#0b5fa5;color:#fff!important}.dash-action.primary:hover{background:#084d88}
+.dash-action.secondary{background:#eff6fc;color:#1c5b91!important;border:1px solid #dbeaf7}
+.dash-progress{height:7px;border-radius:99px;background:#e9eff6;overflow:hidden;margin:12px 0 8px}
+.dash-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,#1684cf,#67c7f5);border-radius:99px}
+.dash-empty{border:1px dashed #cfdeed;border-radius:12px;padding:16px;color:#718198;background:#f9fbfe;font-size:13px;line-height:1.6}
+.dash-notice{display:flex;gap:12px;align-items:flex-start;background:#edf7ff;border:1px solid #d5eafa;border-radius:13px;padding:15px;margin-top:18px}
+.dash-notice strong{display:block;font-size:13px;color:#164c78;margin-bottom:3px}.dash-notice span{font-size:12px;color:#4f6f8c;line-height:1.55}
+.dash-quicklinks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.dash-quicklink{display:flex;align-items:center;gap:12px;padding:15px;border:1px solid #e1eaf4;border-radius:13px;text-decoration:none!important;background:#fff;transition:all .2s}
+.dash-quicklink:hover{border-color:#b7d8f3;transform:translateY(-2px);box-shadow:0 8px 20px #0a24400b}
+.dash-quicklink strong{font-size:12px;color:#17304e;display:block}.dash-quicklink span{font-size:11px;color:#77869a;display:block;margin-top:3px}
+@media(max-width:850px){.dash-span-8,.dash-span-4{grid-column:span 12}.dash-quicklinks{grid-template-columns:repeat(2,minmax(0,1fr))}.dash-hero{align-items:flex-start;flex-direction:column;gap:8px}}
+@media(max-width:520px){.dashboard-page{padding:36px 0 56px}.dashboard-wrap{padding:0 16px}.dash-card{padding:17px}.dash-metrics{grid-template-columns:1fr}.dash-quicklinks{grid-template-columns:1fr}.dash-hero h1{font-size:32px}}
+@media(prefers-reduced-motion:reduce){.dash-card,.dash-action,.dash-quicklink{transition:none}}
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+<main class="dashboard-page">
+<div class="dashboard-wrap">
+<section class="dash-hero">
+<div><div class="dash-eyebrow">BYLA Member Space</div><h1>Your dashboard.</h1><p>A single place to find business resources, upcoming events, competitions and opportunities to get involved.</p></div>
+<div class="dash-date" id="dashboard-date">Your BYLA workspace</div>
+</section>
+<section class="dash-grid" aria-label="Dashboard overview">
+<article class="dash-card dash-span-8">
+<div class="dash-card-head"><h2>Welcome to BYLA</h2><span class="dash-tag">Start here</span></div>
+<p>Build practical business skills, explore real-world challenges and connect with opportunities beyond the classroom.</p>
+<div class="dash-actions"><a class="dash-action primary" href="case-library.html">Explore business cases ↗</a><a class="dash-action secondary" href="opportunities.html">Find opportunities</a></div>
+<div class="dash-notice"><span aria-hidden="true">✦</span><div><strong>Your member space is getting started</strong><span>This dashboard currently links you to BYLA's live public resources. Personal accounts, saved progress and private team workspaces can be added as a later development phase.</span></div></div>
+</article>
+<article class="dash-card dash-span-4">
+<div class="dash-card-head"><h2>Quick links</h2></div>
+<div class="dash-list">
+<a class="dash-list-item" href="competition.html" style="text-decoration:none"><span class="dash-icon">♜</span><span class="dash-item-main"><strong>Case competition</strong><span>Format, rules and registration</span></span><span class="dash-arrow">↗</span></a>
+<a class="dash-list-item" href="learning.html" style="text-decoration:none"><span class="dash-icon">▤</span><span class="dash-item-main"><strong>Learning hub</strong><span>Grow your business skills</span></span><span class="dash-arrow">↗</span></a>
+<a class="dash-list-item" href="events.html" style="text-decoration:none"><span class="dash-icon">▦</span><span class="dash-item-main"><strong>Events calendar</strong><span>See upcoming activities</span></span><span class="dash-arrow">↗</span></a>
+<a class="dash-list-item" href="weekly-challenge.html" style="text-decoration:none"><span class="dash-icon">✳</span><span class="dash-item-main"><strong>Weekly challenge</strong><span>Practice thinking like a founder</span></span><span class="dash-arrow">↗</span></a>
+</div>
+</article>
+<article class="dash-card dash-span-6">
+<div class="dash-card-head"><h2>Competitions & case practice</h2><span class="dash-tag">Explore</span></div>
+<div class="dash-list">
+<div class="dash-list-item"><span class="dash-icon">01</span><span class="dash-item-main"><strong>Prepare with the Case Library</strong><span>Review business scenarios and sharpen your recommendations.</span></span></div>
+<div class="dash-list-item"><span class="dash-icon">02</span><span class="dash-item-main"><strong>Practice in the Case Lab</strong><span>Work through structured prompts to develop your analysis.</span></span></div>
+</div>
+<div class="dash-actions"><a class="dash-action secondary" href="case-library.html">Open case library ↗</a><a class="dash-action secondary" href="case-lab.html">Open case lab ↗</a></div>
+</article>
+<article class="dash-card dash-span-6">
+<div class="dash-card-head"><h2>Events & opportunities</h2><span class="dash-tag">Get involved</span></div>
+<div class="dash-list">
+<div class="dash-list-item"><span class="dash-icon">◷</span><span class="dash-item-main"><strong>Find an event</strong><span>Check the BYLA calendar for workshops and scheduled activities.</span></span><span class="dash-arrow">↗</span></div>
+<div class="dash-list-item"><span class="dash-icon">↗</span><span class="dash-item-main"><strong>Discover opportunities</strong><span>Explore ways to develop skills and contribute to BYLA.</span></span><span class="dash-arrow">↗</span></div>
+</div>
+<div class="dash-actions"><a class="dash-action secondary" href="events.html">Browse events ↗</a><a class="dash-action secondary" href="opportunities.html">View opportunities ↗</a></div>
+</article>
+<article class="dash-card dash-span-12">
+<div class="dash-card-head"><h2>Explore BYLA</h2><span class="dash-tag">Resource directory</span></div>
+<div class="dash-quicklinks">
+<a class="dash-quicklink" href="resources.html"><span class="dash-icon">▦</span><span><strong>All resources</strong><span>Browse the directory</span></span></a>
+<a class="dash-quicklink" href="news.html"><span class="dash-icon">◉</span><span><strong>News & updates</strong><span>Business and BYLA news</span></span></a>
+<a class="dash-quicklink" href="executive-positions.html"><span class="dash-icon">♧</span><span><strong>Executive positions</strong><span>Help lead the organization</span></span></a>
+<a class="dash-quicklink" href="contact.html"><span class="dash-icon">✉</span><span><strong>Contact BYLA</strong><span>Questions and suggestions</span></span></a>
+</div>
+</article>
+</section>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="js/main.js?v=dashboard-foundation-1"></script>
+<script>
+const dateNode=document.getElementById('dashboard-date');
+if(dateNode){dateNode.textContent=new Intl.DateTimeFormat(undefined,{weekday:'long',month:'long',day:'numeric'}).format(new Date());}
+</script>
+</body>
+</html>
