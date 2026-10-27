@@ -84,12 +84,16 @@
       if (!searchWrap.contains(event.relatedTarget)) setSearchOpen(false);
     });
     searchLink.addEventListener('click', event => {
-      if (!searchWrap.classList.contains('is-open')) {
-        event.preventDefault();
-        setSearchOpen(true);
+      event.preventDefault();
+      const open = !searchWrap.classList.contains('is-open');
+      setSearchOpen(open);
+      if (open) {
         const field = $('#nav-search-input', searchWrap);
         if (field) field.focus();
       }
+    });
+    document.addEventListener('click', event => {
+      if (!searchWrap.contains(event.target)) setSearchOpen(false);
     });
     document.addEventListener('keydown', event => {
       if (event.key === 'Escape' && searchWrap.classList.contains('is-open')) {
