@@ -2714,3 +2714,10 @@ section{padding-top:clamp(68px,8vw,104px);padding-bottom:clamp(68px,8vw,104px)}
  .nav-search-wrap .nav-search-link{display:flex;padding:17px 0;border-bottom:1px solid #ffffff20}
 }
 @media(prefers-reduced-motion:reduce){.nav-search-panel,.nav-search-topics a,.nav-search-form button{transition:none!important}}
+
+
+/* Search dropdown usability fix: keep a continuous pointer path from trigger to panel. */
+.nav-search-wrap{padding-bottom:0!important}
+.nav-search-panel{top:100%!important;transform:translateY(0) scale(1)!important;}
+.nav-search-wrap.is-open .nav-search-panel,.nav-search-wrap:focus-within .nav-search-panel{transform:translateY(0) scale(1)!important;}
+@media(max-width:1020px){.nav-search-panel{transform:none!important}}
