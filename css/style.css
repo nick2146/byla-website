@@ -2730,3 +2730,41 @@ section{padding-top:clamp(68px,8vw,104px);padding-bottom:clamp(68px,8vw,104px)}
 .nav-search-wrap.is-open .nav-search-panel,.nav-search-wrap:focus-within .nav-search-panel{opacity:1!important;visibility:visible!important;transform:translateY(0) scale(1)!important;}
 
 
+
+
+/* Newsroom refresh: live-topic entry points, clearer hierarchy, and accessible interactions */
+.news-hero-actions{display:flex;flex-wrap:wrap;gap:11px;margin-top:25px}
+.news-hero-actions .btn{min-height:44px}
+.latest-coverage-section{padding:38px 0 16px;background:linear-gradient(180deg,#f4f8fd 0%,#fff 100%)}
+.latest-coverage-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;margin-bottom:20px}
+.latest-coverage-heading h2{margin:5px 0 8px;color:#102743;font-size:clamp(26px,3vw,36px);letter-spacing:-.045em}
+.latest-coverage-heading p{margin:0;color:#617188;font-size:13px;line-height:1.7;max-width:680px}
+.live-indicator{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;border:1px solid #cfe4f8;border-radius:999px;padding:9px 12px;background:#fff;color:#28618f;font-size:9px;font-weight:850;letter-spacing:.14em}
+.live-indicator i{width:7px;height:7px;border-radius:50%;background:#20a477;box-shadow:0 0 0 4px #20a4771b}
+.latest-coverage-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.latest-coverage-card{position:relative;display:flex;min-height:166px;flex-direction:column;gap:13px;overflow:hidden;padding:22px;border:1px solid #dce7f3;border-radius:17px;background:linear-gradient(150deg,#fff,#f7faff);box-shadow:0 10px 30px #102c4b08;text-decoration:none;transition:transform .25s,border-color .25s,box-shadow .25s}
+.latest-coverage-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#1686ff,#9ed5ff);transform:scaleY(.25);transform-origin:top;transition:transform .25s}
+.latest-coverage-card:hover{transform:translateY(-4px);border-color:#9ccafa;box-shadow:0 18px 40px #102c4b12}
+.latest-coverage-card:hover:before{transform:scaleY(1)}
+.latest-coverage-card:focus-visible,.news-filter:focus-visible,.news-feature-card a:focus-visible,.source-card a:focus-visible{outline:3px solid #65b3ff;outline-offset:3px}
+.coverage-kicker{color:#0872d2;font-size:9px;font-weight:850;letter-spacing:.15em}
+.latest-coverage-card strong{color:#112b48;font-size:19px;line-height:1.2;letter-spacing:-.035em}
+.latest-coverage-card>span:last-child{margin-top:auto;color:#617188;font-size:12px;line-height:1.6}
+.news-feature-card{position:relative;overflow:hidden}
+.news-feature-card:after{content:"";position:absolute;right:-36px;top:-46px;width:105px;height:105px;border:1px solid #dbeaff;border-radius:50%;pointer-events:none}
+.news-feature-card .why-matters{min-height:112px}
+.news-layout{scroll-margin-top:100px}
+#latest-coverage{scroll-margin-top:100px}
+.news-panel{overflow:hidden;border:1px solid #e0e8f2;background:#fff;box-shadow:0 12px 38px #102c4b08}
+.news-panel-head{padding:22px 24px;border-bottom:1px solid #e6edf5}
+.news-panel-head h2{letter-spacing:-.035em}
+.news-panel-head p{line-height:1.65}
+.source-list{padding:0 20px}
+.source-list .source-card{border-bottom:1px solid #e9eff6}
+.source-list .source-card:last-child{border-bottom:0}
+.news-side{display:grid;gap:16px}
+.news-side .tip-card,.news-side .search-card{border:1px solid #e0e8f2;box-shadow:0 12px 32px #102c4b08}
+.news-note{border-radius:12px;line-height:1.8}
+@media(max-width:1050px){.latest-coverage-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.latest-coverage-heading{align-items:flex-start;flex-direction:column;gap:13px}.latest-coverage-grid{grid-template-columns:1fr}.latest-coverage-card{min-height:135px;padding:20px}.news-hero-actions{align-items:stretch;flex-direction:column}.news-hero-actions .btn{justify-content:center;width:100%}.news-feature-card .why-matters{min-height:0}.source-list{padding:0 14px}}
+@media(prefers-reduced-motion:reduce){.latest-coverage-card,.news-feature-card,.news-filter{transition:none}.latest-coverage-card:hover,.news-feature-card:hover,.news-filter:hover{transform:none}}
