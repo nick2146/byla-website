@@ -4,7 +4,28 @@
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const toggle = $('.menu-toggle');
   const links = $('.nav-links');
-  const dropdowns = $$('.nav-dropdown');
+  const dropdowns = $('.nav-dropdown');
+
+  // Graceful image fallback: failed editorial imagery never leaves a broken-image icon.
+  document.addEventListener('error', event => {
+    const img = event.target;
+    if (!(img instanceof HTMLImageElement) || img.classList.contains('brand-logo') || img.dataset.fallbackApplied === 'true') return;
+    img.dataset.fallbackApplied = 'true';
+    img.hidden = true;
+    const fallback = document.createElement('div');
+    fallback.className = 'image-fallback';
+    fallback.setAttribute('role', 'img');
+    fallback.setAttribute('aria-label', img.alt || 'Image unavailable');
+    fallback.textContent = 'BYLA';
+    img.insertAdjacentElement('afterend', fallback);
+  }, true);
+
+  // Defer below-the-fold images without delaying the brand mark or hero imagery.
+  $('img').forEach(img => {
+    if (!img.classList.contains('brand-logo') && !img.closest('.page-hero') && !img.hasAttribute('loading')) {
+      img.loading = 'lazy';
+    }
+  });
 
   const closeMenu = () => {
     if (!toggle || !links) return;
