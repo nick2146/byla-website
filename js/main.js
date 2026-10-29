@@ -244,7 +244,8 @@
   };
   const visualConfig = visualPages[pageFile] || visualPages[document.body.dataset.page] || null;
   const pageHero = $('.page-hero');
-  if (visualConfig && pageHero && !document.querySelector('.site-visual-overview')) {
+  const overviewAnchor = pageHero || $('main');
+  if (visualConfig && overviewAnchor && !document.querySelector('.site-visual-overview')) {
     const overview = document.createElement('section');
     overview.className = 'site-visual-overview container';
     overview.setAttribute('aria-label', 'Page overview');
@@ -284,7 +285,8 @@
       gallery.appendChild(tile);
     });
     overview.append(quick, gallery);
-    pageHero.insertAdjacentElement('afterend', overview);
+    if (pageHero) pageHero.insertAdjacentElement('afterend', overview);
+    else overviewAnchor.insertAdjacentElement('afterbegin', overview);
   }
 
   // Reveal sections as they enter view, with staggered card timing and reduced-motion support.
