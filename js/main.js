@@ -210,37 +210,37 @@
   const pageFile = (window.location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '') || 'index';
   const visualPages = {
     index: { title: 'BYLA at a glance', summary: 'A student-led business community built around practical challenges, financial literacy, and leadership.', tags: ['Learn by doing', 'Real-world thinking', 'Student-led'], images: [
-      ['photo-1521737711867-e3b97375f902','Build together'],['photo-1460925895917-afdab827c52f','Think strategically'],['photo-1556761175-b413da4baf72','Present with confidence']]},
+      ['photo-1522071820081-009f0129c71c','Build together'],['photo-1460925895917-afdab827c52f','Think strategically'],['photo-1556761175-b413da4baf72','Present with confidence']]},
     about: { title: 'The BYLA difference', summary: 'Explore business through hands-on work, shared ideas, and opportunities open to high school students.', tags: ['Student-led', 'Practical learning', 'Open enrollment'], images: [
-      ['photo-1521737711867-e3b97375f902','A community of ideas'],['photo-1552664730-d307ca884978','Collaboration in action'],['photo-1522071820081-009f0129c71c','Leadership grows here']]},
+      ['photo-1529156069898-49953e39b3ac','A community of ideas'],['photo-1528605248644-14dd04022da1','Collaboration in action'],['photo-1521737604893-d14cc237f11d','Leadership grows here']]},
     competition: { title: 'The competition in 3 steps', summary: 'Work in a team, solve a business problem, and pitch a clear recommendation.', tags: ['Teams of 2–4', 'Five-slide deck', 'Pitch + Q&A'], images: [
       ['photo-1552664730-d307ca884978','Team strategy'],['photo-1454165804606-c3d57bc86b40','Business analysis'],['photo-1551836022-d5d88e9218df','Pitch your solution']]},
     partners: { title: 'Partner with purpose', summary: 'Bring a real business challenge, share expertise, or help students learn from professionals.', tags: ['Case partners', 'Mentors + judges', 'Community impact'], images: [
-      ['photo-1521737711867-e3b97375f902','Meet future talent'],['photo-1556761175-b413da4baf72','Share your expertise'],['photo-1522071820081-009f0129c71c','Create opportunities']]},
+      ['photo-1497366754035-f200968a6e72','Meet future talent'],['photo-1497366216548-37526070297c','Share your expertise'],['photo-1497366811353-6870744d04b2','Create opportunities']]},
     contact: { title: 'How can we help?', summary: 'Choose the topic that fits: student questions, business partnerships, judging, or general inquiries.', tags: ['Students', 'Businesses', 'Community'], images: [
-      ['photo-1521737711867-e3b97375f902','Student community'],['photo-1556761175-b413da4baf72','Business partnerships'],['photo-1522071820081-009f0129c71c','Work together']]},
+      ['photo-1516321318423-f06f85e504b3','Student community'],['photo-1553877522-43269d4ea984','Business partnerships'],['photo-1521737711867-e3b97375f902','Work together']]},
     events: { title: 'Plan your next step', summary: 'See upcoming BYLA activities and use self-paced resources when it suits your schedule.', tags: ['Competition updates', 'Learning activities', 'Plan ahead'], images: [
-      ['photo-1503428593586-e225b39ddfe2','Mark the date'],['photo-1521737711867-e3b97375f902','Learn with others'],['photo-1454165804606-c3d57bc86b40','Prepare with purpose']]},
+      ['photo-1503428593586-e225b39ddfe2','Mark the date'],['photo-1517248135467-4c7edcad34c4','Learn with others'],['photo-1505373877841-8d25f7d46678','Prepare with purpose']]},
     'executive-positions': { title: 'Lead from where you are', summary: 'Find a role that matches your strengths and help build useful opportunities for students.', tags: ['Build experience', 'Work as a team', 'Make an impact'], images: [
-      ['photo-1521737711867-e3b97375f902','Lead collaboratively'],['photo-1552664730-d307ca884978','Turn ideas into action'],['photo-1454165804606-c3d57bc86b40','Grow your skills']]},
+      ['photo-1500648767791-00dcc994a43e','Lead collaboratively'],['photo-1517245386807-bb43f82c33c4','Turn ideas into action'],['photo-1506794778202-cad84cf45f1d','Grow your skills']]},
     learning: { title: 'Learn it. Try it. Apply it.', summary: 'Use short guides, practical frameworks, and case exercises to strengthen your business toolkit.', tags: ['Business basics', 'Case analysis', 'Presentation skills'], images: [
-      ['photo-1454165804606-c3d57bc86b40','Learn the framework'],['photo-1460925895917-afdab827c52f','Understand the numbers'],['photo-1552664730-d307ca884978','Practice together']]},
+      ['photo-1503676260728-1c00da094a0b','Learn the framework'],['photo-1434030216411-0b793f4b4173','Understand the numbers'],['photo-1513258496099-48168024aec0','Practice together']]},
     'case-lab': { title: 'Practice business thinking', summary: 'Work through a case, choose your approach, and review the reasoning behind your decisions.', tags: ['Analyze', 'Decide', 'Reflect'], images: [
-      ['photo-1454165804606-c3d57bc86b40','Break down the case'],['photo-1460925895917-afdab827c52f','Use evidence'],['photo-1552664730-d307ca884978','Compare perspectives']]},
+      ['photo-1519389950473-47ba0277781c','Break down the case'],['photo-1551288049-bebda4e38f71','Use evidence'],['photo-1504868584819-f8e8b4b6d7e3','Compare perspectives']]},
     'case-library': { title: 'Pick a case. Build a solution.', summary: 'Practice strategy, marketing, finance, and operations using structured case exercises.', tags: ['Strategy', 'Finance', 'Marketing'], images: [
-      ['photo-1454165804606-c3d57bc86b40','Frame the problem'],['photo-1460925895917-afdab827c52f','Follow the numbers'],['photo-1551836022-d5d88e9218df','Present the recommendation']]},
+      ['photo-1455390582262-044cdead277a','Frame the problem'],['photo-1484480974693-6ca0a78fb36b','Follow the numbers'],['photo-1506784983877-45594efa4cbe','Present the recommendation']]},
     markets: { title: 'Learn markets without real-money risk', summary: 'Explore companies and practise portfolio decisions with simulated money for learning.', tags: ['Virtual practice', 'Financial literacy', 'Learn at your pace'], images: [
-      ['photo-1611974789855-9c2a0a7236a3','Markets in motion'],['photo-1460925895917-afdab827c52f','Read the data'],['photo-1554224155-6726b3ff858f','Build financial skills']]},
+      ['photo-1611974789855-9c2a0a7236a3','Markets in motion'],['photo-1535320903710-d993d3d77d29','Read the data'],['photo-1590283603385-17ffb3a7f29f','Build financial skills']]},
     news: { title: 'Read less. Understand more.', summary: 'Scan trusted sources, spot what changed, and connect headlines to business decisions.', tags: ['Canada + world', 'Markets + economy', 'Think critically'], images: [
-      ['photo-1504711434969-e33886168f5c','Follow the headlines'],['photo-1460925895917-afdab827c52f','Make sense of data'],['photo-1516321318423-f06f85e504b3','Explore new ideas']]},
+      ['photo-1495020689067-958852a7765e','Follow the headlines'],['photo-1504711434969-e33886168f5c','Make sense of data'],['photo-1507413245164-6160d8298b31','Explore new ideas']]},
     opportunities: { title: 'Find your next opportunity', summary: 'Browse competitions, entrepreneurship programs, leadership roles, and learning resources.', tags: ['Compete', 'Create', 'Lead'], images: [
-      ['photo-1521737711867-e3b97375f902','Meet collaborators'],['photo-1556761175-b413da4baf72','Explore business'],['photo-1454165804606-c3d57bc86b40','Build experience']]},
+      ['photo-1523240795612-9a054b0db644','Meet collaborators'],['photo-1510925758641-869d353cecc7','Explore business'],['photo-1523580494863-6f3031224c94','Build experience']]},
     resources: { title: 'Your toolkit, simplified', summary: 'Go straight to the tool you need: cases, practice, events, or business learning.', tags: ['Cases', 'Practice', 'Learning'], images: [
-      ['photo-1454165804606-c3d57bc86b40','Start with a framework'],['photo-1460925895917-afdab827c52f','Work with evidence'],['photo-1552664730-d307ca884978','Put ideas to work']]},
+      ['photo-1456324504439-367cee3b3c32','Start with a framework'],['photo-1517842645767-c639042777db','Work with evidence'],['photo-1453738773917-9c3eff1db985','Put ideas to work']]},
     'weekly-challenge': { title: 'A small challenge. A sharper mind.', summary: 'Explore a business story, make a decision, and explain your reasoning each week.', tags: ['Read the story', 'Make a call', 'Explain why'], images: [
-      ['photo-1504711434969-e33886168f5c','Understand the context'],['photo-1460925895917-afdab827c52f','Use the evidence'],['photo-1551836022-d5d88e9218df','Make the decision']]},
+      ['photo-1501504905252-473c47e087f8','Understand the context'],['photo-1517841905240-472988babdf9','Use the evidence'],['photo-1522202176988-66273c2fd55f','Make the decision']]},
     'case-analysis-worksheet': { title: 'A simple case workflow', summary: 'Identify the problem, compare options, support your recommendation, and define the next step.', tags: ['Problem', 'Options', 'Recommendation'], images: [
-      ['photo-1454165804606-c3d57bc86b40','Structure your thinking'],['photo-1460925895917-afdab827c52f','Support your answer'],['photo-1552664730-d307ca884978','Review your approach']]}
+      ['photo-1524178232363-1fb2b075b655','Structure your thinking'],['photo-1498050108023-c5249f4df085','Support your answer'],['photo-1516321497487-e288fb19713f','Review your approach']]}
   };
   const visualConfig = visualPages[pageFile] || visualPages[document.body.dataset.page] || null;
   const pageHero = $('.page-hero');
