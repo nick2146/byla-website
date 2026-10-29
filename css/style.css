@@ -2868,3 +2868,25 @@ section{padding-top:clamp(68px,8vw,104px);padding-bottom:clamp(68px,8vw,104px)}
 @media(max-width:720px){.newsroom-rebuild-head{align-items:flex-start}.newsroom-count strong{font-size:34px}.publisher-grid{grid-template-columns:1fr}.publisher-card{min-height:0}.newsroom-bottom-grid{grid-template-columns:1fr}.newsletter-rebuild{grid-template-columns:1fr}.newsletter-rebuild-art{min-height:240px}.newsletter-art-word{font-size:55px}.thinking-steps{gap:8px}.thinking-steps p{font-size:10px}.headline-search-links{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.newsroom-rebuild-head{gap:12px}.newsroom-count span{font-size:7px}.publisher-card{padding:19px}.thinking-steps{grid-template-columns:1fr}.thinking-steps>div{display:flex;gap:12px;align-items:flex-start}.thinking-steps p{margin:0}.headline-search-links{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.publisher-card,.publisher-arrow,.publisher-link b,.headline-search-links a{transition:none!important}.publisher-card:hover,.headline-search-links a:hover{transform:none}}
+
+
+/* NEWSROOM CONTRAST PASS — keep supporting text readable on every card */
+.newsroom-rebuild-head p{color:#43536a}
+.newsroom-count span{color:#4b5d74}
+.publisher-category{color:#4b5d74}
+.publisher-arrow{color:#52657d}
+.publisher-card>p{color:#40536b}
+.publisher-link{color:#075da8}
+.newsroom-disclaimer p{color:#40516a}
+.newsroom-disclaimer strong{color:#122943}
+.headline-search-card>p{color:#40536b}
+.headline-search-links a{color:#102f50}
+.headline-all-link{color:#075da8}
+.newsroom-thinking-card>p,.thinking-steps p{color:#d7e4f3}
+.thinking-steps>div>span{color:#9bd0ff}
+.newsletter-rebuild-copy>p{color:#dbe7f5}
+.newsletter-mini-points span{color:#edf5ff;border-color:#ffffff40}
+.newsletter-rebuild-copy small{color:#c5d5e8}
+.newsletter-art-label{color:#d5eaff}
+.newsletter-art-footer{color:#c5d9ef}
+.publisher-card:focus-visible,.headline-search-links a:focus-visible,.headline-all-link:focus-visible{outline:3px solid #1675d1;outline-offset:3px}
