@@ -205,4 +205,126 @@
     top: 0,
     behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
   }));
+
+  // Site-wide visual refresh: concise page summaries, image-led story strips, and gentle reveal motion.
+  const pageFile = (window.location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '') || 'index';
+  const visualPages = {
+    index: { title: 'BYLA at a glance', summary: 'A student-led business community built around practical challenges, financial literacy, and leadership.', tags: ['Learn by doing', 'Real-world thinking', 'Student-led'], images: [
+      ['photo-1521737711867-e3b97375f902','Build together'],['photo-1460925895917-afdab827c52f','Think strategically'],['photo-1556761175-b413da4baf72','Present with confidence']]},
+    about: { title: 'The BYLA difference', summary: 'Explore business through hands-on work, shared ideas, and opportunities open to high school students.', tags: ['Student-led', 'Practical learning', 'Open enrollment'], images: [
+      ['photo-1521737711867-e3b97375f902','A community of ideas'],['photo-1552664730-d307ca884978','Collaboration in action'],['photo-1522071820081-009f0129c71c','Leadership grows here']]},
+    competition: { title: 'The competition in 3 steps', summary: 'Work in a team, solve a business problem, and pitch a clear recommendation.', tags: ['Teams of 2–4', 'Five-slide deck', 'Pitch + Q&A'], images: [
+      ['photo-1552664730-d307ca884978','Team strategy'],['photo-1454165804606-c3d57bc86b40','Business analysis'],['photo-1551836022-d5d88e9218df','Pitch your solution']]},
+    partners: { title: 'Partner with purpose', summary: 'Bring a real business challenge, share expertise, or help students learn from professionals.', tags: ['Case partners', 'Mentors + judges', 'Community impact'], images: [
+      ['photo-1521737711867-e3b97375f902','Meet future talent'],['photo-1556761175-b413da4baf72','Share your expertise'],['photo-1522071820081-009f0129c71c','Create opportunities']]},
+    contact: { title: 'How can we help?', summary: 'Choose the topic that fits: student questions, business partnerships, judging, or general inquiries.', tags: ['Students', 'Businesses', 'Community'], images: [
+      ['photo-1521737711867-e3b97375f902','Student community'],['photo-1556761175-b413da4baf72','Business partnerships'],['photo-1522071820081-009f0129c71c','Work together']]},
+    events: { title: 'Plan your next step', summary: 'See upcoming BYLA activities and use self-paced resources when it suits your schedule.', tags: ['Competition updates', 'Learning activities', 'Plan ahead'], images: [
+      ['photo-1503428593586-e225b39ddfe2','Mark the date'],['photo-1521737711867-e3b97375f902','Learn with others'],['photo-1454165804606-c3d57bc86b40','Prepare with purpose']]},
+    'executive-positions': { title: 'Lead from where you are', summary: 'Find a role that matches your strengths and help build useful opportunities for students.', tags: ['Build experience', 'Work as a team', 'Make an impact'], images: [
+      ['photo-1521737711867-e3b97375f902','Lead collaboratively'],['photo-1552664730-d307ca884978','Turn ideas into action'],['photo-1454165804606-c3d57bc86b40','Grow your skills']]},
+    learning: { title: 'Learn it. Try it. Apply it.', summary: 'Use short guides, practical frameworks, and case exercises to strengthen your business toolkit.', tags: ['Business basics', 'Case analysis', 'Presentation skills'], images: [
+      ['photo-1454165804606-c3d57bc86b40','Learn the framework'],['photo-1460925895917-afdab827c52f','Understand the numbers'],['photo-1552664730-d307ca884978','Practice together']]},
+    'case-lab': { title: 'Practice business thinking', summary: 'Work through a case, choose your approach, and review the reasoning behind your decisions.', tags: ['Analyze', 'Decide', 'Reflect'], images: [
+      ['photo-1454165804606-c3d57bc86b40','Break down the case'],['photo-1460925895917-afdab827c52f','Use evidence'],['photo-1552664730-d307ca884978','Compare perspectives']]},
+    'case-library': { title: 'Pick a case. Build a solution.', summary: 'Practice strategy, marketing, finance, and operations using structured case exercises.', tags: ['Strategy', 'Finance', 'Marketing'], images: [
+      ['photo-1454165804606-c3d57bc86b40','Frame the problem'],['photo-1460925895917-afdab827c52f','Follow the numbers'],['photo-1551836022-d5d88e9218df','Present the recommendation']]},
+    markets: { title: 'Learn markets without real-money risk', summary: 'Explore companies and practise portfolio decisions with simulated money for learning.', tags: ['Virtual practice', 'Financial literacy', 'Learn at your pace'], images: [
+      ['photo-1611974789855-9c2a0a7236a3','Markets in motion'],['photo-1460925895917-afdab827c52f','Read the data'],['photo-1554224155-6726b3ff858f','Build financial skills']]},
+    news: { title: 'Read less. Understand more.', summary: 'Scan trusted sources, spot what changed, and connect headlines to business decisions.', tags: ['Canada + world', 'Markets + economy', 'Think critically'], images: [
+      ['photo-1504711434969-e33886168f5c','Follow the headlines'],['photo-1460925895917-afdab827c52f','Make sense of data'],['photo-1516321318423-f06f85e504b3','Explore new ideas']]},
+    opportunities: { title: 'Find your next opportunity', summary: 'Browse competitions, entrepreneurship programs, leadership roles, and learning resources.', tags: ['Compete', 'Create', 'Lead'], images: [
+      ['photo-1521737711867-e3b97375f902','Meet collaborators'],['photo-1556761175-b413da4baf72','Explore business'],['photo-1454165804606-c3d57bc86b40','Build experience']]},
+    resources: { title: 'Your toolkit, simplified', summary: 'Go straight to the tool you need: cases, practice, events, or business learning.', tags: ['Cases', 'Practice', 'Learning'], images: [
+      ['photo-1454165804606-c3d57bc86b40','Start with a framework'],['photo-1460925895917-afdab827c52f','Work with evidence'],['photo-1552664730-d307ca884978','Put ideas to work']]},
+    'weekly-challenge': { title: 'A small challenge. A sharper mind.', summary: 'Explore a business story, make a decision, and explain your reasoning each week.', tags: ['Read the story', 'Make a call', 'Explain why'], images: [
+      ['photo-1504711434969-e33886168f5c','Understand the context'],['photo-1460925895917-afdab827c52f','Use the evidence'],['photo-1551836022-d5d88e9218df','Make the decision']]},
+    'case-analysis-worksheet': { title: 'A simple case workflow', summary: 'Identify the problem, compare options, support your recommendation, and define the next step.', tags: ['Problem', 'Options', 'Recommendation'], images: [
+      ['photo-1454165804606-c3d57bc86b40','Structure your thinking'],['photo-1460925895917-afdab827c52f','Support your answer'],['photo-1552664730-d307ca884978','Review your approach']]}
+  };
+  const visualConfig = visualPages[pageFile] || visualPages[document.body.dataset.page] || null;
+  const pageHero = $('.page-hero');
+  if (visualConfig && pageHero && !document.querySelector('.site-visual-overview')) {
+    const overview = document.createElement('section');
+    overview.className = 'site-visual-overview container';
+    overview.setAttribute('aria-label', 'Page overview');
+    const quick = document.createElement('div');
+    quick.className = 'site-quick-view';
+    const label = document.createElement('span');
+    label.className = 'site-quick-eyebrow';
+    label.textContent = 'QUICK VIEW';
+    const title = document.createElement('h2');
+    title.textContent = visualConfig.title;
+    const summary = document.createElement('p');
+    summary.textContent = visualConfig.summary;
+    const tags = document.createElement('div');
+    tags.className = 'site-quick-tags';
+    visualConfig.tags.forEach(tagText => {
+      const tag = document.createElement('span');
+      tag.textContent = tagText;
+      tags.appendChild(tag);
+    });
+    quick.append(label, title, summary, tags);
+    const gallery = document.createElement('div');
+    gallery.className = 'site-image-gallery';
+    visualConfig.images.forEach((item, index) => {
+      const tile = document.createElement('figure');
+      tile.className = 'site-image-tile';
+      const img = document.createElement('img');
+      img.src = 'https://images.unsplash.com/' + item[0] + '?auto=format&fit=crop&w=900&q=80';
+      img.alt = item[1];
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.width = 900;
+      img.height = 620;
+      const caption = document.createElement('figcaption');
+      caption.innerHTML = '<span>0' + (index + 1) + '</span><strong></strong>';
+      caption.querySelector('strong').textContent = item[1];
+      tile.append(img, caption);
+      gallery.appendChild(tile);
+    });
+    overview.append(quick, gallery);
+    pageHero.insertAdjacentElement('afterend', overview);
+  }
+
+  // Reveal sections as they enter view, with staggered card timing and reduced-motion support.
+  const motionTargets = $('.page-hero, main > section, main .container > .section-top, main .container > .stats, main .container > .tool-wrap, .feature-card, .resource-card, .opportunity-card, .event-card, .news-card, .partner-card, .publisher-card, .learning-card, .case-card, .form-panel, .site-visual-overview');
+  motionTargets.forEach((element, index) => {
+    if (element.closest('.site-visual-overview') && element !== document.querySelector('.site-visual-overview')) return;
+    if (element.classList.contains('site-reveal')) return;
+    element.classList.add('site-reveal');
+    if (element.matches('.feature-card, .resource-card, .opportunity-card, .event-card, .news-card, .partner-card, .publisher-card, .learning-card, .case-card')) {
+      element.style.setProperty('--reveal-delay', (Math.min(index % 5, 4) * 70) + 'ms');
+    }
+  });
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -35px 0px' });
+    $('.site-reveal').forEach(element => revealObserver.observe(element));
+  } else {
+    $('.site-reveal').forEach(element => element.classList.add('is-revealed'));
+  }
+  // Add subtle pointer tilt only to visual image tiles; no layout movement on touch screens.
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    $('.site-image-tile').forEach(tile => {
+      tile.addEventListener('pointermove', event => {
+        const rect = tile.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        tile.style.setProperty('--tilt-x', (y * -3) + 'deg');
+        tile.style.setProperty('--tilt-y', (x * 3) + 'deg');
+      });
+      tile.addEventListener('pointerleave', () => {
+        tile.style.setProperty('--tilt-x', '0deg');
+        tile.style.setProperty('--tilt-y', '0deg');
+      });
+    });
+  }
+
 })();
