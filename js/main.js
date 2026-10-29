@@ -220,7 +220,7 @@
     contact: { title: 'How can we help?', summary: 'Choose the topic that fits: student questions, business partnerships, judging, or general inquiries.', tags: ['Students', 'Businesses', 'Community'], images: [
       ['photo-1516321318423-f06f85e504b3','Student community'],['photo-1553877522-43269d4ea984','Business partnerships'],['photo-1521737711867-e3b97375f902','Work together']]},
     events: { title: 'Plan your next step', summary: 'See upcoming BYLA activities and use self-paced resources when it suits your schedule.', tags: ['Competition updates', 'Learning activities', 'Plan ahead'], images: [
-      ['photo-1503428593586-e225b39ddfe2','Mark the date'],['photo-1517248135467-4c7edcad34c4','Learn with others'],['photo-1505373877841-8d25f7d46678','Prepare with purpose']]},
+      ['photo-1522071820081-009f0129c71c','Mark the date'],['photo-1517248135467-4c7edcad34c4','Learn with others'],['photo-1505373877841-8d25f7d46678','Prepare with purpose']]},
     'executive-positions': { title: 'Lead from where you are', summary: 'Find a role that matches your strengths and help build useful opportunities for students.', tags: ['Build experience', 'Work as a team', 'Make an impact'], images: [
       ['photo-1500648767791-00dcc994a43e','Lead collaboratively'],['photo-1517245386807-bb43f82c33c4','Turn ideas into action'],['photo-1506794778202-cad84cf45f1d','Grow your skills']]},
     learning: { title: 'Learn it. Try it. Apply it.', summary: 'Use short guides, practical frameworks, and case exercises to strengthen your business toolkit.', tags: ['Business basics', 'Case analysis', 'Presentation skills'], images: [
