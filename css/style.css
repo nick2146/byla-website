@@ -2921,3 +2921,42 @@ a:focus-visible,button:focus-visible{outline:3px solid #1685f8;outline-offset:3p
 @media(max-width:900px){.site-visual-overview{grid-template-columns:1fr}.site-quick-view{max-width:none}.site-image-tile,.site-image-tile img{min-height:190px}}
 @media(max-width:560px){.site-visual-overview{padding-top:20px;padding-bottom:30px}.site-image-gallery{grid-template-columns:1fr;gap:10px}.site-image-tile,.site-image-tile img{min-height:190px;height:190px}.site-quick-view{padding:22px}.site-quick-tags span{font-size:9px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.page-hero .eyebrow{animation:none!important}.site-reveal,.site-image-tile,.site-image-tile img,.btn,.news-hero-actions a,.home-primary-actions a{transition:none!important;transform:none!important}.site-reveal{opacity:1!important}.site-image-tile:hover img{transform:none}}
+
+/* BYLA site polish: clear pathways, useful editorial cards, resilient media, and accessible spacing. */
+.home-path-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.home-path-actions .btn{min-height:46px}
+.home-current-board{padding:72px 0;background:linear-gradient(180deg,#f5f8fc,#fff)}
+.home-current-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.home-current-card{padding:28px;border:1px solid #dfe7f1;border-radius:18px;background:#fff;box-shadow:0 12px 35px #0a25400a;display:flex;flex-direction:column;align-items:flex-start;min-height:260px}
+.home-current-label{font-size:10px;letter-spacing:.14em;font-weight:800;color:#087cf0}
+.home-current-card h3{font-family:Manrope,sans-serif;font-size:21px;line-height:1.25;margin:16px 0 8px}
+.home-current-card p{color:#5b6d83;font-size:14px;line-height:1.7;margin:0 0 20px}
+.home-current-card .text-link{margin-top:auto}
+.current-story-grid{align-items:stretch}
+.current-story-card{display:flex;flex-direction:column;align-items:flex-start}
+.current-story-card .why-matters,.current-story-card .story-question{width:100%;margin-top:15px}
+.current-story-card .story-question{padding:14px 15px;border:1px solid #dbe9fa;border-radius:12px;background:#f3f8ff}
+.current-story-card .story-question>strong{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#075ab4}
+.current-story-card .story-question p{margin:6px 0 0;font-size:13px}
+.current-story-card>a{margin-top:18px}
+.story-source{display:block;margin-top:10px;color:#6b7b90;font-size:11px;line-height:1.5}
+.image-fallback{min-height:180px;display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 15%,#1b5d9b 0%,transparent 45%),linear-gradient(135deg,#06152b,#0b2d54);color:#fff;font-family:Manrope,sans-serif;font-size:28px;font-weight:800;letter-spacing:.22em}
+.image-fallback:after{content:"";position:absolute;inset:14px;border:1px solid #ffffff30;border-radius:8px;pointer-events:none}
+.markets-tutorial-section{padding:76px 0}
+.markets-guide-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.markets-guide-card{padding:24px;border:1px solid #dfe7f1;border-radius:16px;background:#fff;box-shadow:0 10px 30px #0a254008}
+.markets-guide-card>span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#e8f3ff;color:#086bd0;font-weight:800;font-size:12px}
+.markets-guide-card h3{font-family:Manrope,sans-serif;font-size:17px;line-height:1.35;margin:18px 0 9px}
+.markets-guide-card p{font-size:13px;line-height:1.75;color:#607188;margin:0}
+.markets-glossary-section{padding:72px 0}
+.markets-challenge-band{padding:48px 0;background:#06152b;color:#fff}
+.markets-challenge-band>.container{display:flex;align-items:center;justify-content:space-between;gap:34px}
+.markets-challenge-copy{max-width:760px}
+.markets-challenge-copy h2{font-family:Manrope,sans-serif;font-size:clamp(27px,3vw,40px);line-height:1.2;margin:12px 0}
+.markets-challenge-copy>p{color:#d1deef;max-width:700px}
+.markets-challenge-options{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.markets-challenge-options span{padding:7px 11px;border:1px solid #ffffff2a;border-radius:999px;background:#ffffff0b;font-size:12px;color:#e2edfb}
+.markets-challenge-copy .markets-challenge-note{font-size:13px;color:#a9c7e9}
+@media(max-width:1000px){.home-current-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.markets-guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.markets-challenge-band>.container{align-items:flex-start;flex-direction:column}}
+@media(max-width:620px){.home-current-board,.markets-tutorial-section,.markets-glossary-section{padding:48px 0}.home-current-grid,.markets-guide-grid{grid-template-columns:1fr}.home-current-card{min-height:0;padding:22px}.markets-guide-card{padding:21px}.home-path-actions{align-items:stretch;flex-direction:column}.home-path-actions .btn{width:100%}.current-story-card{padding:22px}}
+@media(prefers-reduced-motion:reduce){.home-current-card,.markets-guide-card{transition:none!important;scroll-behavior:auto!important}}
